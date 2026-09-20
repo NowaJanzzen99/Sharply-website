@@ -238,57 +238,63 @@
     transform: translate(0px, 0px);
   }
 
+  /*
+    The image arrives on transform and opacity only. An earlier version opened
+    it with an animated clip-path, which the browser cannot hand to the graphics
+    card: every frame of every step was repainted on the main thread, and that
+    was the stutter. Each service still gets its own direction, set below.
+  */
   [data-stage-img] {
-    clip-path: inset(0 0 100% 0);
-    transition: clip-path 760ms var(--ease-out);
+    opacity: 0;
+    transform: translate3d(var(--ix, 0px), var(--iy, 28px), 0) rotate(var(--ir, 0deg))
+      scale(var(--is, 0.95));
+    transition:
+      opacity 560ms var(--ease-out),
+      transform 900ms var(--ease-out);
+    will-change: transform, opacity;
   }
 
   [data-stage="on"] [data-stage-img] {
-    clip-path: inset(0 0 0 0);
+    opacity: 1;
+    transform: translate3d(0px, 0px, 0) rotate(0deg) scale(1);
   }
 
   [data-stage-img] > * {
-    transform: scale(1.07);
-    transition: transform 900ms var(--ease-out);
+    transform: scale(1.06);
+    transition: transform 1100ms var(--ease-out);
   }
 
   [data-stage="on"] [data-stage-img] > * {
     transform: scale(1);
   }
 
+  [data-stage-img][data-variant="left"] { --ix: -72px; --iy: 0px; --is: 0.96; }
+  [data-stage-img][data-variant="right"] { --ix: 72px; --iy: 0px; --is: 0.96; --ir: 1.6deg; }
+  [data-stage-img][data-variant="up"] { --iy: 72px; --is: 0.97; }
+  [data-stage-img][data-variant="center"] { --iy: -44px; --is: 1.05; }
+  [data-stage-img][data-variant="circle"] { --iy: 0px; --is: 0.84; }
+  [data-stage-img][data-variant="diagonal"] { --ix: 56px; --iy: 56px; --is: 0.97; --ir: -1.6deg; }
 
   /*
     Six shapes for the image curtain, so no two neighbours open the same way.
     Each pair keeps the same clip-path function on both sides, which is what
     lets the browser interpolate between them.
   */
-  [data-img-reveal][data-variant="left"],
-  [data-stage-img][data-variant="left"] { clip-path: inset(0 100% 0 0); }
-  [data-img-reveal][data-variant="right"],
-  [data-stage-img][data-variant="right"] { clip-path: inset(0 0 0 100%); }
-  [data-img-reveal][data-variant="up"],
-  [data-stage-img][data-variant="up"] { clip-path: inset(100% 0 0 0); }
-  [data-img-reveal][data-variant="center"],
-  [data-stage-img][data-variant="center"] { clip-path: inset(50% 50% 50% 50%); }
-  [data-img-reveal][data-variant="circle"],
-  [data-stage-img][data-variant="circle"] { clip-path: circle(0% at 50% 50%); }
-  [data-img-reveal][data-variant="diagonal"],
-  [data-stage-img][data-variant="diagonal"] { clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); }
+  [data-img-reveal][data-variant="left"] { clip-path: inset(0 100% 0 0); }
+  [data-img-reveal][data-variant="right"] { clip-path: inset(0 0 0 100%); }
+  [data-img-reveal][data-variant="up"] { clip-path: inset(100% 0 0 0); }
+  [data-img-reveal][data-variant="center"] { clip-path: inset(50% 50% 50% 50%); }
+  [data-img-reveal][data-variant="circle"] { clip-path: circle(0% at 50% 50%); }
+  [data-img-reveal][data-variant="diagonal"] { clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); }
 
   [data-img-reveal="in"][data-variant="left"],
   [data-img-reveal="in"][data-variant="right"],
   [data-img-reveal="in"][data-variant="up"],
-  [data-img-reveal="in"][data-variant="center"],
-  [data-stage="on"] [data-stage-img][data-variant="left"],
-  [data-stage="on"] [data-stage-img][data-variant="right"],
-  [data-stage="on"] [data-stage-img][data-variant="up"],
-  [data-stage="on"] [data-stage-img][data-variant="center"] { clip-path: inset(0 0 0 0); }
+  [data-img-reveal="in"][data-variant="center"] { clip-path: inset(0 0 0 0); }
 
-  [data-img-reveal="in"][data-variant="circle"],
-  [data-stage="on"] [data-stage-img][data-variant="circle"] { clip-path: circle(75% at 50% 50%); }
+  [data-img-reveal="in"][data-variant="circle"] { clip-path: circle(75% at 50% 50%); }
 
-  [data-img-reveal="in"][data-variant="diagonal"],
-  [data-stage="on"] [data-stage-img][data-variant="diagonal"] { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+  [data-img-reveal="in"][data-variant="diagonal"] { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
 
   [data-tilt] {
     transform-style: preserve-3d;
@@ -341,14 +347,29 @@
     }
 
     [data-stage-el],
+    [data-stage-img],
     [data-stage-img] > * {
       transform: none !important;
       transition-delay: 0s !important;
     }
+  }
 
-    [data-stage-img] {
-      clip-path: none !important;
-    }
+  /*
+    A glass look for frames that move (the service images tilt and slide).
+    backdrop-filter is left out on purpose: blurring what is behind a layer that
+    is being transformed forces a new blur pass on every frame. The gradient,
+    the lit top edge and the inner line carry the glass without it.
+  */
+  .frame {
+    background: linear-gradient(
+      160deg,
+      oklch(0.32 0.045 264 / 0.7),
+      oklch(0.17 0.03 264 / 0.55)
+    );
+    border: 1px solid var(--hairline-strong);
+    box-shadow:
+      inset 0 1px 0 oklch(0.98 0.01 264 / 0.14),
+      inset 0 0 0 1px oklch(0.98 0.01 264 / 0.03);
   }
 
   /*
@@ -402,8 +423,12 @@
     position: absolute;
     inset: 0;
     pointer-events: none;
-    opacity: 0.32;
-    mix-blend-mode: overlay;
+    /*
+      No blend mode. mix-blend-mode: overlay made the browser re-blend the whole
+      hero against everything moving under it on every frame, which is costly on
+      a laptop with a high density screen. Plain low-opacity noise reads the same.
+    */
+    opacity: 0.12;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E");
   }
 }

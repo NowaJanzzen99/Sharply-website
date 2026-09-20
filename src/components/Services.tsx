@@ -83,7 +83,7 @@ function Stage({ service, active }: { service: Service; active: boolean }) {
 
       <div className="col-span-7">
         {/* The glass frame is always there; the picture opens inside it. */}
-        <div data-tilt className="glass rounded-[var(--radius-lg)] p-2">
+        <div data-tilt className="frame rounded-[var(--radius-lg)] p-2">
           <div
             data-stage-img
             data-variant={signature.variant}
