@@ -130,6 +130,21 @@ De hele site staat en draait, in het Nederlands en het Engels. Alleen de 3D-hero
 - **Demo:** volledig werkend en gescript. Kop groter, licht thema, webshopsectie, publiceren met deploy-animatie, transcript, reset, en losse tekstinvoer met trefwoordherkenning.
 - **Beelden:** via `next/image`, dus mobiel laadt een kleine versie in plaats van 2336px. De hero gebruikt `<picture>` voor kunstrichting (liggend op desktop, staand op mobiel).
 
+### Bewegingslaag (20 september 2026, commit e7ccc80 en later)
+
+De site had polish maar geen choreografie: 32 elementen deelden één reveal en niets was gepind. Dat is vervangen.
+
+- **Hero-orb is WebGL** (`src/components/hero/OrbScene.tsx`, react-three-fiber). Geen glas met transmissie: met een doorzichtig canvas bemonstert transmissie de environment-map in plaats van de pagina, waardoor de bol volliep met platte reflecties. Het is nu een dunne iriserende schil (`transparent`, lage opacity, `depthWrite: false`) die aan de rand kleur vangt via fresnel. Licht komt volledig van Lightformers in de scène, dus niets wordt van een CDN gehaald. Volgt de cursor, drijft weg op scroll, mount op idle achter de poster zodat het LCP niet raakt. Reduced motion krijgt dezelfde bol, één keer gerenderd en stilgezet.
+- **Bewegingswoordenschat** in `globals.css`: koppen klappen omhoog achter een masker (`data-line`), bodytekst rijst (`data-reveal`), beelden openen als een gordijn uit een lichte zoom (`data-img-reveal`), groepen cascaderen (`data-stagger`).
+- **Diensten zijn een reel**: het podium plakt terwijl zes diensten erdoorheen schuiven, met een index die meeloopt. Mobiel houdt een gewone stapel.
+- **Werkwijze** tekent een rail en brengt de huidige fase naar voren.
+- **Footer-wordmark** wijkt letter voor letter voor de cursor. **Knoppen** leunen naar de cursor toe.
+- **Intro-gordijn** van 1,1 seconde, één keer per sessie.
+
+**Twee valkuilen, beide gekost aan een uur, staan als commentaar in de code:**
+1. `useScroll` van Motion levert hier geen voortgang, omdat de body `overflow-x` zet. Stapvolgorde loopt daarom via een IntersectionObserver in `src/lib/use-track-progress.ts`.
+2. Een `rootMargin` van `-50%` aan boven- en onderkant maakt de root nul pixels hoog, en die kruist nooit iets. Onderkant staat daarom op `-49.9%`.
+
 ### Voor Fable
 De enige openstaande creatieve taak is de hero-scène. In `src/components/Hero.tsx` staat bovenaan een blok met `FABLE:` dat aangeeft waar de canvas komt. Vervang alleen het `<picture>`-blok, houd de layout, de kop en de `parallax`-gate intact. `hero-orb.webp` blijft de poster en de fallback bij reduced motion.
 

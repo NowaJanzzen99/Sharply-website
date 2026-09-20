@@ -1,18 +1,21 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { Environment, Lightformer } from "@react-three/drei";
 import * as THREE from "three";
 
 /*
   The hero orb, in WebGL.
 
-  A thin-film soap bubble rather than solid glass: transmission plus
-  iridescence reads as the brand image while staying far cheaper than
-  MeshTransmissionMaterial. All light comes from Lightformers inside the
-  scene, so nothing is fetched from a CDN and the highlights stay art
-  directed instead of accidental.
+  A soap bubble is a thin iridescent shell, not a ball of glass. Transmission
+  was the wrong tool: with a transparent canvas it samples the environment map
+  rather than the page, so the orb filled up with flat reflections of the
+  lights. This is a near-transparent shell instead, lit so that the rim catches
+  colour through fresnel while the middle stays open and the page shows through.
+
+  All light comes from Lightformers inside the scene, so nothing is fetched
+  from a CDN and the highlights stay art directed instead of accidental.
 */
 
 export type SceneDrivers = {
@@ -22,16 +25,22 @@ export type SceneDrivers = {
   pointer: { current: { x: number; y: number } };
 };
 
-const BUBBLE_COLOR = new THREE.Color("#b9d2ff");
+const BUBBLE_COLOR = new THREE.Color("#dbe7ff");
 
-function Bubble({ scroll, pointer, compact }: SceneDrivers & { compact: boolean }) {
+function Bubble({
+  scroll,
+  pointer,
+  compact,
+  still,
+}: SceneDrivers & { compact: boolean; still: boolean }) {
   const group = useRef<THREE.Group>(null);
   const mesh = useRef<THREE.Mesh>(null);
 
   useFrame((state, delta) => {
     if (!group.current || !mesh.current) return;
     const step = Math.min(delta, 0.05);
-    const t = state.clock.elapsedTime;
+    // Still mode holds time at zero, so the scene renders without ever moving.
+    const t = still ? 0 : state.clock.elapsedTime;
 
     // Resting place, then a drift away as the hero scrolls off.
     const restX = compact ? 0 : 1.35;
@@ -71,17 +80,17 @@ function Bubble({ scroll, pointer, compact }: SceneDrivers & { compact: boolean 
         <sphereGeometry args={[1.15, compact ? 96 : 160, compact ? 96 : 160]} />
         <meshPhysicalMaterial
           color={BUBBLE_COLOR}
-          transmission={1}
-          thickness={0.08}
-          roughness={0.015}
-          ior={1.06}
+          transparent
+          opacity={0.32}
+          depthWrite={false}
+          roughness={0.07}
           metalness={0}
           iridescence={1}
-          iridescenceIOR={1.9}
-          iridescenceThicknessRange={[220, 1000]}
+          iridescenceIOR={1.75}
+          iridescenceThicknessRange={[240, 980]}
           clearcoat={1}
-          clearcoatRoughness={0.02}
-          envMapIntensity={2.6}
+          clearcoatRoughness={0.06}
+          envMapIntensity={2.4}
           side={THREE.DoubleSide}
         />
       </mesh>
@@ -89,7 +98,11 @@ function Bubble({ scroll, pointer, compact }: SceneDrivers & { compact: boolean 
   );
 }
 
-function Satellites({ pointer, compact }: Pick<SceneDrivers, "pointer"> & { compact: boolean }) {
+function Satellites({
+  pointer,
+  compact,
+  still,
+}: Pick<SceneDrivers, "pointer"> & { compact: boolean; still: boolean }) {
   const group = useRef<THREE.Group>(null);
 
   const seeds = useMemo(() => {
@@ -106,7 +119,7 @@ function Satellites({ pointer, compact }: Pick<SceneDrivers, "pointer"> & { comp
   useFrame((state, delta) => {
     if (!group.current) return;
     const step = Math.min(delta, 0.05);
-    const t = state.clock.elapsedTime;
+    const t = still ? 0 : state.clock.elapsedTime;
 
     group.current.children.forEach((child, index) => {
       const seed = seeds[index];
@@ -134,38 +147,22 @@ function Satellites({ pointer, compact }: Pick<SceneDrivers, "pointer"> & { comp
           <sphereGeometry args={[seed.radius, 48, 48]} />
           <meshPhysicalMaterial
             color="#cddcff"
-            transmission={1}
-            thickness={0.05}
-            roughness={0.02}
-            ior={1.05}
+            transparent
+            opacity={0.3}
+            depthWrite={false}
+            roughness={0.08}
             metalness={0}
             iridescence={1}
-            iridescenceIOR={1.85}
-            iridescenceThicknessRange={[180, 900]}
-            envMapIntensity={2.2}
+            iridescenceIOR={1.6}
+            iridescenceThicknessRange={[180, 880]}
+            clearcoat={1}
+            envMapIntensity={1.5}
             side={THREE.DoubleSide}
           />
         </mesh>
       ))}
     </group>
   );
-}
-
-/**
- * In still mode the loop is off, so nothing would ever be drawn once the
- * environment map resolves. Nudge it a few times over the first second.
- */
-function PaintOnce() {
-  const invalidate = useThree((state) => state.invalidate);
-
-  useEffect(() => {
-    const timers = [0, 120, 400, 900, 1600].map((delay) =>
-      setTimeout(() => invalidate(), delay),
-    );
-    return () => timers.forEach(clearTimeout);
-  }, [invalidate]);
-
-  return null;
 }
 
 /**
@@ -205,59 +202,73 @@ export function OrbScene({
   still = false,
   onReady,
 }: SceneDrivers & { compact: boolean; still?: boolean; onReady?: () => void }) {
+  /*
+    A still scene still has to be drawn a few dozen times: the transmission
+    sampler and the environment map both resolve over several frames, and a
+    single pass leaves the glass looking like matte plastic. Run the loop
+    briefly with time frozen, then stop it.
+  */
+  const [settled, setSettled] = useState(false);
+
+  useEffect(() => {
+    if (!still) return;
+    const timer = setTimeout(() => setSettled(true), 2500);
+    return () => clearTimeout(timer);
+  }, [still]);
+
   return (
     <Canvas
       camera={{ position: [0, 0, 6.5], fov: 35 }}
       dpr={compact ? [1, 1.5] : [1, 1.85]}
-      frameloop={still ? "demand" : "always"}
+      frameloop={still && settled ? "never" : "always"}
       gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
       onCreated={() => onReady?.()}
       style={{ pointerEvents: "none" }}
     >
-      {still ? <PaintOnce /> : null}
       <ParallaxRig pointer={pointer}>
-        <Bubble scroll={scroll} pointer={pointer} compact={compact} />
-        <Satellites pointer={pointer} compact={compact} />
+        <Bubble scroll={scroll} pointer={pointer} compact={compact} still={still} />
+        <Satellites pointer={pointer} compact={compact} still={still} />
       </ParallaxRig>
 
       {/* Art directed light. Rect forms give the long highlights that read as glass. */}
       <Environment resolution={compact ? 128 : 256}>
         <Lightformer
           form="rect"
-          intensity={2.4}
-          color="#8fb6ff"
-          position={[-5, 3, 4]}
-          scale={[10, 6, 1]}
-          rotation={[0, 0.5, 0]}
+          intensity={5}
+          color="#a8c6ff"
+          position={[-4, 2.5, 3]}
+          scale={[1.4, 7, 1]}
+          rotation={[0, 0.6, 0.3]}
         />
         <Lightformer
           form="rect"
-          intensity={1.4}
-          color="#ffc98f"
-          position={[6, -2, 3]}
-          scale={[8, 4, 1]}
-          rotation={[0, -0.6, 0]}
+          intensity={3.5}
+          color="#ffd0a0"
+          position={[4.2, -1.2, 2.5]}
+          scale={[1, 5, 1]}
+          rotation={[0, -0.7, -0.35]}
+        />
+        <Lightformer
+          form="rect"
+          intensity={4}
+          color="#8ee6ff"
+          position={[2.6, 3.4, 1.5]}
+          scale={[0.8, 4, 1]}
+          rotation={[0, -0.3, 1]}
+        />
+        <Lightformer
+          form="circle"
+          intensity={6}
+          color="#ffffff"
+          position={[-1.5, 4, 2]}
+          scale={1.2}
         />
         <Lightformer
           form="ring"
-          intensity={3}
-          color="#ffffff"
-          position={[1, 3, -4]}
-          scale={7}
-        />
-        <Lightformer
-          form="rect"
-          intensity={2.2}
-          color="#2f57ff"
-          position={[0, -5, -2]}
-          scale={[14, 5, 1]}
-        />
-        <Lightformer
-          form="rect"
-          intensity={1.1}
-          color="#7be0ff"
-          position={[-2, -3, 5]}
-          scale={[6, 3, 1]}
+          intensity={2.4}
+          color="#3f6bff"
+          position={[0, -3.5, -3]}
+          scale={9}
         />
       </Environment>
     </Canvas>
