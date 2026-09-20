@@ -224,17 +224,18 @@
     pointer-events: auto;
   }
 
+  /* Each service sets its own --dx and --dy, so its copy arrives from its own side. */
   [data-stage-el] {
     opacity: 0;
-    transform: translateY(18px);
+    transform: translate(var(--dx, 0px), var(--dy, 18px));
     transition:
       opacity 520ms var(--ease-out),
-      transform 520ms var(--ease-out);
+      transform 620ms var(--ease-out);
   }
 
   [data-stage="on"] [data-stage-el] {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate(0px, 0px);
   }
 
   [data-stage-img] {
@@ -253,6 +254,45 @@
 
   [data-stage="on"] [data-stage-img] > * {
     transform: scale(1);
+  }
+
+
+  /*
+    Six shapes for the image curtain, so no two neighbours open the same way.
+    Each pair keeps the same clip-path function on both sides, which is what
+    lets the browser interpolate between them.
+  */
+  [data-img-reveal][data-variant="left"],
+  [data-stage-img][data-variant="left"] { clip-path: inset(0 100% 0 0); }
+  [data-img-reveal][data-variant="right"],
+  [data-stage-img][data-variant="right"] { clip-path: inset(0 0 0 100%); }
+  [data-img-reveal][data-variant="up"],
+  [data-stage-img][data-variant="up"] { clip-path: inset(100% 0 0 0); }
+  [data-img-reveal][data-variant="center"],
+  [data-stage-img][data-variant="center"] { clip-path: inset(50% 50% 50% 50%); }
+  [data-img-reveal][data-variant="circle"],
+  [data-stage-img][data-variant="circle"] { clip-path: circle(0% at 50% 50%); }
+  [data-img-reveal][data-variant="diagonal"],
+  [data-stage-img][data-variant="diagonal"] { clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); }
+
+  [data-img-reveal="in"][data-variant="left"],
+  [data-img-reveal="in"][data-variant="right"],
+  [data-img-reveal="in"][data-variant="up"],
+  [data-img-reveal="in"][data-variant="center"],
+  [data-stage="on"] [data-stage-img][data-variant="left"],
+  [data-stage="on"] [data-stage-img][data-variant="right"],
+  [data-stage="on"] [data-stage-img][data-variant="up"],
+  [data-stage="on"] [data-stage-img][data-variant="center"] { clip-path: inset(0 0 0 0); }
+
+  [data-img-reveal="in"][data-variant="circle"],
+  [data-stage="on"] [data-stage-img][data-variant="circle"] { clip-path: circle(75% at 50% 50%); }
+
+  [data-img-reveal="in"][data-variant="diagonal"],
+  [data-stage="on"] [data-stage-img][data-variant="diagonal"] { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+
+  [data-tilt] {
+    transform-style: preserve-3d;
+    will-change: transform;
   }
 
   /* Hero copy arrives on mount, so it runs as an animation rather than a class flip. */
@@ -291,7 +331,8 @@
       transition-delay: 0s !important;
     }
 
-    [data-img-reveal] {
+    [data-img-reveal],
+    [data-stage-img] {
       clip-path: none !important;
     }
 

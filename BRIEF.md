@@ -148,6 +148,12 @@ De site had polish maar geen choreografie: 32 elementen deelden één reveal en 
 ### Voor Fable
 De enige openstaande creatieve taak is de hero-scène. In `src/components/Hero.tsx` staat bovenaan een blok met `FABLE:` dat aangeeft waar de canvas komt. Vervang alleen het `<picture>`-blok, houd de layout, de kop en de `parallax`-gate intact. `hero-orb.webp` blijft de poster en de fallback bij reduced motion.
 
+### Conceptprojecten en formulier (20 september 2026)
+
+- **Werk-sectie toont drie conceptprojecten** (Noordlicht Keramiek, Halm, Routewerk) met gegenereerde mockups in `public/images/project-*.webp`. Noah vroeg om placeholders die echt lijken. Het zijn verzonnen merken, dus elke kaart draagt een klein label "Conceptproject" onder de afbeelding, en de tekst zegt dat het eigen ontwerpen zijn. Haal het label pas weg als er een echt klantproject voor in de plaats komt. Verzin geen klantnamen, cijfers of quotes erbij. De namen zijn niet gecontroleerd op bestaande bedrijven.
+- **Contactformulier is acht stappen**: wat je nodig hebt, over jullie, doel, details, stijl en materiaal, budget en planning, contact, overzicht. De detailstap bouwt zijn vragen op uit de diensten die je koos (`detailGroups` in `nl.ts` en `en.ts`). Velden staan als data in de content en worden door een generieke renderer getoond (`src/components/contact/`). Bijlagen: maximaal 3, samen 4 MB, alleen pdf, afbeeldingen en Office. Het overzicht en de mail gebruiken dezelfde `buildSections`. De API is `multipart/form-data`, geen JSON meer.
+- **Telefoon**: de bel reageert op kantelen (`deviceorientation`). Android werkt direct, iOS vraagt bij de eerste tik om toestemming, wat het platform verplicht stelt.
+
 ## 11. Open punten
 
 - Noah heeft nog geen definitieve diensten, prijzen of bewijs.

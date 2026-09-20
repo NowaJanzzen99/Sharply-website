@@ -1,112 +1,163 @@
 "use client";
 
-import { useId, useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
-import { ArrowLeft, ArrowRight, Check, CheckCircle, WarningCircle } from "@phosphor-icons/react";
-import { Reveal, RevealLines, splitHeading } from "./Reveal";
+import { useId, useRef, useState } from "react";
 import Image from "next/image";
-import type { Content, Lang } from "@/content";
+import { AnimatePresence, motion } from "motion/react";
+import { ArrowLeft, ArrowRight, Check, CheckCircle, PencilSimple } from "@phosphor-icons/react";
+import { Reveal, RevealLines, splitHeading } from "./Reveal";
+import { FieldControl } from "./contact/FieldControl";
+import {
+  buildSections,
+  groupsForStep,
+  validateField,
+  validateStep,
+  type Values,
+} from "./contact/form-model";
+import { isAllowedFile, MAX_FILES, MAX_TOTAL_BYTES } from "@/lib/contact-schema";
+import type { Content, Field, Lang } from "@/content";
 
-type Values = {
-  needs: string[];
-  project: string;
-  references: string;
-  budget: string;
-  timeline: string;
-  name: string;
-  email: string;
-  company: string;
-  phone: string;
-  website: string;
-};
+type Status = "idle" | "sending" | "success" | "error";
 
-const EMPTY: Values = {
-  needs: [],
-  project: "",
-  references: "",
-  budget: "",
-  timeline: "",
-  name: "",
-  email: "",
-  company: "",
-  phone: "",
-  website: "",
-};
-
-const TOTAL_STEPS = 4;
-
-const fieldClass =
-  "w-full rounded-[var(--radius-md)] border border-hairline-strong bg-canvas-deep px-4 py-3 text-[16px] text-text placeholder:text-text-faint transition-colors duration-200 ease-out hover:border-hairline-strong focus:border-accent";
-
-export function ContactForm({
-  content,
-  lang,
-}: {
-  content: Content;
-  lang: Lang;
-}) {
+export function ContactForm({ content, lang }: { content: Content; lang: Lang }) {
   const copy = content.contact;
   const uid = useId();
+  const panel = useRef<HTMLDivElement>(null);
+  const total = copy.steps.length;
+  const last = total - 1;
 
   const [step, setStep] = useState(0);
   const [direction, setDirection] = useState(1);
-  const [values, setValues] = useState<Values>(EMPTY);
-  const [errors, setErrors] = useState<Partial<Record<keyof Values, string>>>({});
-  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">(
-    "idle",
-  );
+  const [values, setValues] = useState<Values>({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [files, setFiles] = useState<File[]>([]);
+  const [fileError, setFileError] = useState<string>();
+  const [honeypot, setHoneypot] = useState("");
+  const [status, setStatus] = useState<Status>("idle");
 
-  function set<K extends keyof Values>(key: K, value: Values[K]) {
-    setValues((current) => ({ ...current, [key]: value }));
-    setErrors((current) => ({ ...current, [key]: undefined }));
+  const current = copy.steps[step];
+  const sections = buildSections(copy, values);
+  const filesLabel = copy.steps
+    .flatMap((formStep) => formStep.fields)
+    .find((field) => field.kind === "files")?.label;
+
+  function setValue(id: string, value: string | string[]) {
+    setValues((existing) => ({ ...existing, [id]: value }));
+    setErrors((existing) => {
+      if (!existing[id]) return existing;
+      const next = { ...existing };
+      delete next[id];
+      return next;
+    });
   }
 
-  function validate(index: number) {
-    const next: Partial<Record<keyof Values, string>> = {};
+  function checkOnBlur(field: Field) {
+    const raw = values[field.id];
+    const error = validateField(field, raw, copy);
+    setErrors((existing) => {
+      const next = { ...existing };
+      // Only nag about a field once something has been typed into it.
+      if (error && raw && String(raw).trim()) next[field.id] = error;
+      else delete next[field.id];
+      return next;
+    });
+  }
 
-    if (index === 0 && values.needs.length === 0) {
-      next.needs = copy.pickOne;
+  function addFiles(list: FileList | null) {
+    if (!list) return;
+    const incoming = Array.from(list);
+
+    if (incoming.some((file) => !isAllowedFile(file.name))) {
+      setFileError(copy.filesType);
+      return;
     }
-    if (index === 1 && values.project.trim().length < 10) {
-      next.project = values.project.trim() ? copy.tooShort : copy.required;
+
+    const merged = [...files, ...incoming];
+    if (merged.length > MAX_FILES) {
+      setFileError(copy.filesTooMany);
+      return;
     }
-    if (index === 2) {
-      if (!values.budget) next.budget = copy.pickOne;
-      if (!values.timeline) next.timeline = copy.pickOne;
+    if (merged.reduce((sum, file) => sum + file.size, 0) > MAX_TOTAL_BYTES) {
+      setFileError(copy.filesTooBig);
+      return;
     }
-    if (index === 3) {
-      if (values.name.trim().length < 2) next.name = copy.required;
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email.trim())) {
-        next.email = values.email.trim() ? copy.invalidEmail : copy.required;
+
+    setFileError(undefined);
+    setFiles(merged);
+  }
+
+  function removeFile(index: number) {
+    setFiles((existing) => existing.filter((_, position) => position !== index));
+    setFileError(undefined);
+  }
+
+  /** Keep the top of the panel in view so a new step never starts scrolled away. */
+  function keepPanelInView() {
+    requestAnimationFrame(() => {
+      const element = panel.current;
+      if (!element) return;
+      if (element.getBoundingClientRect().top < 84) {
+        element.scrollIntoView({ block: "start", behavior: "smooth" });
       }
-    }
+    });
+  }
 
-    setErrors(next);
-    return Object.keys(next).length === 0;
+  function scrollToFirstError() {
+    requestAnimationFrame(() => {
+      panel.current
+        ?.querySelector("[data-field-error]")
+        ?.scrollIntoView({ block: "center", behavior: "smooth" });
+    });
+  }
+
+  function goTo(index: number, travel: number) {
+    setDirection(travel);
+    setStep(index);
+    keepPanelInView();
   }
 
   function goNext() {
-    if (!validate(step)) return;
-    setDirection(1);
-    setStep((current) => Math.min(current + 1, TOTAL_STEPS - 1));
-  }
-
-  function goBack() {
-    setDirection(-1);
-    setStep((current) => Math.max(current - 1, 0));
+    const found = validateStep(copy, step, values);
+    setErrors(found);
+    if (Object.keys(found).length > 0) {
+      scrollToFirstError();
+      return;
+    }
+    goTo(Math.min(step + 1, last), 1);
   }
 
   async function submit(event: React.FormEvent) {
     event.preventDefault();
-    if (!validate(3)) return;
+    if (step !== last) return;
+
+    // Run every earlier step again, so nothing required can slip past the review.
+    for (let index = 0; index < last; index += 1) {
+      const found = validateStep(copy, index, values);
+      if (Object.keys(found).length > 0) {
+        setErrors(found);
+        goTo(index, -1);
+        scrollToFirstError();
+        return;
+      }
+    }
 
     setStatus("sending");
+
+    const payload = {
+      lang,
+      name: String(values["contact.name"] ?? ""),
+      email: String(values["contact.email"] ?? ""),
+      company: String(values["about.company"] ?? ""),
+      consent: true,
+      website: honeypot,
+      sections: sections.map(({ title, rows }) => ({ title, rows })),
+    };
+
+    const body = new FormData();
+    body.append("payload", JSON.stringify(payload));
+    files.forEach((file) => body.append("files", file));
+
     try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...values, lang }),
-      });
+      const response = await fetch("/api/contact", { method: "POST", body });
       setStatus(response.ok ? "success" : "error");
     } catch {
       setStatus("error");
@@ -114,24 +165,24 @@ export function ContactForm({
   }
 
   function restart() {
-    setValues(EMPTY);
+    setValues({});
     setErrors({});
+    setFiles([]);
+    setFileError(undefined);
     setStep(0);
     setStatus("idle");
   }
 
   const enter = { opacity: 0, transform: `translateX(${direction * 28}px)` };
   const exit = { opacity: 0, transform: `translateX(${direction * -28}px)` };
+  const groups = groupsForStep(copy, step, values);
 
   return (
     <section
       id="contact"
       className="relative scroll-mt-24 overflow-hidden border-t border-hairline py-28 md:py-40"
     >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10 opacity-30"
-      >
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 opacity-30">
         <Image
           src="/images/bg-iridescent.webp"
           alt=""
@@ -142,28 +193,33 @@ export function ContactForm({
       </div>
 
       <div className="container-page">
-        <div className="grid gap-12 md:grid-cols-12 md:gap-10">
-          <div className="md:col-span-5">
-            <h2 className="font-display text-[clamp(2rem,5.5vw,3.5rem)] font-semibold text-text">
-              <RevealLines lines={splitHeading(copy.title)} onView />
-            </h2>
-            <Reveal delay={0.06}>
-              <p className="mt-5 max-w-[40ch] text-[17px] leading-[1.6] text-text-muted">
-                {copy.lead}
-              </p>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <a
-                href={`mailto:${content.footer.email}`}
-                className="mt-8 inline-block text-[16px] text-text underline decoration-hairline-strong underline-offset-[6px] transition-colors duration-200 ease-out hover:decoration-accent"
-              >
-                {content.footer.email}
-              </a>
-            </Reveal>
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
+          <div className="lg:col-span-4">
+            <div className="lg:sticky lg:top-28">
+              <h2 className="font-display text-[clamp(2rem,5.5vw,3.5rem)] font-semibold text-text">
+                <RevealLines lines={splitHeading(copy.title)} onView />
+              </h2>
+              <Reveal delay={0.06}>
+                <p className="mt-5 max-w-[40ch] text-[17px] leading-[1.6] text-text-muted">
+                  {copy.lead}
+                </p>
+              </Reveal>
+              <Reveal delay={0.1}>
+                <a
+                  href={`mailto:${content.footer.email}`}
+                  className="mt-8 inline-block text-[16px] text-text underline decoration-hairline-strong underline-offset-[6px] transition-colors duration-200 ease-out hover:decoration-accent"
+                >
+                  {content.footer.email}
+                </a>
+              </Reveal>
+            </div>
           </div>
 
-          <Reveal className="md:col-span-7" delay={0.08}>
-            <div className="glass rounded-[var(--radius-lg)] p-6 md:p-8">
+          <Reveal className="lg:col-span-8" delay={0.08}>
+            <div
+              ref={panel}
+              className="glass scroll-mt-24 rounded-[var(--radius-lg)] p-5 sm:p-7 md:p-9"
+            >
               <AnimatePresence mode="wait" initial={false}>
                 {status === "success" ? (
                   <motion.div
@@ -196,38 +252,40 @@ export function ContactForm({
                     initial={false}
                     className="flex flex-col"
                   >
-                    <ol className="flex items-center gap-2">
-                      {copy.steps.map((formStep, i) => {
-                        const done = i < step;
-                        const current = i === step;
+                    {/* Step rail: completed steps can be revisited. */}
+                    <ol className="flex items-center gap-1.5">
+                      {copy.steps.map((formStep, index) => {
+                        const done = index < step;
+                        const active = index === step;
                         return (
-                          <li key={formStep.title} className="flex min-w-0 flex-1 items-center gap-2">
-                            <span
-                              aria-current={current ? "step" : undefined}
-                              className="flex h-6 w-6 shrink-0 items-center justify-center rounded-[var(--radius-pill)] border font-mono text-[11px] transition-[background-color,border-color,color] duration-300 ease-[var(--ease-out)]"
+                          <li
+                            key={formStep.id}
+                            className="flex min-w-0 flex-1 items-center gap-1.5 last:flex-none"
+                          >
+                            <button
+                              type="button"
+                              disabled={!done}
+                              onClick={() => goTo(index, -1)}
+                              aria-label={formStep.title}
+                              aria-current={active ? "step" : undefined}
+                              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[var(--radius-pill)] border font-mono text-[11px] transition-[background-color,border-color,color] duration-300 ease-[var(--ease-out)] disabled:cursor-default"
                               style={{
                                 borderColor:
-                                  done || current ? "var(--accent)" : "var(--hairline-strong)",
+                                  done || active ? "var(--accent)" : "var(--hairline-strong)",
                                 backgroundColor: done ? "var(--accent)" : "transparent",
                                 color: done
                                   ? "var(--accent-ink)"
-                                  : current
+                                  : active
                                     ? "var(--accent-bright)"
                                     : "var(--text-faint)",
                               }}
                             >
-                              {done ? <Check size={12} weight="bold" /> : i + 1}
-                            </span>
-                            <span
-                              className="hidden truncate text-[12px] transition-colors duration-300 ease-[var(--ease-out)] lg:block"
-                              style={{ color: current ? "var(--text)" : "var(--text-faint)" }}
-                            >
-                              {formStep.title}
-                            </span>
-                            {i < TOTAL_STEPS - 1 ? (
+                              {done ? <Check size={12} weight="bold" /> : index + 1}
+                            </button>
+                            {index < last ? (
                               <span
                                 aria-hidden="true"
-                                className="ml-1 h-px flex-1 overflow-hidden bg-hairline-strong"
+                                className="h-px flex-1 overflow-hidden bg-hairline-strong"
                               >
                                 <span
                                   className="block h-full w-full origin-left bg-accent transition-transform duration-500 ease-[var(--ease-out)]"
@@ -243,320 +301,147 @@ export function ContactForm({
                     <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-text-faint">
                       {copy.progress
                         .replace("{current}", String(step + 1))
-                        .replace("{total}", String(TOTAL_STEPS))}
+                        .replace("{total}", String(total))}
                     </p>
-
-                    <h3 className="mt-2 font-display text-[24px] font-medium text-text">
-                      {copy.steps[step].title}
+                    <h3 className="mt-2 font-display text-[24px] font-medium text-text md:text-[28px]">
+                      {current.title}
                     </h3>
-                    <p className="mt-1.5 text-[15px] text-text-faint">
-                      {copy.steps[step].hint}
-                    </p>
+                    <p className="mt-1.5 text-[15px] text-text-faint">{current.hint}</p>
 
-                    <div className="mt-7 min-h-[16rem]">
-                      <AnimatePresence mode="wait" custom={direction} initial={false}>
+                    <div className="mt-8">
+                      <AnimatePresence mode="wait" initial={false}>
                         <motion.div
                           key={step}
                           initial={enter}
                           animate={{ opacity: 1, transform: "translateX(0px)" }}
                           exit={exit}
                           transition={{ duration: 0.28, ease: [0.23, 1, 0.32, 1] }}
+                          className="flex flex-col gap-9"
                         >
-                          {step === 0 ? (
-                            <fieldset>
-                              <legend className="sr-only">{copy.needsLabel}</legend>
-                              <div className="flex flex-wrap gap-2">
-                                {copy.needs.map((need) => {
-                                  const active = values.needs.includes(need.id);
-                                  return (
-                                    <label
-                                      key={need.id}
-                                      className={`cursor-pointer rounded-[var(--radius-pill)] border px-4 py-2.5 text-[15px] transition-[border-color,background-color,transform] duration-150 ease-[var(--ease-out)] active:scale-[0.97] ${
-                                        active
-                                          ? "border-accent bg-accent text-accent-ink"
-                                          : "border-hairline-strong text-text-muted hover:border-text-faint hover:text-text"
-                                      }`}
-                                    >
-                                      <input
-                                        type="checkbox"
-                                        className="sr-only"
-                                        checked={active}
-                                        onChange={() =>
-                                          set(
-                                            "needs",
-                                            active
-                                              ? values.needs.filter((id) => id !== need.id)
-                                              : [...values.needs, need.id],
-                                          )
-                                        }
-                                      />
-                                      <span className="flex items-center gap-1.5">
-                                        {active ? <Check size={13} weight="bold" /> : null}
-                                        {need.label}
-                                      </span>
-                                    </label>
-                                  );
-                                })}
-                              </div>
-                              {errors.needs ? (
-                                <p role="alert" className="mt-3 flex items-center gap-1.5 text-[14px] text-accent-bright">
-                                  <WarningCircle size={15} weight="fill" />
-                                  {errors.needs}
-                                </p>
-                              ) : null}
-                            </fieldset>
-                          ) : null}
-
-                          {step === 1 ? (
-                            <div className="flex flex-col gap-5">
-                              <div>
-                                <label
-                                  htmlFor={`${uid}-project`}
-                                  className="block text-[14px] font-medium text-text"
-                                >
-                                  {copy.projectLabel}
-                                </label>
-                                <textarea
-                                  id={`${uid}-project`}
-                                  rows={4}
-                                  value={values.project}
-                                  onChange={(event) => set("project", event.target.value)}
-                                  onBlur={() => {
-                                    if (values.project.trim() && values.project.trim().length < 10) {
-                                      setErrors((c) => ({ ...c, project: copy.tooShort }));
-                                    }
-                                  }}
-                                  placeholder={copy.projectPlaceholder}
-                                  aria-invalid={Boolean(errors.project)}
-                                  aria-describedby={errors.project ? `${uid}-project-error` : undefined}
-                                  className={`mt-2 ${fieldClass} resize-y`}
-                                />
-                                {errors.project ? (
-                                  <p
-                                    id={`${uid}-project-error`}
-                                    role="alert"
-                                    className="mt-2 flex items-center gap-1.5 text-[14px] text-accent-bright"
-                                  >
-                                    <WarningCircle size={15} weight="fill" />
-                                    {errors.project}
-                                  </p>
-                                ) : null}
-                              </div>
-
-                              <div>
-                                <label
-                                  htmlFor={`${uid}-refs`}
-                                  className="block text-[14px] font-medium text-text"
-                                >
-                                  {copy.referencesLabel}{" "}
-                                  <span className="text-text-faint">({copy.optional})</span>
-                                </label>
-                                <textarea
-                                  id={`${uid}-refs`}
-                                  rows={2}
-                                  value={values.references}
-                                  onChange={(event) => set("references", event.target.value)}
-                                  placeholder={copy.referencesPlaceholder}
-                                  className={`mt-2 ${fieldClass} resize-y`}
-                                />
-                              </div>
-                            </div>
-                          ) : null}
-
-                          {step === 2 ? (
+                          {current.id === "review" ? (
                             <div className="flex flex-col gap-7">
-                              <fieldset>
-                                <legend className="text-[14px] font-medium text-text">
-                                  {copy.budgetLabel}
-                                </legend>
-                                <div className="mt-3 flex flex-wrap gap-2">
-                                  {copy.budgets.map((option) => (
-                                    <label
-                                      key={option.id}
-                                      className={`cursor-pointer rounded-[var(--radius-pill)] border px-4 py-2.5 text-[15px] transition-[border-color,background-color,transform] duration-150 ease-[var(--ease-out)] active:scale-[0.97] ${
-                                        values.budget === option.id
-                                          ? "border-accent bg-accent text-accent-ink"
-                                          : "border-hairline-strong text-text-muted hover:border-text-faint hover:text-text"
-                                      }`}
+                              <p className="text-[15px] leading-[1.6] text-text-muted">
+                                {copy.reviewIntro}
+                              </p>
+
+                              {sections.map((section) => (
+                                <div key={`${section.title}-${section.stepIndex}`}>
+                                  <div className="flex items-center justify-between gap-4 border-b border-hairline pb-2">
+                                    <h4 className="font-display text-[17px] font-medium text-text">
+                                      {section.title}
+                                    </h4>
+                                    <button
+                                      type="button"
+                                      onClick={() => goTo(section.stepIndex, -1)}
+                                      className="inline-flex items-center gap-1.5 text-[13px] text-text-muted transition-colors duration-150 ease-out hover:text-text"
                                     >
-                                      <input
-                                        type="radio"
-                                        name="budget"
-                                        className="sr-only"
-                                        checked={values.budget === option.id}
-                                        onChange={() => set("budget", option.id)}
+                                      <PencilSimple size={13} />
+                                      {copy.edit}
+                                    </button>
+                                  </div>
+                                  <dl className="mt-3 grid gap-x-6 gap-y-2.5 sm:grid-cols-[minmax(0,11rem)_1fr]">
+                                    {section.rows.map((row) => (
+                                      <div key={row.label} className="contents">
+                                        <dt className="text-[13px] text-text-faint">{row.label}</dt>
+                                        <dd className="whitespace-pre-wrap text-[15px] text-text">
+                                          {row.value}
+                                        </dd>
+                                      </div>
+                                    ))}
+                                  </dl>
+                                </div>
+                              ))}
+
+                              {files.length > 0 ? (
+                                <div>
+                                  <h4 className="border-b border-hairline pb-2 font-display text-[17px] font-medium text-text">
+                                    {filesLabel}
+                                  </h4>
+                                  <p className="mt-3 text-[15px] text-text">
+                                    {files.map((file) => file.name).join(", ")}
+                                  </p>
+                                </div>
+                              ) : null}
+                            </div>
+                          ) : groups.length === 0 ? (
+                            <p className="text-[15px] leading-[1.6] text-text-muted">
+                              {copy.noDetails}
+                            </p>
+                          ) : (
+                            groups.map((group) => (
+                              <div key={group.title ?? current.id}>
+                                {group.title ? (
+                                  <h4 className="mb-5 border-b border-hairline pb-2 font-display text-[18px] font-medium text-text">
+                                    {group.title}
+                                  </h4>
+                                ) : null}
+                                <div className="grid gap-x-5 gap-y-7 sm:grid-cols-2">
+                                  {group.fields.map((field) => (
+                                    <div
+                                      key={field.id}
+                                      className={field.half ? "" : "sm:col-span-2"}
+                                    >
+                                      <FieldControl
+                                        field={field}
+                                        value={values[field.id]}
+                                        error={errors[field.id]}
+                                        copy={copy}
+                                        uid={uid}
+                                        onChange={setValue}
+                                        onBlurCheck={checkOnBlur}
+                                        files={files}
+                                        fileError={fileError}
+                                        onFiles={addFiles}
+                                        onRemoveFile={removeFile}
                                       />
-                                      {option.label}
-                                    </label>
+                                    </div>
                                   ))}
                                 </div>
-                                {errors.budget ? (
-                                  <p role="alert" className="mt-3 flex items-center gap-1.5 text-[14px] text-accent-bright">
-                                    <WarningCircle size={15} weight="fill" />
-                                    {errors.budget}
-                                  </p>
-                                ) : null}
-                              </fieldset>
-
-                              <fieldset>
-                                <legend className="text-[14px] font-medium text-text">
-                                  {copy.timelineLabel}
-                                </legend>
-                                <div className="mt-3 flex flex-wrap gap-2">
-                                  {copy.timelines.map((option) => (
-                                    <label
-                                      key={option.id}
-                                      className={`cursor-pointer rounded-[var(--radius-pill)] border px-4 py-2.5 text-[15px] transition-[border-color,background-color,transform] duration-150 ease-[var(--ease-out)] active:scale-[0.97] ${
-                                        values.timeline === option.id
-                                          ? "border-accent bg-accent text-accent-ink"
-                                          : "border-hairline-strong text-text-muted hover:border-text-faint hover:text-text"
-                                      }`}
-                                    >
-                                      <input
-                                        type="radio"
-                                        name="timeline"
-                                        className="sr-only"
-                                        checked={values.timeline === option.id}
-                                        onChange={() => set("timeline", option.id)}
-                                      />
-                                      {option.label}
-                                    </label>
-                                  ))}
-                                </div>
-                                {errors.timeline ? (
-                                  <p role="alert" className="mt-3 flex items-center gap-1.5 text-[14px] text-accent-bright">
-                                    <WarningCircle size={15} weight="fill" />
-                                    {errors.timeline}
-                                  </p>
-                                ) : null}
-                              </fieldset>
-                            </div>
-                          ) : null}
-
-                          {step === 3 ? (
-                            <div className="grid gap-5 sm:grid-cols-2">
-                              <div>
-                                <label htmlFor={`${uid}-name`} className="block text-[14px] font-medium text-text">
-                                  {copy.nameLabel}
-                                </label>
-                                <input
-                                  id={`${uid}-name`}
-                                  value={values.name}
-                                  autoComplete="name"
-                                  onChange={(event) => set("name", event.target.value)}
-                                  onBlur={() => {
-                                    if (values.name.trim().length < 2) {
-                                      setErrors((c) => ({ ...c, name: copy.required }));
-                                    }
-                                  }}
-                                  aria-invalid={Boolean(errors.name)}
-                                  aria-describedby={errors.name ? `${uid}-name-error` : undefined}
-                                  className={`mt-2 ${fieldClass}`}
-                                />
-                                {errors.name ? (
-                                  <p id={`${uid}-name-error`} role="alert" className="mt-2 text-[14px] text-accent-bright">
-                                    {errors.name}
-                                  </p>
-                                ) : null}
                               </div>
-
-                              <div>
-                                <label htmlFor={`${uid}-email`} className="block text-[14px] font-medium text-text">
-                                  {copy.emailLabel}
-                                </label>
-                                <input
-                                  id={`${uid}-email`}
-                                  type="email"
-                                  inputMode="email"
-                                  autoComplete="email"
-                                  value={values.email}
-                                  onChange={(event) => set("email", event.target.value)}
-                                  onBlur={() => {
-                                    if (
-                                      values.email.trim() &&
-                                      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email.trim())
-                                    ) {
-                                      setErrors((c) => ({ ...c, email: copy.invalidEmail }));
-                                    }
-                                  }}
-                                  aria-invalid={Boolean(errors.email)}
-                                  aria-describedby={errors.email ? `${uid}-email-error` : undefined}
-                                  className={`mt-2 ${fieldClass}`}
-                                />
-                                {errors.email ? (
-                                  <p id={`${uid}-email-error`} role="alert" className="mt-2 text-[14px] text-accent-bright">
-                                    {errors.email}
-                                  </p>
-                                ) : null}
-                              </div>
-
-                              <div>
-                                <label htmlFor={`${uid}-company`} className="block text-[14px] font-medium text-text">
-                                  {copy.companyLabel}{" "}
-                                  <span className="text-text-faint">({copy.optional})</span>
-                                </label>
-                                <input
-                                  id={`${uid}-company`}
-                                  autoComplete="organization"
-                                  value={values.company}
-                                  onChange={(event) => set("company", event.target.value)}
-                                  className={`mt-2 ${fieldClass}`}
-                                />
-                              </div>
-
-                              <div>
-                                <label htmlFor={`${uid}-phone`} className="block text-[14px] font-medium text-text">
-                                  {copy.phoneLabel}{" "}
-                                  <span className="text-text-faint">({copy.optional})</span>
-                                </label>
-                                <input
-                                  id={`${uid}-phone`}
-                                  type="tel"
-                                  inputMode="tel"
-                                  autoComplete="tel"
-                                  value={values.phone}
-                                  onChange={(event) => set("phone", event.target.value)}
-                                  className={`mt-2 ${fieldClass}`}
-                                />
-                              </div>
-                            </div>
-                          ) : null}
+                            ))
+                          )}
                         </motion.div>
                       </AnimatePresence>
                     </div>
 
                     {/* Honeypot, hidden from people and from assistive tech. */}
-                    <div aria-hidden="true" className="absolute left-[-9999px] h-px w-px overflow-hidden">
+                    <div
+                      aria-hidden="true"
+                      className="absolute left-[-9999px] h-px w-px overflow-hidden"
+                    >
                       <label htmlFor={`${uid}-website`}>Website</label>
                       <input
                         id={`${uid}-website`}
                         tabIndex={-1}
                         autoComplete="off"
-                        value={values.website}
-                        onChange={(event) => set("website", event.target.value)}
+                        value={honeypot}
+                        onChange={(event) => setHoneypot(event.target.value)}
                       />
                     </div>
 
                     {status === "error" ? (
-                      <p role="alert" className="mt-5 rounded-[var(--radius-md)] border border-hairline-strong px-4 py-3 text-[14px] text-text">
+                      <p
+                        role="alert"
+                        className="mt-6 rounded-[var(--radius-md)] border border-hairline-strong px-4 py-3 text-[14px] text-text"
+                      >
                         <span className="font-medium">{copy.errorTitle}.</span>{" "}
                         <span className="text-text-muted">{copy.errorBody}</span>
                       </p>
                     ) : null}
 
-                    <div className="mt-8 flex items-center gap-3 border-t border-hairline pt-6">
+                    <div className="mt-9 flex items-center gap-3 border-t border-hairline pt-6">
                       {step > 0 ? (
                         <button
                           type="button"
-                          onClick={goBack}
-                          className="inline-flex items-center gap-1.5 rounded-[var(--radius-pill)] border border-hairline-strong px-4 py-3 text-[15px] text-text transition-[transform,background-color] duration-150 ease-[var(--ease-out)] hover:bg-canvas-raised active:scale-[0.97]"
+                          onClick={() => goTo(step - 1, -1)}
+                          className="inline-flex items-center gap-1.5 rounded-[var(--radius-pill)] border border-hairline-strong px-4 py-3 text-[15px] text-text transition-[transform,background-color] duration-150 ease-[var(--ease-out)] active:scale-[0.97] hover-fine:hover:bg-canvas-raised"
                         >
                           <ArrowLeft size={16} />
                           {copy.back}
                         </button>
                       ) : null}
 
-                      {step < TOTAL_STEPS - 1 ? (
+                      {step < last ? (
                         <button
                           type="button"
                           onClick={goNext}
@@ -569,7 +454,7 @@ export function ContactForm({
                         <button
                           type="submit"
                           disabled={status === "sending"}
-                          className="ml-auto inline-flex items-center gap-1.5 rounded-[var(--radius-pill)] bg-accent px-5 py-3 text-[15px] font-medium text-accent-ink transition-[transform,background-color] duration-150 ease-[var(--ease-out)] hover:bg-accent-bright active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-70"
+                          className="ml-auto inline-flex items-center gap-1.5 rounded-[var(--radius-pill)] bg-accent px-5 py-3 text-[15px] font-medium text-accent-ink transition-[transform,background-color] duration-150 ease-[var(--ease-out)] active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-70 hover-fine:hover:bg-accent-bright"
                         >
                           {status === "sending" ? copy.sending : copy.submit}
                           <ArrowRight size={16} weight="bold" />

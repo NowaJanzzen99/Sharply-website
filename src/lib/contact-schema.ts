@@ -1,16 +1,46 @@
 import { z } from "zod";
 
+/** Shared by the browser and the route, so both refuse the same things. */
+export const MAX_FILES = 3;
+export const MAX_TOTAL_BYTES = 4 * 1024 * 1024;
+export const ALLOWED_EXTENSIONS = [
+  "pdf",
+  "png",
+  "jpg",
+  "jpeg",
+  "webp",
+  "doc",
+  "docx",
+  "ppt",
+  "pptx",
+] as const;
+
+export function extensionOf(name: string) {
+  const dot = name.lastIndexOf(".");
+  return dot === -1 ? "" : name.slice(dot + 1).toLowerCase();
+}
+
+export function isAllowedFile(name: string) {
+  return (ALLOWED_EXTENSIONS as readonly string[]).includes(extensionOf(name));
+}
+
+const rowSchema = z.object({
+  label: z.string().trim().min(1).max(200),
+  value: z.string().trim().min(1).max(4000),
+});
+
+const sectionSchema = z.object({
+  title: z.string().trim().min(1).max(120),
+  rows: z.array(rowSchema).min(1).max(40),
+});
+
 export const contactSchema = z.object({
-  needs: z.array(z.string().max(60)).min(1).max(12),
-  project: z.string().trim().min(10).max(4000),
-  references: z.string().trim().max(2000).default(""),
-  budget: z.string().trim().min(1).max(60),
-  timeline: z.string().trim().min(1).max(60),
+  lang: z.enum(["nl", "en"]),
   name: z.string().trim().min(2).max(120),
   email: z.string().trim().email().max(200),
   company: z.string().trim().max(160).default(""),
-  phone: z.string().trim().max(60).default(""),
-  lang: z.enum(["nl", "en"]),
+  consent: z.literal(true),
+  sections: z.array(sectionSchema).min(1).max(16),
   /**
    * Honeypot: real people never see this field, so anything in it means a bot.
    * Accepted by the schema on purpose, then handled in the route.

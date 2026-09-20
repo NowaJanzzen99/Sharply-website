@@ -41,7 +41,7 @@ export function Manifesto({ content }: { content: Content }) {
           <div className="md:col-span-5 md:pt-16">
             <RevealImage className="relative overflow-hidden rounded-[var(--radius-lg)] border border-hairline">
               <Image
-                src="/images/handcraft-ai.webp"
+                src="/images/manifesto-workflow.webp"
                 alt={content.manifesto.imageAlt}
                 width={2336}
                 height={1744}

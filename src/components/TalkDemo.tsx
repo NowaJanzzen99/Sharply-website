@@ -33,6 +33,7 @@ export function TalkDemo({ content }: { content: Content }) {
   const counter = useRef(0);
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
   const panel = useRef<HTMLDivElement>(null);
+  const preview = useRef<HTMLDivElement>(null);
   const touched = useRef(false);
   const runRef = useRef<((command: DemoCommand) => void) | null>(null);
   const reduce = useReducedMotion();
@@ -101,9 +102,27 @@ export function TalkDemo({ content }: { content: Content }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    runRef.current = run;
-  });
+  /*
+    On a phone the controls and the preview do not fit on one screen, so a tap
+    could change something the reader cannot see. After a deliberate tap the
+    preview is brought back into view if any of it is off screen.
+  */
+  function revealPreview() {
+    const element = preview.current;
+    if (!element || window.matchMedia("(min-width: 1024px)").matches) return;
+
+    requestAnimationFrame(() => {
+      const box = element.getBoundingClientRect();
+      const margin = 84;
+      if (box.top >= margin && box.bottom <= window.innerHeight - 24) return;
+      element.scrollIntoView({
+        block: "start",
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "auto"
+          : "smooth",
+      });
+    });
+  }
 
   function log(ask: string, reply: string) {
     counter.current += 1;
@@ -128,6 +147,10 @@ export function TalkDemo({ content }: { content: Content }) {
     log(command.label, command.reply);
   }
 
+  useEffect(() => {
+    runRef.current = run;
+  });
+
   function submit(event: React.FormEvent) {
     event.preventDefault();
     const value = typed.trim();
@@ -143,6 +166,7 @@ export function TalkDemo({ content }: { content: Content }) {
       log(value, content.demo.unknownReply);
     }
     setTyped("");
+    revealPreview();
   }
 
   function reset() {
@@ -151,7 +175,7 @@ export function TalkDemo({ content }: { content: Content }) {
     setStage("idle");
   }
 
-  const preview = content.demo.preview;
+  const previewCopy = content.demo.preview;
 
   return (
     <section
@@ -185,7 +209,7 @@ export function TalkDemo({ content }: { content: Content }) {
 
         <div className="mt-14 grid gap-8 lg:grid-cols-12 lg:items-start">
           {/* Controls */}
-          <Reveal className="lg:col-span-5">
+          <Reveal className="order-2 lg:order-1 lg:col-span-5">
             <div ref={panel} className="glass rounded-[var(--radius-lg)] p-5 md:p-6">
               <p className="font-display text-[19px] font-medium text-text">
                 {content.demo.tryTitle}
@@ -201,6 +225,7 @@ export function TalkDemo({ content }: { content: Content }) {
                     onClick={() => {
                       touched.current = true;
                       run(command);
+                      revealPreview();
                     }}
                     className="rounded-[var(--radius-pill)] border border-hairline-strong bg-canvas-raised px-3.5 py-2 text-left text-[14px] text-text transition-[transform,border-color,background-color] duration-150 ease-[var(--ease-out)] hover:border-accent hover:bg-canvas-raised active:scale-[0.97]"
                   >
@@ -280,8 +305,8 @@ export function TalkDemo({ content }: { content: Content }) {
           </Reveal>
 
           {/* Live preview */}
-          <Reveal className="lg:col-span-7" delay={0.1}>
-            <div className="glass rounded-[var(--radius-lg)] p-2.5">
+          <Reveal className="order-1 lg:order-2 lg:col-span-7" delay={0.1}>
+            <div ref={preview} className="glass scroll-mt-24 rounded-[var(--radius-lg)] p-2.5">
               <div className="relative overflow-hidden rounded-[calc(var(--radius-lg)-6px)] border border-hairline bg-canvas-deep">
               <div className="flex items-center gap-2 border-b border-hairline bg-[oklch(0.16_0.028_264/0.6)] px-4 py-3">
                 <Globe size={15} className="shrink-0 text-text-faint" />
@@ -322,7 +347,7 @@ export function TalkDemo({ content }: { content: Content }) {
                       state.light ? "text-[#1a1a1f]" : "text-white"
                     }`}
                   >
-                    {preview.brand}
+                    {previewCopy.brand}
                   </motion.p>
 
                   <motion.h3
@@ -334,7 +359,7 @@ export function TalkDemo({ content }: { content: Content }) {
                       state.light ? "text-[#121216]" : "text-white"
                     }`}
                   >
-                    {preview.headline}
+                    {previewCopy.headline}
                   </motion.h3>
 
                   <motion.p
@@ -344,7 +369,7 @@ export function TalkDemo({ content }: { content: Content }) {
                       state.light ? "text-[#4a4a55]" : "text-white/65"
                     }`}
                   >
-                    {preview.body}
+                    {previewCopy.body}
                   </motion.p>
 
                   <div
@@ -354,7 +379,7 @@ export function TalkDemo({ content }: { content: Content }) {
                         : "bg-white text-[#121216]"
                     }`}
                   >
-                    {preview.cta}
+                    {previewCopy.cta}
                   </div>
 
                   <AnimatePresence initial={false}>
@@ -376,10 +401,10 @@ export function TalkDemo({ content }: { content: Content }) {
                               state.light ? "text-[#4a4a55]" : "text-white/55"
                             }`}
                           >
-                            {preview.shopTitle}
+                            {previewCopy.shopTitle}
                           </p>
                           <ul className="mt-4 grid gap-3 sm:grid-cols-3">
-                            {preview.shopItems.map((item) => (
+                            {previewCopy.shopItems.map((item) => (
                               <li
                                 key={item.name}
                                 className={`rounded-[var(--radius-md)] border p-3.5 ${

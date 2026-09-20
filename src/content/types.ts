@@ -32,9 +32,47 @@ export type DemoCommand = {
   reply: string;
 };
 
+export type Option = { id: string; label: string };
+
+type FieldBase = {
+  /** Unique across the whole form, prefixed by the step or need it belongs to. */
+  id: string;
+  label: string;
+  hint?: string;
+  required?: boolean;
+  /** Sit two short fields side by side on wider screens. */
+  half?: boolean;
+};
+
+export type Field =
+  | (FieldBase & { kind: "chips"; multi?: boolean; options: Option[] })
+  | (FieldBase & { kind: "select"; options: Option[]; placeholder?: string })
+  | (FieldBase & {
+      kind: "text" | "email" | "tel" | "url" | "date";
+      placeholder?: string;
+      autoComplete?: string;
+    })
+  | (FieldBase & {
+      kind: "area";
+      placeholder?: string;
+      rows?: number;
+      min?: number;
+    })
+  | (FieldBase & { kind: "files" })
+  | (FieldBase & { kind: "consent" });
+
 export type FormStep = {
+  id: string;
   title: string;
   hint: string;
+  fields: Field[];
+};
+
+/** Follow-up questions that only appear for the services the visitor picked. */
+export type DetailGroup = {
+  need: string;
+  title: string;
+  fields: Field[];
 };
 
 export type Content = {
@@ -102,8 +140,18 @@ export type Content = {
     title: string;
     lead: string;
     body: string;
-    badge: string;
-    slots: { title: string; discipline: string }[];
+    conceptLabel: string;
+    ctaTitle: string;
+    ctaText: string;
+    ctaButton: string;
+    items: {
+      key: string;
+      title: string;
+      discipline: string;
+      blurb: string;
+      image: string;
+      alt: string;
+    }[];
   };
   process: {
     title: string;
@@ -113,36 +161,37 @@ export type Content = {
   contact: {
     title: string;
     lead: string;
-    steps: FormStep[];
-    needsLabel: string;
-    needs: { id: string; label: string }[];
-    projectLabel: string;
-    projectPlaceholder: string;
-    referencesLabel: string;
-    referencesPlaceholder: string;
-    budgetLabel: string;
-    budgets: { id: string; label: string }[];
-    timelineLabel: string;
-    timelines: { id: string; label: string }[];
-    nameLabel: string;
-    emailLabel: string;
-    companyLabel: string;
-    phoneLabel: string;
+    progress: string;
     optional: string;
+    required: string;
+    invalidEmail: string;
+    invalidUrl: string;
+    pickOne: string;
+    tooShort: string;
+    consentRequired: string;
     next: string;
     back: string;
     submit: string;
     sending: string;
-    progress: string;
+    edit: string;
+    reviewTitle: string;
+    reviewIntro: string;
+    empty: string;
+    noDetails: string;
+    selectPlaceholder: string;
+    filesHint: string;
+    filesAdd: string;
+    filesRemove: string;
+    filesTooBig: string;
+    filesTooMany: string;
+    filesType: string;
     successTitle: string;
     successBody: string;
     againLabel: string;
     errorTitle: string;
     errorBody: string;
-    required: string;
-    invalidEmail: string;
-    pickOne: string;
-    tooShort: string;
+    steps: FormStep[];
+    detailGroups: DetailGroup[];
   };
   footer: {
     contactTitle: string;

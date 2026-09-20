@@ -136,16 +136,20 @@ export function RevealImage({
   children,
   className,
   delay = 0,
+  variant,
 }: {
   children: ReactNode;
   className?: string;
   delay?: number;
+  /** Which shape the curtain opens with. See the variants in globals.css. */
+  variant?: string;
 }) {
   const { ref, shown } = useInViewOnce<HTMLDivElement>(0.15);
 
   return (
     <div
       ref={ref}
+      data-variant={variant}
       data-img-reveal={shown ? "in" : "out"}
       style={delay ? { transitionDelay: `${delay}s` } : undefined}
       className={className}

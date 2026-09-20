@@ -56,6 +56,10 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
     // Pointer, in normalised screen space, smoothed towards its target.
     const target = { x: 0, y: 0 };
     const eased = { x: 0, y: 0 };
+    // Phone tilt, in the same -1 to 1 space, measured from wherever the phone
+    // was first held rather than from flat, so it feels natural in the hand.
+    const tilt = { x: 0, y: 0 };
+    let base: { gamma: number; beta: number } | null = null;
     let scroll = 0;
 
     const onMove = (event: PointerEvent) => {
@@ -65,6 +69,51 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
 
     if (fine && !reduce) {
       window.addEventListener("pointermove", onMove, { passive: true });
+    }
+
+    /*
+      On a touch device the bubble answers the phone being tilted instead of a
+      cursor. Android delivers orientation straight away. iOS only does after an
+      explicit permission prompt, which the platform requires to come from a tap,
+      so the first tap anywhere on the page asks for it.
+    */
+    const clamp = (value: number) => Math.max(-1, Math.min(1, value));
+
+    const onOrient = (event: DeviceOrientationEvent) => {
+      if (event.gamma === null || event.beta === null) return;
+      if (!base) base = { gamma: event.gamma, beta: event.beta };
+      tilt.x = clamp((event.gamma - base.gamma) / 22);
+      tilt.y = clamp((event.beta - base.beta) / 22);
+    };
+
+    const onTurn = () => {
+      base = null;
+    };
+
+    const startOrientation = () => {
+      window.addEventListener("deviceorientation", onOrient, { passive: true });
+      window.addEventListener("orientationchange", onTurn);
+    };
+
+    let askForPermission: (() => void) | null = null;
+
+    if (!fine && !reduce && "DeviceOrientationEvent" in window) {
+      const Orientation = window.DeviceOrientationEvent as unknown as {
+        requestPermission?: () => Promise<"granted" | "denied">;
+      };
+
+      if (typeof Orientation.requestPermission === "function") {
+        askForPermission = () => {
+          Orientation.requestPermission?.()
+            .then((result) => {
+              if (result === "granted") startOrientation();
+            })
+            .catch(() => {});
+        };
+        window.addEventListener("touchend", askForPermission, { once: true });
+      } else {
+        startOrientation();
+      }
     }
 
     const readScroll = () => {
@@ -88,16 +137,19 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
 
     const tick = (now: number) => {
       const seconds = (now - started) / 1000;
-      eased.x += (target.x - eased.x) * 0.045;
-      eased.y += (target.y - eased.y) * 0.045;
+      const aimX = fine ? target.x : tilt.x;
+      const aimY = fine ? target.y : tilt.y;
+      const follow = fine ? 0.045 : 0.07;
+      eased.x += (aimX - eased.x) * follow;
+      eased.y += (aimY - eased.y) * follow;
       readScroll();
 
       layers.forEach((layer) => {
         const wave = (seconds / (layer.period * slow) + layer.phase) * Math.PI * 2;
-        const x = Math.sin(wave) * layer.driftX * calm + eased.x * 34 * layer.pull;
+        const x = Math.sin(wave) * layer.driftX * calm + eased.x * (fine ? 34 : 46) * layer.pull;
         const y =
           Math.cos(wave * 0.8) * layer.driftY * calm +
-          eased.y * 24 * layer.pull +
+          eased.y * (fine ? 24 : 34) * layer.pull +
           scroll * 150 * layer.pull;
         const rotate = layer.spin ? Math.sin(wave * 0.5) * layer.spin * calm : 0;
         const scale = 1 + Math.sin(wave * 0.6) * 0.012 * calm - scroll * 0.06 * layer.pull;
@@ -113,6 +165,9 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("deviceorientation", onOrient);
+      window.removeEventListener("orientationchange", onTurn);
+      if (askForPermission) window.removeEventListener("touchend", askForPermission);
     };
   }, []);
 
