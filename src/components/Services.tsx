@@ -18,31 +18,34 @@ import type { Content, Service } from "@/content";
 
 const STEP_VH = 78;
 
-function Stage({ service, active }: { service: Service; active: boolean }) {
+/**
+ * One stage, remounted whenever the reel advances. Remounting is what lets the
+ * entrance animations replay for each service instead of a single crossfade
+ * doing duty for all six.
+ */
+function Stage({ service }: { service: Service }) {
   return (
-    <div
-      aria-hidden={!active}
-      className="absolute inset-0 grid grid-cols-12 items-center gap-10"
-      style={{
-        opacity: active ? 1 : 0,
-        transform: active ? "translateY(0px)" : "translateY(18px)",
-        transition:
-          "opacity 520ms var(--ease-out), transform 520ms var(--ease-out), clip-path 620ms var(--ease-out)",
-        clipPath: active ? "inset(0 0 0 0)" : "inset(0 0 12% 0)",
-        pointerEvents: active ? "auto" : "none",
-      }}
-    >
+    <div className="absolute inset-0 grid grid-cols-12 items-center gap-10">
       <div className="col-span-5 flex flex-col">
-        <h3 className="font-display text-[clamp(1.75rem,3vw,2.6rem)] font-medium text-text">
+        <h3
+          data-stage-el
+          className="font-display text-[clamp(1.75rem,3vw,2.6rem)] font-medium text-text"
+        >
           {service.title}
         </h3>
-        <p className="mt-4 max-w-[46ch] text-[17px] leading-[1.6] text-text-muted">
+        <p
+          data-stage-el
+          style={{ animationDelay: "80ms" }}
+          className="mt-4 max-w-[46ch] text-[17px] leading-[1.6] text-text-muted"
+        >
           {service.body}
         </p>
         <ul className="mt-6 flex flex-wrap gap-2">
-          {service.points.map((point) => (
+          {service.points.map((point, i) => (
             <li
               key={point}
+              data-stage-el
+              style={{ animationDelay: `${160 + i * 70}ms` }}
               className="rounded-[var(--radius-pill)] border border-hairline px-3 py-1.5 text-[13px] text-text-faint"
             >
               {point}
@@ -52,17 +55,16 @@ function Stage({ service, active }: { service: Service; active: boolean }) {
       </div>
 
       <div className="col-span-7">
-        <div className="relative aspect-[16/11] overflow-hidden rounded-[var(--radius-lg)] border border-hairline">
+        <div
+          data-stage-img
+          className="relative aspect-[16/11] overflow-hidden rounded-[var(--radius-lg)] border border-hairline"
+        >
           <Image
             src={service.image}
             alt={service.alt}
             fill
             sizes="(min-width: 768px) 58vw, 100vw"
             className="object-cover"
-            style={{
-              transform: active ? "scale(1)" : "scale(1.06)",
-              transition: "transform 900ms var(--ease-out)",
-            }}
           />
         </div>
       </div>
@@ -137,9 +139,7 @@ export function Services({ content }: { content: Content }) {
 
               {/* Stage */}
               <div className="relative col-span-9 h-[62vh]">
-                {items.map((service, i) => (
-                  <Stage key={service.key} service={service} active={i === index} />
-                ))}
+                <Stage key={items[index].key} service={items[index]} />
               </div>
             </div>
           </div>

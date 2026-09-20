@@ -73,6 +73,8 @@ export type Content = {
     title: string;
     lead: string;
     note: string;
+    tryTitle: string;
+    tryHint: string;
     inputLabel: string;
     inputPlaceholder: string;
     send: string;

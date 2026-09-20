@@ -2,7 +2,7 @@
 
 import { useId, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { ArrowLeft, ArrowRight, CheckCircle, WarningCircle } from "@phosphor-icons/react";
+import { ArrowLeft, ArrowRight, Check, CheckCircle, WarningCircle } from "@phosphor-icons/react";
 import { Reveal, RevealLines, splitHeading } from "./Reveal";
 import Image from "next/image";
 import type { Content, Lang } from "@/content";
@@ -196,27 +196,57 @@ export function ContactForm({
                     initial={false}
                     className="flex flex-col"
                   >
-                    <div className="flex items-center justify-between gap-4">
-                      <p className="font-mono text-[12px] uppercase tracking-[0.12em] text-text-faint">
-                        {copy.progress
-                          .replace("{current}", String(step + 1))
-                          .replace("{total}", String(TOTAL_STEPS))}
-                      </p>
-                      <span
-                        aria-hidden="true"
-                        className="h-[2px] w-28 overflow-hidden rounded-[var(--radius-pill)] bg-hairline-strong"
-                      >
-                        <motion.span
-                          className="block h-full w-full origin-left bg-accent"
-                          animate={{
-                            transform: `scaleX(${(step + 1) / TOTAL_STEPS})`,
-                          }}
-                          transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
-                        />
-                      </span>
-                    </div>
+                    <ol className="flex items-center gap-2">
+                      {copy.steps.map((formStep, i) => {
+                        const done = i < step;
+                        const current = i === step;
+                        return (
+                          <li key={formStep.title} className="flex min-w-0 flex-1 items-center gap-2">
+                            <span
+                              aria-current={current ? "step" : undefined}
+                              className="flex h-6 w-6 shrink-0 items-center justify-center rounded-[var(--radius-pill)] border font-mono text-[11px] transition-[background-color,border-color,color] duration-300 ease-[var(--ease-out)]"
+                              style={{
+                                borderColor:
+                                  done || current ? "var(--accent)" : "var(--hairline-strong)",
+                                backgroundColor: done ? "var(--accent)" : "transparent",
+                                color: done
+                                  ? "var(--accent-ink)"
+                                  : current
+                                    ? "var(--accent-bright)"
+                                    : "var(--text-faint)",
+                              }}
+                            >
+                              {done ? <Check size={12} weight="bold" /> : i + 1}
+                            </span>
+                            <span
+                              className="hidden truncate text-[12px] transition-colors duration-300 ease-[var(--ease-out)] lg:block"
+                              style={{ color: current ? "var(--text)" : "var(--text-faint)" }}
+                            >
+                              {formStep.title}
+                            </span>
+                            {i < TOTAL_STEPS - 1 ? (
+                              <span
+                                aria-hidden="true"
+                                className="ml-1 h-px flex-1 overflow-hidden bg-hairline-strong"
+                              >
+                                <span
+                                  className="block h-full w-full origin-left bg-accent transition-transform duration-500 ease-[var(--ease-out)]"
+                                  style={{ transform: `scaleX(${done ? 1 : 0})` }}
+                                />
+                              </span>
+                            ) : null}
+                          </li>
+                        );
+                      })}
+                    </ol>
 
-                    <h3 className="mt-5 font-display text-[24px] font-medium text-text">
+                    <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-text-faint">
+                      {copy.progress
+                        .replace("{current}", String(step + 1))
+                        .replace("{total}", String(TOTAL_STEPS))}
+                    </p>
+
+                    <h3 className="mt-2 font-display text-[24px] font-medium text-text">
                       {copy.steps[step].title}
                     </h3>
                     <p className="mt-1.5 text-[15px] text-text-faint">
@@ -260,7 +290,10 @@ export function ContactForm({
                                           )
                                         }
                                       />
-                                      {need.label}
+                                      <span className="flex items-center gap-1.5">
+                                        {active ? <Check size={13} weight="bold" /> : null}
+                                        {need.label}
+                                      </span>
                                     </label>
                                   );
                                 })}

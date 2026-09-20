@@ -208,6 +208,41 @@
   [data-stagger="in"] > *:nth-child(7) { transition-delay: 330ms; }
   [data-stagger="in"] > *:nth-child(8) { transition-delay: 385ms; }
 
+  /*
+    A service stage is remounted each time the reel advances, so these run as
+    mount animations: the copy rises in sequence while the image wipes open.
+  */
+  [data-stage-el] {
+    animation: stage-rise 640ms var(--ease-out) both;
+  }
+
+  [data-stage-img] {
+    animation: stage-wipe 880ms var(--ease-out) both;
+  }
+
+  [data-stage-img] > * {
+    animation: stage-settle 1100ms var(--ease-out) both;
+  }
+
+  @keyframes stage-rise {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+  }
+
+  @keyframes stage-wipe {
+    from {
+      clip-path: inset(0 0 100% 0);
+    }
+  }
+
+  @keyframes stage-settle {
+    from {
+      transform: scale(1.09);
+    }
+  }
+
   /* Hero copy arrives on mount, so it runs as an animation rather than a class flip. */
   [data-reveal-hero] {
     animation: hero-rise 850ms var(--ease-out) both;
@@ -248,7 +283,10 @@
       clip-path: none !important;
     }
 
-    [data-reveal-hero] {
+    [data-reveal-hero],
+    [data-stage-el],
+    [data-stage-img],
+    [data-stage-img] > * {
       animation: none;
     }
   }

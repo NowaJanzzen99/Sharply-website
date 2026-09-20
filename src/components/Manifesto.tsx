@@ -1,39 +1,16 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "motion/react";
-import { Reveal, RevealImage, RevealLines } from "./Reveal";
 import Image from "next/image";
+import { Reveal, RevealImage, RevealLines } from "./Reveal";
 import type { Content } from "@/content";
 
-function LitWord({
-  word,
-  progress,
-  start,
-  end,
-}: {
-  word: string;
-  progress: ReturnType<typeof useScroll>["scrollYProgress"];
-  start: number;
-  end: number;
-}) {
-  const opacity = useTransform(progress, [start, end], [0.24, 1]);
-  return (
-    <motion.span style={{ opacity }} className="inline-block">
-      {word}
-    </motion.span>
-  );
-}
+/*
+  An earlier version lit the lead sentence word by word as you scrolled. It read
+  as a rendering fault rather than as craft, so the lead now arrives on the same
+  line mask every other heading uses.
+*/
 
 export function Manifesto({ content }: { content: Content }) {
-  const section = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: section,
-    offset: ["start 0.85", "start 0.3"],
-  });
-
-  const words = content.manifesto.lead.split(" ");
-
   return (
     <section id="studio" className="relative scroll-mt-24 py-28 md:py-40">
       <div className="container-page">
@@ -43,22 +20,12 @@ export function Manifesto({ content }: { content: Content }) {
               <RevealLines lines={[content.manifesto.title]} onView />
             </h2>
 
-            <div
-              ref={section}
-              className="mt-8 font-display text-[clamp(1.35rem,3.2vw,2.1rem)] font-medium leading-[1.25] tracking-[-0.025em] text-text"
-            >
-              {words.map((word, index) => (
-                <span key={`${word}-${index}`}>
-                  <LitWord
-                    word={word}
-                    progress={scrollYProgress}
-                    start={index / words.length}
-                    end={(index + 1) / words.length}
-                  />
-                  {index < words.length - 1 ? " " : null}
-                </span>
-              ))}
-            </div>
+            <p className="mt-8 font-display text-[clamp(1.35rem,3.2vw,2.1rem)] font-medium leading-[1.25] tracking-[-0.025em] text-text">
+              <RevealLines
+                lines={content.manifesto.lead.split(/(?<=\.)\s+/)}
+                onView
+              />
+            </p>
 
             <div className="mt-8 flex flex-col gap-5 md:max-w-[58ch]">
               {content.manifesto.body.map((paragraph, index) => (

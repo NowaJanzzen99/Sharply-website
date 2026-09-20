@@ -32,6 +32,9 @@ export function TalkDemo({ content }: { content: Content }) {
   const [stage, setStage] = useState<"idle" | "publishing" | "live">("idle");
   const counter = useRef(0);
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
+  const panel = useRef<HTMLDivElement>(null);
+  const touched = useRef(false);
+  const runRef = useRef<((command: DemoCommand) => void) | null>(null);
   const reduce = useReducedMotion();
 
   useEffect(() => {
@@ -40,6 +43,67 @@ export function TalkDemo({ content }: { content: Content }) {
       pending.forEach(clearTimeout);
     };
   }, []);
+
+  /*
+    On arrival the demo plays one instruction by itself, typing it out first.
+    Purpose is explanation: reading "the site adapts" convinces nobody, watching
+    the headline grow does. It runs once, and any interaction cancels it.
+
+    Its timers live in this effect rather than in the shared list, so the
+    component's own cleanup cannot clear them out from under it.
+  */
+  useEffect(() => {
+    const element = panel.current;
+    if (!element) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const own: ReturnType<typeof setTimeout>[] = [];
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        observer.disconnect();
+
+        const demo = content.demo.commands[0];
+        const letters = demo.label.split("");
+
+        letters.forEach((_, position) => {
+          own.push(
+            setTimeout(
+              () => {
+                if (touched.current) return;
+                setTyped(demo.label.slice(0, position + 1));
+              },
+              900 + position * 42,
+            ),
+          );
+        });
+
+        own.push(
+          setTimeout(
+            () => {
+              if (touched.current) return;
+              setTyped("");
+              runRef.current?.(demo);
+            },
+            900 + letters.length * 42 + 500,
+          ),
+        );
+      },
+      { threshold: 0.35 },
+    );
+
+    observer.observe(element);
+    return () => {
+      observer.disconnect();
+      own.forEach(clearTimeout);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    runRef.current = run;
+  });
 
   function log(ask: string, reply: string) {
     counter.current += 1;
@@ -122,14 +186,23 @@ export function TalkDemo({ content }: { content: Content }) {
         <div className="mt-14 grid gap-8 lg:grid-cols-12 lg:items-start">
           {/* Controls */}
           <Reveal className="lg:col-span-5">
-            <div className="glass rounded-[var(--radius-lg)] p-5 md:p-6">
+            <div ref={panel} className="glass rounded-[var(--radius-lg)] p-5 md:p-6">
+              <p className="font-display text-[19px] font-medium text-text">
+                {content.demo.tryTitle}
+              </p>
+              <p className="mt-1.5 mb-4 text-[14px] leading-[1.5] text-text-muted">
+                {content.demo.tryHint}
+              </p>
               <div className="flex flex-wrap gap-2">
                 {content.demo.commands.map((command) => (
                   <button
                     key={command.id}
                     type="button"
-                    onClick={() => run(command)}
-                    className="rounded-[var(--radius-pill)] border border-hairline-strong bg-canvas-raised px-3.5 py-2 text-left text-[14px] text-text transition-[transform,border-color] duration-150 ease-[var(--ease-out)] hover:border-accent active:scale-[0.97]"
+                    onClick={() => {
+                      touched.current = true;
+                      run(command);
+                    }}
+                    className="rounded-[var(--radius-pill)] border border-hairline-strong bg-canvas-raised px-3.5 py-2 text-left text-[14px] text-text transition-[transform,border-color,background-color] duration-150 ease-[var(--ease-out)] hover:border-accent hover:bg-canvas-raised active:scale-[0.97]"
                   >
                     {command.label}
                   </button>
@@ -147,7 +220,10 @@ export function TalkDemo({ content }: { content: Content }) {
                   <input
                     id="demo-input"
                     value={typed}
-                    onChange={(event) => setTyped(event.target.value)}
+                    onChange={(event) => {
+                      touched.current = true;
+                      setTyped(event.target.value);
+                    }}
                     placeholder={content.demo.inputPlaceholder}
                     className="min-w-0 flex-1 rounded-[var(--radius-md)] border border-hairline-strong bg-canvas-deep px-3.5 py-2.5 text-[15px] text-text placeholder:text-text-faint"
                   />
