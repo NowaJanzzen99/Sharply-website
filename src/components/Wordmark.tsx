@@ -1,9 +1,11 @@
-import { useId } from "react";
+import { useId, type CSSProperties } from "react";
 
-/**
- * Sharply mark: a glass orb with a hard cut taken out of it.
- * Pure geometry so it stays crisp at any size.
- */
+/*
+  Sharply mark: a glass orb with a hard corner cut and a sharper facet inside.
+  The facet reads as a glass refraction edge; the small white dot is the
+  specular hit. --mark-glow adapts the facet tone to currentColor, so the same
+  mark reads as glass at 16px in the footer and at 28px in the intro.
+*/
 export function Mark({ className }: { className?: string }) {
   const id = useId();
   return (
@@ -12,12 +14,30 @@ export function Mark({ className }: { className?: string }) {
       aria-hidden="true"
       className={className}
       fill="none"
+      style={{ "--mark-glow": "color-mix(in oklch, currentColor, white 38%)" } as CSSProperties}
     >
-      <mask id={id}>
-        <rect width="24" height="24" fill="#fff" />
-        <path d="M25 4 L25 25 L7.5 25 Z" fill="#000" />
-      </mask>
-      <circle cx="12" cy="12" r="9.25" fill="currentColor" mask={`url(#${id})`} />
+      <defs>
+        <mask id={id}>
+          <rect width="24" height="24" fill="#fff" />
+          <path d="M25 4 L25 25 L7.5 25 Z" fill="#000" />
+        </mask>
+      </defs>
+      <g mask={`url(#${id})`}>
+        <circle cx="12" cy="12" r="9.25" fill="currentColor" />
+        <polygon
+          points="12,2.75 12,12 2.75,12"
+          fill="var(--mark-glow)"
+        />
+        <ellipse
+          cx="9.25"
+          cy="8.75"
+          rx="2.4"
+          ry="1.25"
+          transform="rotate(-38 9.25 8.75)"
+          fill="#fff"
+          fillOpacity="0.32"
+        />
+      </g>
     </svg>
   );
 }
