@@ -36,7 +36,7 @@ export const en: Content = {
       "So what you see is not a button someone pressed. It is craft with an engine under it.",
     ],
     imageAlt:
-      "Smooth glass orb resting on layers of hand-torn paper with visible fibres",
+      "A hand drawing a line on paper with a pen, blue threads of light lifting off it",
   },
   services: {
     title: "What we make",

@@ -18,22 +18,43 @@ function useInViewOnce<T extends HTMLElement>(threshold = 0.2) {
   const ref = useRef<T>(null);
   const [shown, setShown] = useState(false);
 
+  /*
+    Two defences, both learned the hard way.
+
+    The observer is attached a frame after mount: one attached during the
+    hydration pass can end up never delivering a single entry, which leaves
+    whatever it guards hidden forever. And because these reveals hide real
+    content, a timer shows everything after two seconds regardless. A missed
+    animation is a blemish; a missing photograph is a broken page.
+  */
   useEffect(() => {
-    const element = ref.current;
-    if (!element) return;
+    let observer: IntersectionObserver | null = null;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((entry) => entry.isIntersecting)) {
-          setShown(true);
-          observer.disconnect();
-        }
-      },
-      { threshold },
-    );
+    const attach = () => {
+      const element = ref.current;
+      if (!element) return;
 
-    observer.observe(element);
-    return () => observer.disconnect();
+      observer = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((entry) => entry.isIntersecting)) {
+            setShown(true);
+            observer?.disconnect();
+          }
+        },
+        { threshold },
+      );
+
+      observer.observe(element);
+    };
+
+    const frame = requestAnimationFrame(attach);
+    const failsafe = setTimeout(() => setShown(true), 2000);
+
+    return () => {
+      cancelAnimationFrame(frame);
+      clearTimeout(failsafe);
+      observer?.disconnect();
+    };
   }, [threshold]);
 
   return { ref, shown };

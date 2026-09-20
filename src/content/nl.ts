@@ -36,7 +36,7 @@ export const nl: Content = {
       "Wat je ziet is dus geen knop die is ingedrukt. Het is handwerk met een motor eronder.",
     ],
     imageAlt:
-      "Gladde glazen bol op lagen handgescheurd papier met zichtbare vezels",
+      "Hand die met een pen een lijn op papier tekent, waaruit blauwe lichtdraden opstijgen",
   },
   services: {
     title: "Wat we maken",

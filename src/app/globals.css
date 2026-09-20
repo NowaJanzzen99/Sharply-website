@@ -209,38 +209,50 @@
   [data-stagger="in"] > *:nth-child(8) { transition-delay: 385ms; }
 
   /*
-    A service stage is remounted each time the reel advances, so these run as
-    mount animations: the copy rises in sequence while the image wipes open.
+    Service stages all stay mounted and swap on a data attribute. Transitions,
+    not mount animations: remounting each step reloaded its image and made the
+    whole reel stutter as you scrolled.
   */
+  [data-stage] {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 420ms var(--ease-out);
+  }
+
+  [data-stage="on"] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
   [data-stage-el] {
-    animation: stage-rise 640ms var(--ease-out) both;
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 520ms var(--ease-out),
+      transform 520ms var(--ease-out);
+  }
+
+  [data-stage="on"] [data-stage-el] {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   [data-stage-img] {
-    animation: stage-wipe 880ms var(--ease-out) both;
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path 760ms var(--ease-out);
+  }
+
+  [data-stage="on"] [data-stage-img] {
+    clip-path: inset(0 0 0 0);
   }
 
   [data-stage-img] > * {
-    animation: stage-settle 1100ms var(--ease-out) both;
+    transform: scale(1.07);
+    transition: transform 900ms var(--ease-out);
   }
 
-  @keyframes stage-rise {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-  }
-
-  @keyframes stage-wipe {
-    from {
-      clip-path: inset(0 0 100% 0);
-    }
-  }
-
-  @keyframes stage-settle {
-    from {
-      transform: scale(1.09);
-    }
+  [data-stage="on"] [data-stage-img] > * {
+    transform: scale(1);
   }
 
   /* Hero copy arrives on mount, so it runs as an animation rather than a class flip. */
@@ -283,23 +295,52 @@
       clip-path: none !important;
     }
 
-    [data-reveal-hero],
-    [data-stage-el],
-    [data-stage-img],
-    [data-stage-img] > * {
+    [data-reveal-hero] {
       animation: none;
+    }
+
+    [data-stage-el],
+    [data-stage-img] > * {
+      transform: none !important;
+      transition-delay: 0s !important;
+    }
+
+    [data-stage-img] {
+      clip-path: none !important;
     }
   }
 
-  /* Frosted panel. Used sparingly, with a solid fallback. */
+  /*
+    Frosted panel. The highlight along the top edge and the inset line just
+    inside the border are what separate glass from a grey box: light catches
+    the lip of a real pane before it catches its face.
+  */
   .glass {
+    position: relative;
     background: linear-gradient(
       160deg,
-      oklch(0.32 0.04 264 / 0.5),
-      oklch(0.2 0.03 264 / 0.35)
+      oklch(0.34 0.045 264 / 0.52),
+      oklch(0.19 0.03 264 / 0.34)
     );
     border: 1px solid var(--hairline);
-    backdrop-filter: blur(20px) saturate(140%);
+    backdrop-filter: blur(22px) saturate(150%);
+    box-shadow:
+      inset 0 1px 0 oklch(0.98 0.01 264 / 0.13),
+      inset 0 0 0 1px oklch(0.98 0.01 264 / 0.03),
+      0 22px 60px oklch(0.06 0.02 264 / 0.5);
+  }
+
+  .glass::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(
+      120% 70% at 18% -10%,
+      oklch(0.85 0.06 259 / 0.16) 0%,
+      transparent 62%
+    );
   }
 
   @supports not (backdrop-filter: blur(1px)) {

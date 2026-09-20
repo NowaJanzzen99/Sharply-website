@@ -7,7 +7,7 @@ import type { Content } from "@/content";
  */
 export function Work({ content }: { content: Content }) {
   return (
-    <section className="relative border-t border-hairline py-28 md:py-36">
+    <section className="relative border-t border-hairline py-24 md:py-32">
       <div className="container-page">
         <div className="flex flex-col gap-5 md:max-w-[62ch]">
           <h2 className="font-display text-[clamp(2rem,5.5vw,3.5rem)] font-semibold text-text">
@@ -25,10 +25,10 @@ export function Work({ content }: { content: Content }) {
           </Reveal>
         </div>
 
-        <RevealStagger className="mt-14 grid gap-4 sm:grid-cols-3">
+        <RevealStagger className="mt-12 grid gap-4 sm:grid-cols-3">
           {content.work.slots.map((slot) => (
             <li key={slot.title}>
-              <div className="flex aspect-[4/5] flex-col justify-end rounded-[var(--radius-lg)] border border-dashed border-hairline-strong p-6">
+              <div className="flex min-h-[9.5rem] flex-col justify-center rounded-[var(--radius-lg)] border border-dashed border-hairline-strong p-6">
                 <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-accent-bright">
                   {content.work.badge}
                 </span>

@@ -281,8 +281,9 @@ export function TalkDemo({ content }: { content: Content }) {
 
           {/* Live preview */}
           <Reveal className="lg:col-span-7" delay={0.1}>
-            <div className="overflow-hidden rounded-[var(--radius-lg)] border border-hairline-strong bg-canvas-deep">
-              <div className="flex items-center gap-2 border-b border-hairline px-4 py-3">
+            <div className="glass rounded-[var(--radius-lg)] p-2.5">
+              <div className="relative overflow-hidden rounded-[calc(var(--radius-lg)-6px)] border border-hairline bg-canvas-deep">
+              <div className="flex items-center gap-2 border-b border-hairline bg-[oklch(0.16_0.028_264/0.6)] px-4 py-3">
                 <Globe size={15} className="shrink-0 text-text-faint" />
                 <span className="truncate font-mono text-[12px] text-text-faint">
                   {stage === "live"
@@ -435,6 +436,7 @@ export function TalkDemo({ content }: { content: Content }) {
                     </motion.div>
                   ) : null}
                 </AnimatePresence>
+              </div>
               </div>
             </div>
           </Reveal>

@@ -16,16 +16,20 @@ import type { Content, Service } from "@/content";
   display:none branch, so only the branch a visitor actually sees fetches.
 */
 
-const STEP_VH = 78;
+const STEP_VH = 68;
 
 /**
- * One stage, remounted whenever the reel advances. Remounting is what lets the
- * entrance animations replay for each service instead of a single crossfade
- * doing duty for all six.
+ * Every stage stays mounted; only the attribute changes. Stylesheet transitions
+ * then stagger the copy and wipe the image open, without an image ever being
+ * torn down and fetched again mid-scroll.
  */
-function Stage({ service }: { service: Service }) {
+function Stage({ service, active }: { service: Service; active: boolean }) {
   return (
-    <div className="absolute inset-0 grid grid-cols-12 items-center gap-10">
+    <div
+      data-stage={active ? "on" : "off"}
+      aria-hidden={!active}
+      className="absolute inset-0 grid grid-cols-12 items-center gap-10"
+    >
       <div className="col-span-5 flex flex-col">
         <h3
           data-stage-el
@@ -35,7 +39,7 @@ function Stage({ service }: { service: Service }) {
         </h3>
         <p
           data-stage-el
-          style={{ animationDelay: "80ms" }}
+          style={{ transitionDelay: "90ms" }}
           className="mt-4 max-w-[46ch] text-[17px] leading-[1.6] text-text-muted"
         >
           {service.body}
@@ -45,7 +49,7 @@ function Stage({ service }: { service: Service }) {
             <li
               key={point}
               data-stage-el
-              style={{ animationDelay: `${160 + i * 70}ms` }}
+              style={{ transitionDelay: `${180 + i * 70}ms` }}
               className="rounded-[var(--radius-pill)] border border-hairline px-3 py-1.5 text-[13px] text-text-faint"
             >
               {point}
@@ -138,8 +142,10 @@ export function Services({ content }: { content: Content }) {
               </ol>
 
               {/* Stage */}
-              <div className="relative col-span-9 h-[62vh]">
-                <Stage key={items[index].key} service={items[index]} />
+              <div className="relative col-span-9 min-h-[54vh]">
+                {items.map((service, i) => (
+                  <Stage key={service.key} service={service} active={i === index} />
+                ))}
               </div>
             </div>
           </div>

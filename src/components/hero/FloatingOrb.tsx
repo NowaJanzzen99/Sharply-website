@@ -68,21 +68,20 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
     }
 
     const readScroll = () => {
+      if (reduce) return;
       const box = root.getBoundingClientRect();
       const travel = window.innerHeight + box.height;
       scroll = Math.min(1, Math.max(0, (window.innerHeight - box.top) / travel));
     };
 
     /*
-      Reduced motion keeps the bubble exactly where it is. It still gets the
-      picture, just without the drift.
+      Reduced motion means gentler, not frozen. The bubble keeps a slow, small
+      drift so the hero is not a flat photograph, but it stops answering the
+      cursor and stops moving with the scroll, which are the parts that cause
+      trouble for people who ask for less motion.
     */
-    if (reduce) {
-      layers.forEach(({ el }) => {
-        el.style.transform = "translate3d(0px, 0px, 0px)";
-      });
-      return;
-    }
+    const calm = reduce ? 0.22 : 1;
+    const slow = reduce ? 2.2 : 1;
 
     let frame = 0;
     const started = performance.now();
@@ -94,14 +93,14 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
       readScroll();
 
       layers.forEach((layer) => {
-        const wave = (seconds / layer.period + layer.phase) * Math.PI * 2;
-        const x = Math.sin(wave) * layer.driftX + eased.x * 34 * layer.pull;
+        const wave = (seconds / (layer.period * slow) + layer.phase) * Math.PI * 2;
+        const x = Math.sin(wave) * layer.driftX * calm + eased.x * 34 * layer.pull;
         const y =
-          Math.cos(wave * 0.8) * layer.driftY +
+          Math.cos(wave * 0.8) * layer.driftY * calm +
           eased.y * 24 * layer.pull +
           scroll * 150 * layer.pull;
-        const rotate = layer.spin ? Math.sin(wave * 0.5) * layer.spin : 0;
-        const scale = 1 + Math.sin(wave * 0.6) * 0.012 - scroll * 0.06 * layer.pull;
+        const rotate = layer.spin ? Math.sin(wave * 0.5) * layer.spin * calm : 0;
+        const scale = 1 + Math.sin(wave * 0.6) * 0.012 * calm - scroll * 0.06 * layer.pull;
 
         layer.el.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0) rotate(${rotate.toFixed(2)}deg) scale(${scale.toFixed(4)})`;
       });
