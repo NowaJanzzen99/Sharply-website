@@ -1,26 +1,223 @@
 @import "tailwindcss";
 
+/* Motion on hover only where a real pointer exists: touch fires hover on tap. */
+@custom-variant hover-fine (@media (hover: hover) and (pointer: fine));
+
+/*
+  Sharply design tokens.
+  One theme for the whole page: deep midnight navy with a single cobalt accent.
+  Iridescence is reserved for imagery and a few glass surfaces, never for text.
+*/
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Surfaces */
+  --canvas: oklch(0.13 0.026 264);
+  --canvas-deep: oklch(0.09 0.022 264);
+  --canvas-raised: oklch(0.175 0.03 264);
+  --hairline: oklch(0.32 0.03 264 / 0.5);
+  --hairline-strong: oklch(0.58 0.042 264 / 0.72);
+
+  /* Text */
+  --text: oklch(0.97 0.006 264);
+  --text-muted: oklch(0.76 0.022 264);
+  --text-faint: oklch(0.62 0.024 264);
+
+  /* Single accent, locked across the page */
+  --accent: oklch(0.64 0.178 259);
+  --accent-bright: oklch(0.74 0.152 259);
+  --accent-ink: oklch(0.16 0.05 264);
+
+  /* Radius system: one scale, cards top out at 16px */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+
+  /* Easing, strong curves only */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  /* Layered z-index scale, never 9999 */
+  --z-sticky: 20;
+  --z-nav: 30;
+  --z-overlay: 40;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-canvas: var(--canvas);
+  --color-canvas-deep: var(--canvas-deep);
+  --color-canvas-raised: var(--canvas-raised);
+  --color-hairline: var(--hairline);
+  --color-hairline-strong: var(--hairline-strong);
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-text-faint: var(--text-faint);
+  --color-accent: var(--accent);
+  --color-accent-bright: var(--accent-bright);
+  --color-accent-ink: var(--accent-ink);
+
   --font-sans: var(--font-geist-sans);
+  --font-display: var(--font-sora);
   --font-mono: var(--font-geist-mono);
+
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    min-width: 0;
+  }
+
+  html {
+    background-color: var(--canvas-deep);
+    color-scheme: dark;
+  }
+
+  /* Lenis drives scrolling; native smooth scroll would fight it. */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  body {
+    background-color: var(--canvas);
+    color: var(--text);
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display), var(--font-sans), system-ui, sans-serif;
+    text-wrap: balance;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background-color: var(--accent);
+    color: var(--accent-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent-bright);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /*
+    Reduced motion keeps fades and colour, drops looping and travel.
+    Individual components narrow this further where they move things.
+  */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* Scroll reveals and the headline mask. Both are CSS so they survive a busy
+     main thread and so reduced motion is handled here, not in render. */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 700ms var(--ease-out),
+      transform 700ms var(--ease-out);
+  }
+
+  [data-reveal="in"] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  [data-line] {
+    display: block;
+    opacity: 0;
+    transform: translateY(100%);
+    transition:
+      opacity 900ms var(--ease-out),
+      transform 900ms var(--ease-out);
+  }
+
+  [data-line="in"] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    /* Keep the fade, drop every bit of travel. */
+    [data-reveal],
+    [data-line] {
+      transform: none !important;
+      transition-duration: 220ms !important;
+      transition-delay: 0s !important;
+    }
+  }
+
+  /* Frosted panel. Used sparingly, with a solid fallback. */
+  .glass {
+    background: linear-gradient(
+      160deg,
+      oklch(0.32 0.04 264 / 0.5),
+      oklch(0.2 0.03 264 / 0.35)
+    );
+    border: 1px solid var(--hairline);
+    backdrop-filter: blur(20px) saturate(140%);
+  }
+
+  @supports not (backdrop-filter: blur(1px)) {
+    .glass {
+      background: var(--canvas-raised);
+    }
+  }
+
+  @media (prefers-reduced-transparency: reduce) {
+    .glass {
+      background: var(--canvas-raised);
+      backdrop-filter: none;
+    }
+  }
+
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.32;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E");
+  }
+}
+
+@layer components {
+  .container-page {
+    width: 100%;
+    max-width: 1360px;
+    margin-inline: auto;
+    padding-inline: 20px;
+  }
+
+  @media (width >= 768px) {
+    .container-page {
+      padding-inline: 40px;
+    }
+  }
 }

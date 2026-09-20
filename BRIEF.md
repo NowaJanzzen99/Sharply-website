@@ -118,8 +118,25 @@ Noah heeft €45 Fable-tegoed voor vandaag. Fable doet de moeilijke creatieve ke
 
 Tip om tegoed te sparen: itereer op 3D in korte, concrete rondes, en test niet steeds hele pagina's opnieuw.
 
+## 10b. Wat er nu staat (gebouwd door Sonnet, 20 september 2026)
+
+De hele site staat en draait, in het Nederlands en het Engels. Alleen de 3D-hero ontbreekt nog.
+
+- **Routing en talen:** `src/app/[lang]/`, `src/proxy.ts` stuurt `/` naar `/nl` of `/en` via `Accept-Language`. Teksten in `src/content/nl.ts` en `en.ts`, getypeerd in `types.ts`.
+- **Secties:** Hero, Manifesto (studio), Services, TalkDemo, Work, Process, ContactForm, Footer, plus Nav met taalwisselaar en mobiel menu.
+- **Design tokens:** `src/app/globals.css`. Midnight navy, één kobalt accent, radius tot 16px, sterke easing-curves. Alle contrast is gemeten en haalt WCAG AA (body 9.35:1, kleinste tekst 5.2:1, knoptekst 5.68:1, randen 4.4:1).
+- **Motion:** scroll-reveals en de hero-kop lopen op **CSS transitions** met `data-reveal` en `data-line`, niet op Motion. Reden: identiek op server en client, geen hydration-mismatch, en ze blijven soepel terwijl de pagina nog laadt. `prefers-reduced-motion` wordt in de stylesheet afgehandeld. Motion gebruiken we alleen voor AnimatePresence en scroll-gekoppelde waarden. Let op: zet `initial`/`animate` van Motion niet terug voor iets dat zichtbaar moet zijn, dat was precies de bug.
+- **Formulier:** vier stappen, validatie bij blur, alle acht staten, honeypot, rate limit, zod, `/api/contact` via Resend. Getest: 400 bij ongeldige invoer, 429 bij te veel verzoeken, 500 als de env ontbreekt, en de foutstaat verschijnt in de UI. De succesroute kan pas als de Resend-key erin staat.
+- **Demo:** volledig werkend en gescript. Kop groter, licht thema, webshopsectie, publiceren met deploy-animatie, transcript, reset, en losse tekstinvoer met trefwoordherkenning.
+- **Beelden:** via `next/image`, dus mobiel laadt een kleine versie in plaats van 2336px. De hero gebruikt `<picture>` voor kunstrichting (liggend op desktop, staand op mobiel).
+
+### Voor Fable
+De enige openstaande creatieve taak is de hero-scène. In `src/components/Hero.tsx` staat bovenaan een blok met `FABLE:` dat aangeeft waar de canvas komt. Vervang alleen het `<picture>`-blok, houd de layout, de kop en de `parallax`-gate intact. `hero-orb.webp` blijft de poster en de fallback bij reduced motion.
+
 ## 11. Open punten
 
 - Noah heeft nog geen definitieve diensten, prijzen of bewijs.
 - Kleur- en stijlrichting is afgeleid van het Pinterest-bord (donker/kobalt). Als het te veel op "elke AI-site" gaat lijken, is een lichtere hoofdrichting een terugvaloptie.
-- Resend en DNS moeten Noah nog inrichten (Mijndomein).
+- Resend en DNS moeten Noah nog inrichten (Mijndomein). Zonder `RESEND_API_KEY` geeft het formulier netjes een foutmelding met een mailadres als terugval.
+- De 3D-hero moet nog gebouwd worden (Fable).
+- Nog niet gedaan: een skip-link naar de hoofdinhoud, en een deelafbeelding voor social media.
