@@ -85,6 +85,7 @@ Geen echte API-calls. Een gescripte demo: bezoeker kiest of typt een opdracht (b
 
 - **Logo:** nieuw wordmark ontwerpen dat bij de glazen stijl past (eventueel met klein beeldmerk). Lever het als SVG en houd het scherp op elke maat. Geen handgetekende schetsmatige SVG's voor illustraties.
 - **Beelden:** genereren met de Higgsfield-tool (`generate_image`, eventueel `generate_video`). **Budget: maximaal 100 credits.** Controleer vóór elke batch het saldo en de kosten (`balance`, `show_plans_and_credits`), stop bij 100 en houd `reference/assets-log.md` bij (wat, prompt, kosten). Exporteer als geoptimaliseerd `avif/webp` in `public/`.
+- **Al gemaakt en goedgekeurd door Noah (11 beelden, 33 credits, 67 over):** staan als webp in `public/images/`, volledige lijst met doel en prompt in `reference/assets-log.md`. Gebruik ze met `next/image`. `hero-orb` en `hero-orb-portrait` zijn de fallback en de visuele referentie voor de 3D-hero (de echte scène is code). Vijf `service-*` beelden zijn per dienst, `handcraft-ai` voor de handcraft-sectie, `bg-*` als sectieachtergrond. Modelkeuze: `gpt_image_2_5`, variant `sunburst` voor nieuwe beelden (Noah's voorkeur), kwaliteit `high`, 2k, 3 credits per beeld. Er staat geen tekst in de beelden.
 
 ## 8. Placeholders (later door Noah in te vullen)
 
@@ -100,8 +101,8 @@ Analytics: cookieloos (bijvoorbeeld Vercel Analytics), zodat er geen cookiebanne
 ## 9. Repo en deploy
 
 - Lokaal: `~/Downloads/sharply`, eigen git-repo (niet nesten in een ander project).
-- GitHub: aparte **privé** repo `sharply-website` (nog niet aangemaakt).
-- Vercel: nieuw, los project (nog niet aangemaakt). Eerst een `*.vercel.app` preview. sharply.nl koppelen als laatste stap (DNS bij Mijndomein).
+- GitHub: `NowaJanzzen99/sharply-website` (aangemaakt; moet **Private** zijn, Noah zet dat zelf, controleer het).
+- Vercel: project `sharply-website` in team "Noah Janssen's projects", live op sharply-website.vercel.app, deployt vanaf `main`. Framework Preset staat op Next.js. De Vercel-koppeling van Claude kan dit project niet zien, dus instellingen wijzigt Noah zelf in het dashboard. Pushen doet Noah zelf (`git push`), Claude wordt daarin geblokkeerd. sharply.nl koppelen als laatste stap (DNS bij Mijndomein, het domein is leeg).
 
 ## 10. Werkverdeling en volgorde
 
