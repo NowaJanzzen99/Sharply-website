@@ -1,4 +1,4 @@
-import { Reveal } from "./Reveal";
+import { Reveal, RevealLines, RevealStagger } from "./Reveal";
 import type { Content } from "@/content";
 
 /**
@@ -10,11 +10,9 @@ export function Work({ content }: { content: Content }) {
     <section className="relative border-t border-hairline py-28 md:py-36">
       <div className="container-page">
         <div className="flex flex-col gap-5 md:max-w-[62ch]">
-          <Reveal>
-            <h2 className="font-display text-[clamp(2rem,5.5vw,3.5rem)] font-semibold text-text">
-              {content.work.title}
-            </h2>
-          </Reveal>
+          <h2 className="font-display text-[clamp(2rem,5.5vw,3.5rem)] font-semibold text-text">
+            <RevealLines lines={[content.work.title]} onView />
+          </h2>
           <Reveal delay={0.06}>
             <p className="text-[17px] leading-[1.6] text-text-muted md:text-[19px]">
               {content.work.lead}
@@ -27,9 +25,9 @@ export function Work({ content }: { content: Content }) {
           </Reveal>
         </div>
 
-        <ul className="mt-14 grid gap-4 sm:grid-cols-3">
-          {content.work.slots.map((slot, index) => (
-            <Reveal as="li" key={slot.title} delay={index * 0.07}>
+        <RevealStagger className="mt-14 grid gap-4 sm:grid-cols-3">
+          {content.work.slots.map((slot) => (
+            <li key={slot.title}>
               <div className="flex aspect-[4/5] flex-col justify-end rounded-[var(--radius-lg)] border border-dashed border-hairline-strong p-6">
                 <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-accent-bright">
                   {content.work.badge}
@@ -41,9 +39,9 @@ export function Work({ content }: { content: Content }) {
                   {slot.discipline}
                 </span>
               </div>
-            </Reveal>
+            </li>
           ))}
-        </ul>
+        </RevealStagger>
       </div>
     </section>
   );

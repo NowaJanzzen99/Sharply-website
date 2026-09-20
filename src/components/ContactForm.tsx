@@ -3,7 +3,7 @@
 import { useId, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowLeft, ArrowRight, CheckCircle, WarningCircle } from "@phosphor-icons/react";
-import { Reveal } from "./Reveal";
+import { Reveal, RevealLines, splitHeading } from "./Reveal";
 import Image from "next/image";
 import type { Content, Lang } from "@/content";
 
@@ -144,11 +144,9 @@ export function ContactForm({
       <div className="container-page">
         <div className="grid gap-12 md:grid-cols-12 md:gap-10">
           <div className="md:col-span-5">
-            <Reveal>
-              <h2 className="font-display text-[clamp(2rem,5.5vw,3.5rem)] font-semibold text-text">
-                {copy.title}
-              </h2>
-            </Reveal>
+            <h2 className="font-display text-[clamp(2rem,5.5vw,3.5rem)] font-semibold text-text">
+              <RevealLines lines={splitHeading(copy.title)} onView />
+            </h2>
             <Reveal delay={0.06}>
               <p className="mt-5 max-w-[40ch] text-[17px] leading-[1.6] text-text-muted">
                 {copy.lead}

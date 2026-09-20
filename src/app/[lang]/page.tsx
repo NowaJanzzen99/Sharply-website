@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { Intro } from "@/components/Intro";
 import { Nav } from "@/components/Nav";
 import { Hero } from "@/components/Hero";
 import { Manifesto } from "@/components/Manifesto";
@@ -21,6 +22,7 @@ export default async function HomePage({
 
   return (
     <>
+      <Intro />
       <Nav content={content} lang={lang} />
       <main>
         <Hero content={content} />

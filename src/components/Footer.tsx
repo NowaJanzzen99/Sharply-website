@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Mark } from "./Wordmark";
+import { FooterWordmark } from "./FooterWordmark";
 import type { Content, Lang } from "@/content";
 
 export function Footer({ content, lang }: { content: Content; lang: Lang }) {
@@ -57,10 +58,10 @@ export function Footer({ content, lang }: { content: Content; lang: Lang }) {
         </div>
       </div>
 
-      <div aria-hidden="true" className="relative select-none">
-        <span className="block translate-y-[0.22em] text-center font-display text-[clamp(5rem,21vw,19rem)] font-semibold leading-[0.8] tracking-[-0.055em] text-text/[0.055]">
-          sharply
-        </span>
+      <div aria-hidden="true" className="relative select-none pt-2">
+        <div className="translate-y-[0.22em]">
+          <FooterWordmark />
+        </div>
       </div>
     </footer>
   );

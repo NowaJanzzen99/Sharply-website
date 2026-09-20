@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
-import { Reveal } from "./Reveal";
+import { Reveal, RevealImage, RevealLines } from "./Reveal";
 import Image from "next/image";
 import type { Content } from "@/content";
 
@@ -39,11 +39,9 @@ export function Manifesto({ content }: { content: Content }) {
       <div className="container-page">
         <div className="grid gap-14 md:grid-cols-12 md:gap-10">
           <div className="md:col-span-7 md:pr-8">
-            <Reveal>
-              <h2 className="font-display text-[clamp(2rem,5.5vw,3.5rem)] font-semibold text-text">
-                {content.manifesto.title}
-              </h2>
-            </Reveal>
+            <h2 className="font-display text-[clamp(2rem,5.5vw,3.5rem)] font-semibold text-text">
+              <RevealLines lines={[content.manifesto.title]} onView />
+            </h2>
 
             <div
               ref={section}
@@ -73,8 +71,8 @@ export function Manifesto({ content }: { content: Content }) {
             </div>
           </div>
 
-          <Reveal className="md:col-span-5 md:pt-16" delay={0.1}>
-            <figure className="relative overflow-hidden rounded-[var(--radius-lg)] border border-hairline">
+          <div className="md:col-span-5 md:pt-16">
+            <RevealImage className="relative overflow-hidden rounded-[var(--radius-lg)] border border-hairline">
               <Image
                 src="/images/handcraft-ai.webp"
                 alt={content.manifesto.imageAlt}
@@ -83,8 +81,8 @@ export function Manifesto({ content }: { content: Content }) {
                 sizes="(min-width: 768px) 42vw, 100vw"
                 className="h-full w-full object-cover"
               />
-            </figure>
-          </Reveal>
+            </RevealImage>
+          </div>
         </div>
       </div>
     </section>

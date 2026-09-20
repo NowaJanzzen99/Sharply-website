@@ -1,89 +1,183 @@
-import { Reveal } from "./Reveal";
+"use client";
+
 import Image from "next/image";
-import type { Content } from "@/content";
+import { motion } from "motion/react";
+import { useStepIndex } from "@/lib/use-track-progress";
+import { Reveal, RevealImage, RevealLines, RevealStagger } from "./Reveal";
+import type { Content, Service } from "@/content";
 
-/**
- * Deliberately not a row of identical cards: the grid carries its own
- * rhythm (7/5, 5/7, 6/6) so the eye keeps moving down the section.
- * Every service gets a cell, no cell is left empty.
- */
-const SPANS = [
-  "md:col-span-7",
-  "md:col-span-5",
-  "md:col-span-5",
-  "md:col-span-7",
-  "md:col-span-6",
-  "md:col-span-6",
-];
+/*
+  Desktop turns the service list into a reel: the stage pins for the length of
+  the section while the six services advance through it, one at a time, with the
+  index on the left tracking along. Scrolling stays ordinary and reversible, so
+  the section is choreographed without taking the scroll away from anyone.
 
-const RATIOS = [
-  "aspect-[16/10]",
-  "aspect-[4/3]",
-  "aspect-[4/3]",
-  "aspect-[16/10]",
-  "aspect-[3/2]",
-  "aspect-[3/2]",
-];
+  Mobile gets a plain stack. Its images carry loading="lazy" inside a
+  display:none branch, so only the branch a visitor actually sees fetches.
+*/
+
+const STEP_VH = 78;
+
+function Stage({ service, active }: { service: Service; active: boolean }) {
+  return (
+    <div
+      aria-hidden={!active}
+      className="absolute inset-0 grid grid-cols-12 items-center gap-10"
+      style={{
+        opacity: active ? 1 : 0,
+        transform: active ? "translateY(0px)" : "translateY(18px)",
+        transition:
+          "opacity 520ms var(--ease-out), transform 520ms var(--ease-out), clip-path 620ms var(--ease-out)",
+        clipPath: active ? "inset(0 0 0 0)" : "inset(0 0 12% 0)",
+        pointerEvents: active ? "auto" : "none",
+      }}
+    >
+      <div className="col-span-5 flex flex-col">
+        <h3 className="font-display text-[clamp(1.75rem,3vw,2.6rem)] font-medium text-text">
+          {service.title}
+        </h3>
+        <p className="mt-4 max-w-[46ch] text-[17px] leading-[1.6] text-text-muted">
+          {service.body}
+        </p>
+        <ul className="mt-6 flex flex-wrap gap-2">
+          {service.points.map((point) => (
+            <li
+              key={point}
+              className="rounded-[var(--radius-pill)] border border-hairline px-3 py-1.5 text-[13px] text-text-faint"
+            >
+              {point}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="col-span-7">
+        <div className="relative aspect-[16/11] overflow-hidden rounded-[var(--radius-lg)] border border-hairline">
+          <Image
+            src={service.image}
+            alt={service.alt}
+            fill
+            sizes="(min-width: 768px) 58vw, 100vw"
+            className="object-cover"
+            style={{
+              transform: active ? "scale(1)" : "scale(1.06)",
+              transition: "transform 900ms var(--ease-out)",
+            }}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export function Services({ content }: { content: Content }) {
+  const items = content.services.items;
+  const { container, index } = useStepIndex<HTMLDivElement>(items.length);
+
   return (
     <section
       id="diensten"
-      className="relative scroll-mt-24 border-t border-hairline py-28 md:py-40"
+      className="relative scroll-mt-24 border-t border-hairline pt-28 md:pt-40"
     >
       <div className="container-page">
         <div className="max-w-[52ch]">
-          <Reveal>
-            <h2 className="font-display text-[clamp(2rem,5.5vw,3.5rem)] font-semibold text-text">
-              {content.services.title}
-            </h2>
-          </Reveal>
+          <h2 className="font-display text-[clamp(2rem,5.5vw,3.5rem)] font-semibold text-text">
+            <RevealLines lines={[content.services.title]} onView />
+          </h2>
           <Reveal delay={0.06}>
             <p className="mt-5 text-[17px] leading-[1.6] text-text-muted md:text-[19px]">
               {content.services.lead}
             </p>
           </Reveal>
         </div>
+      </div>
 
-        <div className="mt-16 grid gap-x-8 gap-y-14 md:grid-cols-12">
-          {content.services.items.map((service, index) => (
-            <Reveal
-              key={service.key}
-              className={`${SPANS[index]} group`}
-              delay={(index % 2) * 0.08}
-            >
-              <article className="flex h-full flex-col">
-                <div
-                  className={`relative overflow-hidden rounded-[var(--radius-lg)] border border-hairline ${RATIOS[index]}`}
-                >
-                  <Image
-                    src={service.image}
-                    alt={service.alt}
-                    fill
-                    sizes="(min-width: 768px) 55vw, 100vw"
-                    className="object-cover transition-transform duration-500 ease-[var(--ease-out)] hover-fine:group-hover:scale-[1.04]"
-                  />
-                </div>
+      {/* Desktop reel */}
+      <div
+        ref={container}
+        className="relative hidden md:block"
+        style={{ height: `${items.length * STEP_VH}vh` }}
+      >
+        {/* One sentinel per service, each a step tall. The reel advances when
+            the sentinel crosses the middle of the screen. */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+          {items.map((service, i) => (
+            <div key={service.key} data-step={i} style={{ height: `${STEP_VH}vh` }} />
+          ))}
+        </div>
 
-                <h3 className="mt-6 font-display text-[22px] font-medium text-text md:text-[26px]">
-                  {service.title}
-                </h3>
-                <p className="mt-3 max-w-[52ch] text-[16px] leading-[1.6] text-text-muted">
-                  {service.body}
-                </p>
-
-                <ul className="mt-5 flex flex-wrap gap-2">
-                  {service.points.map((point) => (
-                    <li
-                      key={point}
-                      className="rounded-[var(--radius-pill)] border border-hairline px-3 py-1.5 text-[13px] text-text-faint"
+        <div className="sticky top-0 flex h-[100dvh] items-center">
+          <div className="container-page w-full">
+            <div className="grid grid-cols-12 gap-10">
+              {/* Index */}
+              <ol className="col-span-3 flex flex-col gap-1 border-l border-hairline pl-6">
+                {items.map((service, i) => (
+                  <li key={service.key}>
+                    <span
+                      className="block py-1.5 text-[15px] transition-[color,transform] duration-300 ease-[var(--ease-out)]"
+                      style={{
+                        color: i === index ? "var(--text)" : "var(--text-faint)",
+                        transform: i === index ? "translateX(6px)" : "translateX(0)",
+                      }}
                     >
-                      {point}
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            </Reveal>
+                      {service.title}
+                    </span>
+                  </li>
+                ))}
+                <li aria-hidden="true" className="mt-5">
+                  <span className="block h-[2px] w-24 overflow-hidden rounded-[var(--radius-pill)] bg-hairline-strong">
+                    <motion.span
+                      className="block h-full w-full origin-left bg-accent"
+                      animate={{ transform: `scaleX(${(index + 1) / items.length})` }}
+                      transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
+                    />
+                  </span>
+                </li>
+              </ol>
+
+              {/* Stage */}
+              <div className="relative col-span-9 h-[62vh]">
+                {items.map((service, i) => (
+                  <Stage key={service.key} service={service} active={i === index} />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile stack */}
+      <div className="container-page md:hidden">
+        <div className="mt-14 flex flex-col gap-14 pb-28">
+          {items.map((service) => (
+            <article key={service.key}>
+              <RevealImage className="relative aspect-[4/3] overflow-hidden rounded-[var(--radius-lg)] border border-hairline">
+                <Image
+                  src={service.image}
+                  alt={service.alt}
+                  fill
+                  sizes="100vw"
+                  loading="lazy"
+                  className="object-cover"
+                />
+              </RevealImage>
+              <h3 className="mt-6 font-display text-[22px] font-medium text-text">
+                {service.title}
+              </h3>
+              <p className="mt-3 text-[16px] leading-[1.6] text-text-muted">
+                {service.body}
+              </p>
+              <RevealStagger className="mt-5 flex flex-wrap gap-2">
+                {service.points.map((point) => (
+                  <li
+                    key={point}
+                    className="rounded-[var(--radius-pill)] border border-hairline px-3 py-1.5 text-[13px] text-text-faint"
+                  >
+                    {point}
+                  </li>
+                ))}
+              </RevealStagger>
+            </article>
           ))}
         </div>
       </div>

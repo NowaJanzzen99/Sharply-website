@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { ArrowRight, CheckCircle, Globe } from "@phosphor-icons/react";
-import { Reveal } from "./Reveal";
+import { Reveal, RevealLines, splitHeading } from "./Reveal";
 import Image from "next/image";
 import type { Content, DemoCommand } from "@/content";
 
@@ -109,11 +109,9 @@ export function TalkDemo({ content }: { content: Content }) {
 
       <div className="container-page">
         <div className="max-w-[56ch]">
-          <Reveal>
-            <h2 className="font-display text-[clamp(2rem,5.5vw,3.5rem)] font-semibold text-text">
-              {content.demo.title}
-            </h2>
-          </Reveal>
+          <h2 className="font-display text-[clamp(2rem,5.5vw,3.5rem)] font-semibold text-text">
+            <RevealLines lines={splitHeading(content.demo.title)} onView />
+          </h2>
           <Reveal delay={0.06}>
             <p className="mt-5 text-[17px] leading-[1.6] text-text-muted md:text-[19px]">
               {content.demo.lead}
