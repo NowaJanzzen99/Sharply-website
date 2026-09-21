@@ -142,20 +142,33 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
       it. Each layer names its own moment in data-pop-at, so the small ones go
       first and the big one last, in the order they leave the screen.
     */
-    type Pop = { at: number; value: number; base: number; image: HTMLElement | null };
+    type Pop = {
+      at: number;
+      /** 0 whole, 1 fully burst. Moves fast towards a pop, slowly back. */
+      value: number;
+      /** Opacity of the skin: falls with the burst, returns on its own. */
+      alpha: number;
+      base: number;
+      image: HTMLElement | null;
+    };
+    const POP_MS = 420;
+    const REFORM_MS = 1100;
+    let lastTick = performance.now();
     const pops = new Map<HTMLElement, Pop>();
     layers.forEach(({ el }) => {
       if (el.dataset.popAt === undefined) return;
       pops.set(el, {
         at: Number(el.dataset.popAt),
         value: 0,
+        alpha: 1,
         base: Number(el.dataset.baseOpacity ?? 1),
         image: el.querySelector<HTMLElement>("[data-orb-image]"),
       });
     });
 
     const mainLayer = root.querySelector<HTMLElement>("[data-orb-main]");
-    const ring = root.querySelector<HTMLElement>("[data-pop-ring]");
+    const rings = Array.from(root.querySelectorAll<HTMLElement>("[data-pop-ring]"));
+    const flash = root.querySelector<HTMLElement>("[data-pop-flash]");
     const drops = Array.from(root.querySelectorAll<HTMLElement>("[data-pop-drop]"));
     let radius = mainLayer ? mainLayer.offsetWidth / 2 : 0;
     const measure = () => {
@@ -170,19 +183,20 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
       const seconds = (now - started) / 1000;
       const aimX = fine ? target.x : tilt.x;
       const aimY = fine ? target.y : tilt.y;
-      const follow = fine ? 0.045 : 0.07;
+      const follow = fine ? 0.06 : 0.07;
       eased.x += (aimX - eased.x) * follow;
       eased.y += (aimY - eased.y) * follow;
       readScroll();
 
       layers.forEach((layer) => {
         const wave = (seconds / (layer.period * slow) + layer.phase) * Math.PI * 2;
+        // A second, slower wave on top, so the path is a loop and never a line.
         const x =
-          Math.sin(wave) * layer.driftX * calm +
-          eased.x * (fine ? 34 : 46) * layer.pull * gentle;
+          (Math.sin(wave) + Math.sin(wave * 0.37 + 1.3) * 0.45) * layer.driftX * calm +
+          eased.x * (fine ? 96 : 46) * layer.pull * gentle;
         const y =
-          Math.cos(wave * 0.8) * layer.driftY * calm +
-          eased.y * (fine ? 24 : 34) * layer.pull * gentle +
+          (Math.cos(wave * 0.8) + Math.cos(wave * 0.29) * 0.4) * layer.driftY * calm +
+          eased.y * (fine ? 68 : 34) * layer.pull * gentle +
           // The bubble trails the page a little, so it stays in view longer.
           scroll * 190 * layer.pull * gentle;
         const rotate = !reduce && layer.spin ? Math.sin(wave * 0.5) * layer.spin : 0;
@@ -193,28 +207,63 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
         layer.el.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0) rotate(${rotate.toFixed(2)}deg) scale(${scale.toFixed(4)})`;
       });
 
+      const dt = Math.min(64, now - lastTick);
+      lastTick = now;
+
       pops.forEach((pop, element) => {
-        pop.value += ((scroll > pop.at ? 1 : 0) - pop.value) * 0.16;
-        const p = pop.value < 0.001 ? 0 : pop.value > 0.999 ? 1 : pop.value;
+        // Bursts once only `pop.at` of the bubble is still on screen, however
+        // it got there (page scroll, drift or the trail): about half, so it goes
+        // while it is still clearly a bubble and never slips out of view whole.
+        const box = element.getBoundingClientRect();
+        const left = Math.max(0, box.bottom) / Math.max(box.height, 1);
+        const popping = left < pop.at;
+
+        // A soap bubble bursts in a blink and takes a moment to come back.
+        pop.value = popping
+          ? Math.min(1, pop.value + dt / POP_MS)
+          : Math.max(0, pop.value - dt / REFORM_MS);
+        const p = pop.value;
+
+        // Swell for the first sixth, then the skin is simply gone.
+        const swell = Math.min(1, p / 0.16);
+        const gone = Math.min(1, Math.max(0, (p - 0.16) / 0.07));
+        if (popping) pop.alpha = Math.min(pop.alpha, 1 - gone);
+        else pop.alpha += (1 - pop.alpha) * 0.07;
 
         if (pop.image) {
-          pop.image.style.opacity = String((pop.base * Math.max(0, 1 - p * 1.35)).toFixed(3));
-          pop.image.style.transform = reduce ? "" : `scale(${(1 + p * 0.34).toFixed(3)})`;
+          pop.image.style.opacity = (pop.base * pop.alpha).toFixed(3);
+          pop.image.style.transform = reduce
+            ? ""
+            : `scale(${(1 + swell * 0.05 + (1 - (1 - p) ** 3) * 0.1).toFixed(3)})`;
         }
 
         if (element === mainLayer && !reduce) {
-          const burst = Math.sin(p * Math.PI);
+          // Everything the burst throws is fast at first and slows to nothing.
+          const out = 1 - (1 - p) ** 3;
+          const life = Math.max(0, 1 - p ** 1.6);
+          const fired = p > 0.14 ? 1 : 0;
 
-          if (ring) {
-            ring.style.opacity = (burst * 0.6).toFixed(3);
-            ring.style.transform = `scale(${(0.88 + p * 1.0).toFixed(3)})`;
+          rings.forEach((ring, index) => {
+            const start = 0.14 + index * 0.05;
+            const t = Math.min(1, Math.max(0, (p - start) / (1 - start)));
+            const spread = 1 - (1 - t) ** 3;
+            ring.style.opacity = (fired * (1 - t) * (index === 0 ? 0.7 : 0.4)).toFixed(3);
+            ring.style.transform = `scale(${(0.9 + spread * (index === 0 ? 0.75 : 1.15)).toFixed(3)})`;
+          });
+
+          if (flash) {
+            flash.style.opacity = (fired * Math.max(0, 1 - (p - 0.14) * 5) * 0.55).toFixed(3);
+            flash.style.transform = `scale(${(0.7 + out * 0.7).toFixed(3)})`;
           }
 
           drops.forEach((drop, index) => {
-            const angle = (index / drops.length) * Math.PI * 2 + 0.4;
-            const reach = radius * (0.85 + (index % 3) * 0.3) * p;
-            drop.style.opacity = (burst * 0.9).toFixed(3);
-            drop.style.transform = `translate3d(${(Math.cos(angle) * reach).toFixed(1)}px, ${(Math.sin(angle) * reach).toFixed(1)}px, 0) scale(${(1 - p * 0.55).toFixed(3)})`;
+            const angle = (index / drops.length) * Math.PI * 2 + (index % 2) * 0.35;
+            const reach = radius * (0.7 + (index % 4) * 0.22) * out;
+            // A little gravity, so the spray falls the way real droplets do.
+            const fall = out * out * radius * 0.35;
+            const size = 0.55 + (index % 3) * 0.3;
+            drop.style.opacity = (fired * life * 0.9).toFixed(3);
+            drop.style.transform = `translate3d(${(Math.cos(angle) * reach).toFixed(1)}px, ${(Math.sin(angle) * reach + fall).toFixed(1)}px, 0) scale(${(size * (1 - p * 0.5)).toFixed(3)})`;
           });
         }
       });
@@ -251,11 +300,11 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
         data-orb-layer
         data-orb-main
         data-pull="1"
-        data-drift-x="18"
-        data-drift-y="26"
-        data-period="11"
-        data-spin="1.6"
-        data-pop-at="0.7"
+        data-drift-x="44"
+        data-drift-y="60"
+        data-period="9"
+        data-spin="3"
+        data-pop-at="0.5"
         data-base-opacity="1"
         className={`absolute ${
           compact
@@ -277,15 +326,25 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
         {/* The shock ring and droplets of the burst. Invisible until it happens. */}
         <span
           aria-hidden="true"
-          data-pop-ring
-          className="absolute inset-[3%] rounded-full border border-[oklch(0.82_0.1_259/0.7)] opacity-0 will-change-transform"
+          data-pop-flash
+          className="absolute inset-[8%] rounded-full bg-[radial-gradient(circle,oklch(0.92_0.06_240/0.7)_0%,oklch(0.7_0.14_259/0.25)_45%,transparent_70%)] opacity-0 will-change-transform"
         />
-        {Array.from({ length: 10 }, (_, index) => (
+        <span
+          aria-hidden="true"
+          data-pop-ring
+          className="absolute inset-[3%] rounded-full border border-[oklch(0.86_0.09_230/0.8)] opacity-0 will-change-transform"
+        />
+        <span
+          aria-hidden="true"
+          data-pop-ring
+          className="absolute inset-[3%] rounded-full border border-[oklch(0.8_0.12_300/0.6)] opacity-0 will-change-transform"
+        />
+        {Array.from({ length: 18 }, (_, index) => (
           <span
             key={index}
             aria-hidden="true"
             data-pop-drop
-            className="absolute left-1/2 top-1/2 -ml-1 -mt-1 h-2 w-2 rounded-full bg-[oklch(0.86_0.09_259)] opacity-0 will-change-transform"
+            className="absolute left-1/2 top-1/2 -ml-1.5 -mt-1.5 h-3 w-3 rounded-full bg-[radial-gradient(circle_at_32%_30%,white_0%,oklch(0.86_0.09_230)_45%,oklch(0.6_0.16_270/0.6)_100%)] opacity-0 will-change-transform"
           />
         ))}
       </div>
@@ -294,12 +353,12 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
       <div
         data-orb-layer
         data-pull="1.9"
-        data-drift-x="30"
-        data-drift-y="38"
-        data-period="8.5"
+        data-drift-x="46"
+        data-drift-y="56"
+        data-period="6.5"
         data-phase="0.35"
-        data-spin="4"
-        data-pop-at="0.5"
+        data-spin="6"
+        data-pop-at="0.55"
         data-base-opacity="0.8"
         className={`absolute ${
           compact ? "left-[14%] top-[54%] w-[16vw]" : "left-[46%] top-[68%] w-[7vw] max-w-[96px]"
@@ -319,12 +378,12 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
       <div
         data-orb-layer
         data-pull="2.6"
-        data-drift-x="38"
-        data-drift-y="28"
-        data-period="7"
+        data-drift-x="52"
+        data-drift-y="40"
+        data-period="5.5"
         data-phase="0.7"
-        data-spin="6"
-        data-pop-at="0.3"
+        data-spin="8"
+        data-pop-at="0.6"
         data-base-opacity="0.65"
         className={`absolute ${
           compact ? "right-[12%] top-[16%] w-[11vw]" : "left-[88%] top-[28%] w-[5vw] max-w-[68px]"

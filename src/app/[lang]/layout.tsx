@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Geist, Geist_Mono, Sora } from "next/font/google";
 import "../globals.css";
 import { SmoothScroll } from "@/components/SmoothScroll";
+import { PageChrome } from "@/components/PageChrome";
 import { getContent, isLang, LANGS, type Lang } from "@/content";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -59,6 +60,7 @@ export default async function LangLayout({
     >
       <body>
         <SmoothScroll />
+        <PageChrome lang={lang as Lang} />
         {children}
       </body>
     </html>

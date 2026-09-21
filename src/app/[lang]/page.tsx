@@ -24,7 +24,7 @@ export default async function HomePage({
     <>
       <Intro />
       <Nav content={content} lang={lang} />
-      <main>
+      <main id="main">
         <Hero content={content} />
         <Manifesto content={content} />
         <Services content={content} />
