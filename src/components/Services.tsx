@@ -314,7 +314,7 @@ export function Services({ content }: { content: Content }) {
       <div className="container-page md:hidden">
         <div className="mt-14 flex flex-col gap-14 pb-28">
           {items.map((service, position) => (
-            <article key={service.key}>
+            <article key={service.key} data-scene>
               <RevealImage
                 variant={MOBILE_VARIANTS[position % MOBILE_VARIANTS.length]}
                 className="relative aspect-[4/3] overflow-hidden rounded-[var(--radius-lg)] border border-hairline"

@@ -38,7 +38,7 @@ export function Manifesto({ content }: { content: Content }) {
             </div>
           </div>
 
-          <div className="md:col-span-5 md:pt-16">
+          <div data-scene className="md:col-span-5 md:pt-16">
             <RevealImage className="relative overflow-hidden rounded-[var(--radius-lg)] border border-hairline">
               <Image
                 src="/images/manifesto-workflow.webp"
@@ -46,6 +46,7 @@ export function Manifesto({ content }: { content: Content }) {
                 width={2336}
                 height={1744}
                 sizes="(min-width: 768px) 42vw, 100vw"
+                data-scene-img
                 className="h-full w-full object-cover"
               />
             </RevealImage>

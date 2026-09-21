@@ -49,7 +49,7 @@ export function Process({ content }: { content: Content }) {
 
             <ol ref={container}>
               {steps.map((step, index) => (
-                <li key={step.title} data-step={index}>
+                <li key={step.title} data-step={index} data-scene="row" data-scene-lag={index * 0.05}>
                   <div
                     className={`relative border-b border-hairline pb-8 ${
                       index === 0 ? "pt-0" : "pt-8"

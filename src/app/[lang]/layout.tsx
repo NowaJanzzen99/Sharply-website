@@ -56,6 +56,8 @@ export default async function LangLayout({
   return (
     <html
       lang={lang as Lang}
+      // The intro's inline script marks a returning visitor on <html> before hydration.
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} ${sora.variable} antialiased`}
     >
       <body>

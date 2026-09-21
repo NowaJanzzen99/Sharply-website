@@ -304,7 +304,10 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
         // (page scroll, its own drift, the trail) it bursts at the same place.
         const box = element.getBoundingClientRect();
         const showing = Math.max(0, box.bottom) / Math.max(box.height, 1);
-        const popping = showing < pop.at;
+        // Only once the visitor has scrolled: in a short window (a phone on its
+        // side) the bubble can be taller than the screen and would otherwise
+        // burst on arrival.
+        const popping = window.scrollY > 40 && showing < pop.at;
 
         pop.value = popping
           ? Math.min(1, pop.value + dt / POP_MS)

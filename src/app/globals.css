@@ -122,10 +122,12 @@
     Reduced motion keeps fades and colour, drops looping and travel.
     Individual components narrow this further where they move things.
   */
+  /* The loading screen is exempt: it moves nothing across the page, and
+     without it the screen would simply vanish instead of leaving. */
   @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
+    *:not([data-intro], [data-intro] *),
+    *:not([data-intro], [data-intro] *)::before,
+    *:not([data-intro], [data-intro] *)::after {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       scroll-behavior: auto !important;
@@ -241,16 +243,167 @@
     }
   }
 
-  @keyframes intro-mark {
-    from {
+  /*
+    The loading screen (Intro.tsx). While loading, the bubble condenses out of a
+    blur and floats; the name rises letter by letter behind a mask. On
+    data-phase="bursting" the bubble swells and is gone in a blink, rings and
+    droplets fly out, and the whole screen fades while the stage pushes
+    towards the viewer, so the site seems to come out of the burst.
+  */
+  html[data-intro-seen="true"] [data-intro] {
+    display: none;
+  }
+
+  [data-intro] {
+    /* Failsafe: if script never runs, the screen still leaves. */
+    animation: intro-failsafe 0s linear 6s forwards;
+  }
+
+  .intro-orb {
+    animation:
+      intro-condense 1200ms var(--ease-out) both,
+      intro-float 3.2s ease-in-out 1200ms infinite alternate;
+  }
+
+  .intro-glow {
+    animation: intro-breathe 2.4s ease-in-out infinite alternate;
+  }
+
+  .intro-mark {
+    animation: intro-rise 700ms var(--ease-out) 180ms both;
+  }
+
+  .intro-letter {
+    animation: intro-letter 800ms var(--ease-out) both;
+  }
+
+  .intro-ring,
+  .intro-drop {
+    opacity: 0;
+  }
+
+  [data-intro][data-phase="bursting"] {
+    animation: intro-leave 900ms var(--ease-out) 120ms forwards;
+    pointer-events: none;
+  }
+
+  [data-intro][data-phase="bursting"] .intro-stage {
+    animation: intro-push 1000ms var(--ease-out) forwards;
+  }
+
+  [data-intro][data-phase="bursting"] .intro-orb {
+    animation: intro-pop 260ms var(--ease-out) forwards;
+  }
+
+  [data-intro][data-phase="bursting"] .intro-ring {
+    animation: intro-ring 620ms var(--ease-out) forwards;
+  }
+
+  [data-intro][data-phase="bursting"] .intro-ring-late {
+    animation-delay: 70ms;
+  }
+
+  [data-intro][data-phase="bursting"] .intro-drop {
+    animation: intro-drop 760ms var(--ease-out) 40ms forwards;
+  }
+
+  [data-intro][data-phase="bursting"] .intro-meta {
+    opacity: 0;
+    transition: opacity 200ms var(--ease-out);
+  }
+
+  @keyframes intro-failsafe {
+    to {
+      visibility: hidden;
       opacity: 0;
-      transform: translateY(10px) scale(0.96);
     }
   }
 
-  @keyframes intro-line {
+  @keyframes intro-condense {
     from {
-      transform: scaleX(0);
+      opacity: 0;
+      filter: blur(18px) saturate(0.85) hue-rotate(-8deg);
+      transform: scale(0.82);
+    }
+  }
+
+  @keyframes intro-float {
+    from {
+      transform: translateY(-6px) rotate(-2deg);
+    }
+    to {
+      transform: translateY(8px) rotate(2deg);
+    }
+  }
+
+  @keyframes intro-breathe {
+    from {
+      opacity: 0.7;
+      transform: translate(-50%, -50%) scale(0.94);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1.06);
+    }
+  }
+
+  @keyframes intro-rise {
+    from {
+      opacity: 0;
+      transform: translateY(10px) scale(0.9) rotate(-20deg);
+    }
+  }
+
+  @keyframes intro-letter {
+    from {
+      opacity: 0;
+      transform: translateY(110%);
+    }
+  }
+
+  @keyframes intro-pop {
+    30% {
+      opacity: 1;
+      transform: scale(1.08);
+    }
+    to {
+      opacity: 0;
+      transform: scale(1.22);
+    }
+  }
+
+  @keyframes intro-ring {
+    from {
+      opacity: 0.9;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 0;
+      transform: scale(2.1);
+    }
+  }
+
+  @keyframes intro-drop {
+    from {
+      opacity: 1;
+      transform: translate(0, 0) scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: translate(var(--tx), var(--ty)) scale(0.4);
+    }
+  }
+
+  @keyframes intro-push {
+    to {
+      transform: scale(1.12);
+      filter: blur(6px);
+    }
+  }
+
+  @keyframes intro-leave {
+    to {
+      opacity: 0;
     }
   }
 

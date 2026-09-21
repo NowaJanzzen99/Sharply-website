@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import type { Lang } from "@/content";
+import { ScrollScenes } from "./ScrollScenes";
 
 /*
   Three small things that belong to the whole page rather than to a section:
@@ -78,6 +79,7 @@ export function PageChrome({ lang }: { lang: Lang }) {
 
   return (
     <>
+      <ScrollScenes />
       <a
         href="#main"
         className="fixed left-4 top-4 -translate-y-24 rounded-[var(--radius-pill)] bg-text px-4 py-2.5 text-[14px] font-medium text-canvas-deep transition-transform duration-200 ease-[var(--ease-out)] focus:translate-y-0"

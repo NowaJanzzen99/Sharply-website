@@ -210,7 +210,7 @@ export function TalkDemo({ content }: { content: Content }) {
         <div className="mt-14 grid gap-8 lg:grid-cols-12 lg:items-start">
           {/* Controls */}
           <Reveal className="order-2 lg:order-1 lg:col-span-5">
-            <div ref={panel} className="glass rounded-[var(--radius-lg)] p-5 md:p-6">
+            <div ref={panel} data-scene className="glass rounded-[var(--radius-lg)] p-5 md:p-6">
               <p className="font-display text-[19px] font-medium text-text">
                 {content.demo.tryTitle}
               </p>
@@ -306,7 +306,7 @@ export function TalkDemo({ content }: { content: Content }) {
 
           {/* Live preview */}
           <Reveal className="order-1 lg:order-2 lg:col-span-7" delay={0.1}>
-            <div ref={preview} className="glass scroll-mt-24 rounded-[var(--radius-lg)] p-2.5">
+            <div ref={preview} data-scene data-scene-lag={0.1} className="glass scroll-mt-24 rounded-[var(--radius-lg)] p-2.5">
               <div className="relative overflow-hidden rounded-[calc(var(--radius-lg)-6px)] border border-hairline bg-canvas-deep">
               <div className="flex items-center gap-2 border-b border-hairline bg-[oklch(0.16_0.028_264/0.6)] px-4 py-3">
                 <Globe size={15} className="shrink-0 text-text-faint" />

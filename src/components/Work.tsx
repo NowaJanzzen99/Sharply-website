@@ -16,15 +16,17 @@ function ProjectCard({
   variant,
   className,
   wide = false,
+  lag = 0,
 }: {
   item: Item;
   label: string;
   variant: string;
   className: string;
   wide?: boolean;
+  lag?: number;
 }) {
   return (
-    <article className={`group ${className}`}>
+    <article data-scene data-scene-lag={lag} className={`group ${className}`}>
       <RevealImage
         variant={variant}
         className="relative overflow-hidden rounded-[var(--radius-lg)] border border-hairline"
@@ -35,7 +37,8 @@ function ProjectCard({
             alt={item.alt}
             fill
             sizes={wide ? "(min-width: 768px) 66vw, 100vw" : "(min-width: 768px) 55vw, 100vw"}
-            className="object-cover transition-transform duration-700 ease-[var(--ease-out)] hover-fine:group-hover:scale-[1.035]"
+            data-scene-img
+            className="object-cover"
           />
         </div>
       </RevealImage>
@@ -87,6 +90,7 @@ export function Work({ content }: { content: Content }) {
             item={second}
             label={label}
             variant="circle"
+            lag={0.12}
             className="md:col-span-5 md:mt-28"
           />
           <ProjectCard
@@ -98,7 +102,7 @@ export function Work({ content }: { content: Content }) {
           />
 
           <Reveal className="md:col-span-4 md:self-end" delay={0.1}>
-            <div className="glass rounded-[var(--radius-lg)] p-7">
+            <div data-scene data-scene-lag={0.1} className="glass rounded-[var(--radius-lg)] p-7">
               <h3 className="font-display text-[24px] font-medium text-text">
                 {content.work.ctaTitle}
               </h3>
