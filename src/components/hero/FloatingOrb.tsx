@@ -10,7 +10,7 @@ import Image from "next/image";
   than rebuilt in WebGL. That was the lesson from the first attempt: a shader
   bubble never matched the render, and swapping the still for it mid-load made
   the hero visibly flatten. One image, always the same image, that drifts,
-  leans towards the cursor and slips away as the page scrolls.
+  leans towards the cursor, and bursts as the page scrolls past it.
 
   Everything is written straight to transforms inside a single rAF loop. React
   state would re-render the tree on every pointer move, and a CSS variable on a
@@ -28,6 +28,66 @@ type Layer = {
   phase: number;
   spin: number;
 };
+
+/*
+  The burst.
+
+  A soap bubble does not fade. A hole opens at one weak point, and the film
+  around it retracts outwards at speed, tearing into curved slivers that break
+  up into a ring of droplets. It is over in a few milliseconds. On screen that
+  same shape reads best at about four hundred.
+
+  So the bubble is cut into wedges. Each wedge is an empty span that borrows
+  the bubble's own picture as its background and is clipped to its slice, which
+  means the wedges laid on top of each other are pixel for pixel the bubble
+  itself: the swap from whole to shattered is invisible. Then each one flies
+  out along its own bearing, spins, shrinks and thins away. The wedge nearest
+  the rupture leaves first and the tear races around the sphere from there.
+
+  The clip paths are static. Only transform and opacity change per frame, so
+  the whole burst stays on the graphics card.
+*/
+
+/** A pie slice of the bubble, with a hair of overlap so no seam shows. */
+function wedgeClip(index: number, count: number) {
+  const step = (Math.PI * 2) / count;
+  const from = index * step - Math.PI / 2 - 0.008;
+  const to = from + step + 0.016;
+  const points = ["50% 50%"];
+  for (let k = 0; k <= 4; k += 1) {
+    const angle = from + ((to - from) * k) / 4;
+    points.push(
+      `${(50 + 78 * Math.cos(angle)).toFixed(2)}% ${(50 + 78 * Math.sin(angle)).toFixed(2)}%`,
+    );
+  }
+  return `polygon(${points.join(",")})`;
+}
+
+function Shards({ count }: { count: number }) {
+  return (
+    <>
+      {Array.from({ length: count }, (_, index) => (
+        <span
+          key={index}
+          aria-hidden="true"
+          data-shard
+          data-index={index}
+          data-count={count}
+          style={{
+            clipPath: wedgeClip(index, count),
+            backgroundSize: "100% 100%",
+            visibility: "hidden",
+          }}
+          className="absolute inset-0"
+        />
+      ))}
+    </>
+  );
+}
+
+/** How long the burst takes, and how long the bubble needs to re-form. */
+const POP_MS = 440;
+const REFORM_MS = 900;
 
 export function FloatingOrb({ compact }: { compact: boolean }) {
   const host = useRef<HTMLDivElement>(null);
@@ -136,43 +196,72 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
     const gentle = reduce ? 0.55 : 1;
 
     /*
-      The pop. As the hero scrolls away each bubble bursts once the page has
-      carried it most of the way out: it swells, thins to nothing and, for the
-      big one, throws a ring and a few droplets. Scrolling back up re-inflates
-      it. Each layer names its own moment in data-pop-at, so the small ones go
-      first and the big one last, in the order they leave the screen.
+      Each bubble bursts while it is still whole on screen, not on its way out.
+      data-pop-at is how much of the bubble still has to sit below the top edge,
+      measured in bubble heights, so 1 means it goes the moment its top edge
+      reaches the top of the window and anything above 1 means it goes while
+      there is still a gap. The small ones name a bigger number, so they go
+      first and the big one last. Scrolling back up re-forms them.
     */
     type Pop = {
       at: number;
-      /** 0 whole, 1 fully burst. Moves fast towards a pop, slowly back. */
+      /** 0 whole, 1 fully burst. Runs fast towards a burst, slowly back. */
       value: number;
-      /** Opacity of the skin: falls with the burst, returns on its own. */
-      alpha: number;
       base: number;
       image: HTMLElement | null;
+      shards: HTMLElement[];
+      /** Where the film tears first, in radians. */
+      rupture: number;
+      /** Half the bubble's own width, which sets how far its pieces travel. */
+      radius: number;
     };
-    const POP_MS = 420;
-    const REFORM_MS = 1100;
+
     let lastTick = performance.now();
     const pops = new Map<HTMLElement, Pop>();
-    layers.forEach(({ el }) => {
+
+    layers.forEach(({ el }, order) => {
       if (el.dataset.popAt === undefined) return;
       pops.set(el, {
         at: Number(el.dataset.popAt),
         value: 0,
-        alpha: 1,
         base: Number(el.dataset.baseOpacity ?? 1),
         image: el.querySelector<HTMLElement>("[data-orb-image]"),
+        shards: Array.from(el.querySelectorAll<HTMLElement>("[data-shard]")),
+        rupture: -Math.PI / 2 + order * 1.7,
+        radius: el.offsetWidth / 2,
       });
     });
+
+    /*
+      The wedges borrow the picture the browser already downloaded, read off the
+      rendered element rather than written as a path. next/image serves a sized
+      and re-encoded file, so hardcoding /images/orb.webp here would fetch the
+      full two megapixel original a second time.
+    */
+    const dressShards = () => {
+      pops.forEach((pop) => {
+        const img = pop.image as HTMLImageElement | null;
+        const src = img?.currentSrc || img?.src;
+        if (!src) return;
+        pop.shards.forEach((shard) => {
+          if (shard.style.backgroundImage) return;
+          shard.style.backgroundImage = `url("${src}")`;
+          shard.style.filter = getComputedStyle(img as Element).filter;
+        });
+      });
+    };
+
+    dressShards();
+    window.addEventListener("load", dressShards);
 
     const mainLayer = root.querySelector<HTMLElement>("[data-orb-main]");
     const rings = Array.from(root.querySelectorAll<HTMLElement>("[data-pop-ring]"));
     const flash = root.querySelector<HTMLElement>("[data-pop-flash]");
     const drops = Array.from(root.querySelectorAll<HTMLElement>("[data-pop-drop]"));
-    let radius = mainLayer ? mainLayer.offsetWidth / 2 : 0;
     const measure = () => {
-      radius = mainLayer ? mainLayer.offsetWidth / 2 : 0;
+      pops.forEach((pop, element) => {
+        pop.radius = element.offsetWidth / 2;
+      });
     };
     window.addEventListener("resize", measure);
 
@@ -211,59 +300,81 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
       lastTick = now;
 
       pops.forEach((pop, element) => {
-        // Bursts once only `pop.at` of the bubble is still on screen, however
-        // it got there (page scroll, drift or the trail): about half, so it goes
-        // while it is still clearly a bubble and never slips out of view whole.
+        // Measured on the element itself, so however the bubble got there
+        // (page scroll, its own drift, the trail) it bursts at the same place.
         const box = element.getBoundingClientRect();
-        const left = Math.max(0, box.bottom) / Math.max(box.height, 1);
-        const popping = left < pop.at;
+        const showing = Math.max(0, box.bottom) / Math.max(box.height, 1);
+        const popping = showing < pop.at;
 
-        // A soap bubble bursts in a blink and takes a moment to come back.
         pop.value = popping
           ? Math.min(1, pop.value + dt / POP_MS)
           : Math.max(0, pop.value - dt / REFORM_MS);
         const p = pop.value;
-
-        // Swell for the first sixth, then the skin is simply gone.
-        const swell = Math.min(1, p / 0.16);
-        const gone = Math.min(1, Math.max(0, (p - 0.16) / 0.07));
-        if (popping) pop.alpha = Math.min(pop.alpha, 1 - gone);
-        else pop.alpha += (1 - pop.alpha) * 0.07;
+        const burst = p > 0.0015;
 
         if (pop.image) {
-          pop.image.style.opacity = (pop.base * pop.alpha).toFixed(3);
-          pop.image.style.transform = reduce
-            ? ""
-            : `scale(${(1 + swell * 0.05 + (1 - (1 - p) ** 3) * 0.1).toFixed(3)})`;
+          // Whole or shattered, never both: the wedges are the same pixels.
+          pop.image.style.opacity = burst ? "0" : String(pop.base);
         }
 
-        if (element === mainLayer && !reduce) {
-          // Everything the burst throws is fast at first and slows to nothing.
-          const out = 1 - (1 - p) ** 3;
-          const life = Math.max(0, 1 - p ** 1.6);
-          const fired = p > 0.14 ? 1 : 0;
+        pop.shards.forEach((shard, index) => {
+          if (!burst) {
+            if (shard.style.visibility !== "hidden") shard.style.visibility = "hidden";
+            return;
+          }
+          if (shard.style.visibility === "hidden") shard.style.visibility = "visible";
 
-          rings.forEach((ring, index) => {
-            const start = 0.14 + index * 0.05;
-            const t = Math.min(1, Math.max(0, (p - start) / (1 - start)));
-            const spread = 1 - (1 - t) ** 3;
-            ring.style.opacity = (fired * (1 - t) * (index === 0 ? 0.7 : 0.4)).toFixed(3);
-            ring.style.transform = `scale(${(0.9 + spread * (index === 0 ? 0.75 : 1.15)).toFixed(3)})`;
-          });
+          const count = pop.shards.length;
+          const bearing = ((index + 0.5) / count) * Math.PI * 2 - Math.PI / 2;
+          // How far around the sphere the tear has to travel to reach this
+          // wedge: the far side goes a beat after the rupture.
+          let away = Math.abs(bearing - pop.rupture) % (Math.PI * 2);
+          if (away > Math.PI) away = Math.PI * 2 - away;
+          const start = (away / Math.PI) * 0.16;
+          const t = Math.min(1, Math.max(0, (p - start) / (1 - start)));
 
-          if (flash) {
-            flash.style.opacity = (fired * Math.max(0, 1 - (p - 0.14) * 5) * 0.55).toFixed(3);
-            flash.style.transform = `scale(${(0.7 + out * 0.7).toFixed(3)})`;
+          if (t <= 0) {
+            shard.style.opacity = String(pop.base);
+            shard.style.transform = "";
+            return;
           }
 
+          // Fast off the mark, slowing as the film runs out of tension.
+          const out = 1 - (1 - t) ** 2.4;
+          const spread = pop.radius * (1.15 + (index % 3) * 0.22) * out;
+          const lift = out * out * pop.radius * 0.22;
+          const spin = ((index % 2 ? 1 : -1) * 70 + (index % 5) * 12) * out;
+
+          shard.style.opacity = (pop.base * Math.max(0, 1 - t ** 1.5)).toFixed(3);
+          shard.style.transform = `translate3d(${(Math.cos(bearing) * spread).toFixed(1)}px, ${(Math.sin(bearing) * spread + lift).toFixed(1)}px, 0) rotate(${spin.toFixed(1)}deg) scale(${(1 - out * 0.62).toFixed(3)})`;
+        });
+
+        if (element === mainLayer) {
+          const out = 1 - (1 - p) ** 2.4;
+          const life = Math.max(0, 1 - p ** 1.5);
+          const lit = burst ? 1 : 0;
+
+          // The rim of the hole, racing outwards and gone.
+          rings.forEach((ring, index) => {
+            const t = Math.min(1, p * (index === 0 ? 1.9 : 1.3));
+            ring.style.opacity = (lit * (1 - t) * (index === 0 ? 0.8 : 0.45)).toFixed(3);
+            ring.style.transform = `scale(${(0.72 + t * (index === 0 ? 0.85 : 1.3)).toFixed(3)})`;
+          });
+
+          // One short flare as the film gives way.
+          if (flash) {
+            flash.style.opacity = (lit * Math.max(0, 1 - p * 9) * 0.6).toFixed(3);
+            flash.style.transform = `scale(${(0.72 + out * 0.6).toFixed(3)})`;
+          }
+
+          // The spray the retracting film breaks up into, falling as it goes.
           drops.forEach((drop, index) => {
-            const angle = (index / drops.length) * Math.PI * 2 + (index % 2) * 0.35;
-            const reach = radius * (0.7 + (index % 4) * 0.22) * out;
-            // A little gravity, so the spray falls the way real droplets do.
-            const fall = out * out * radius * 0.35;
-            const size = 0.55 + (index % 3) * 0.3;
-            drop.style.opacity = (fired * life * 0.9).toFixed(3);
-            drop.style.transform = `translate3d(${(Math.cos(angle) * reach).toFixed(1)}px, ${(Math.sin(angle) * reach + fall).toFixed(1)}px, 0) scale(${(size * (1 - p * 0.5)).toFixed(3)})`;
+            const angle = (index / drops.length) * Math.PI * 2 + (index % 3) * 0.3;
+            const reach = pop.radius * (0.8 + (index % 5) * 0.2) * out;
+            const fall = out * out * pop.radius * 0.42;
+            const size = 0.4 + (index % 4) * 0.25;
+            drop.style.opacity = (lit * life * 0.9).toFixed(3);
+            drop.style.transform = `translate3d(${(Math.cos(angle) * reach).toFixed(1)}px, ${(Math.sin(angle) * reach + fall).toFixed(1)}px, 0) scale(${(size * (1 - p * 0.45)).toFixed(3)})`;
           });
         }
       });
@@ -277,6 +388,7 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
       cancelAnimationFrame(frame);
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("resize", measure);
+      window.removeEventListener("load", dressShards);
       window.removeEventListener("deviceorientation", onOrient);
       window.removeEventListener("orientationchange", onTurn);
       if (askForPermission) window.removeEventListener("touchend", askForPermission);
@@ -295,7 +407,7 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
         className="absolute left-1/2 top-[42%] h-[92vmin] w-[92vmin] -translate-x-1/2 -translate-y-1/2 rounded-[var(--radius-pill)] bg-[radial-gradient(circle,oklch(0.5_0.15_259/0.45)_0%,oklch(0.32_0.12_262/0.2)_40%,transparent_70%)] blur-3xl will-change-transform md:left-[70%]"
       />
 
-      {/* The bubble itself. It bursts once the page has carried it most of the way out. */}
+      {/* The bubble itself. It bursts as soon as it starts to leave the screen. */}
       <div
         data-orb-layer
         data-orb-main
@@ -304,7 +416,7 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
         data-drift-y="60"
         data-period="9"
         data-spin="3"
-        data-pop-at="0.5"
+        data-pop-at="1"
         data-base-opacity="1"
         className={`absolute ${
           compact
@@ -323,11 +435,13 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
           className="h-auto w-full [filter:saturate(0.82)_brightness(0.94)_hue-rotate(-8deg)]"
         />
 
-        {/* The shock ring and droplets of the burst. Invisible until it happens. */}
+        <Shards count={16} />
+
+        {/* The flare, the rim of the hole, and the spray it breaks up into. */}
         <span
           aria-hidden="true"
           data-pop-flash
-          className="absolute inset-[8%] rounded-full bg-[radial-gradient(circle,oklch(0.92_0.06_240/0.7)_0%,oklch(0.7_0.14_259/0.25)_45%,transparent_70%)] opacity-0 will-change-transform"
+          className="absolute inset-[8%] rounded-full bg-[radial-gradient(circle,oklch(0.95_0.05_240/0.75)_0%,oklch(0.7_0.14_259/0.28)_45%,transparent_70%)] opacity-0 will-change-transform"
         />
         <span
           aria-hidden="true"
@@ -339,7 +453,7 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
           data-pop-ring
           className="absolute inset-[3%] rounded-full border border-[oklch(0.8_0.12_300/0.6)] opacity-0 will-change-transform"
         />
-        {Array.from({ length: 18 }, (_, index) => (
+        {Array.from({ length: 26 }, (_, index) => (
           <span
             key={index}
             aria-hidden="true"
@@ -349,7 +463,7 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
         ))}
       </div>
 
-      {/* Two companions, drifting on their own clocks. */}
+      {/* Two companions, drifting on their own clocks. They go first. */}
       <div
         data-orb-layer
         data-pull="1.9"
@@ -358,7 +472,7 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
         data-period="6.5"
         data-phase="0.35"
         data-spin="6"
-        data-pop-at="0.55"
+        data-pop-at="1.2"
         data-base-opacity="0.8"
         className={`absolute ${
           compact ? "left-[14%] top-[54%] w-[16vw]" : "left-[46%] top-[68%] w-[7vw] max-w-[96px]"
@@ -373,6 +487,7 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
           sizes="(min-width: 768px) 7vw, 16vw"
           className="h-auto w-full opacity-80 [filter:saturate(0.82)_brightness(0.94)_hue-rotate(-8deg)]"
         />
+        <Shards count={10} />
       </div>
 
       <div
@@ -383,7 +498,7 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
         data-period="5.5"
         data-phase="0.7"
         data-spin="8"
-        data-pop-at="0.6"
+        data-pop-at="1.4"
         data-base-opacity="0.65"
         className={`absolute ${
           compact ? "right-[12%] top-[16%] w-[11vw]" : "left-[88%] top-[28%] w-[5vw] max-w-[68px]"
@@ -398,6 +513,7 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
           sizes="(min-width: 768px) 5vw, 11vw"
           className="h-auto w-full opacity-65 [filter:saturate(0.82)_brightness(0.94)_hue-rotate(-8deg)]"
         />
+        <Shards count={10} />
       </div>
     </div>
   );
