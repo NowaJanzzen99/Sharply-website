@@ -83,7 +83,7 @@ Geen echte API-calls. Een gescripte demo: bezoeker kiest of typt een opdracht (b
 
 ## 7. Beelden en logo
 
-- **Logo:** nieuw wordmark ontwerpen dat bij de glazen stijl past (eventueel met klein beeldmerk). Lever het als SVG en houd het scherp op elke maat. Geen handgetekende schetsmatige SVG's voor illustraties.
+- **Logo: klaar.** Het beeldmerk is een gegenereerde render, geen vector: een letter S uit twee scherpe glazen bladen, cobalt met iridescente facetranden. Materiaal is hier het punt, en dat is wat het aan de bel in de hero bindt. Staat als `public/images/logo-mark.webp` (transparant) en `src/app/icon.png`. Vervangen doe je door die twee bestanden te vervangen, niet door `Wordmark.tsx` aan te passen.
 - **Beelden:** genereren met de Higgsfield-tool (`generate_image`, eventueel `generate_video`). **Budget: maximaal 100 credits.** Controleer vóór elke batch het saldo en de kosten (`balance`, `show_plans_and_credits`), stop bij 100 en houd `reference/assets-log.md` bij (wat, prompt, kosten). Exporteer als geoptimaliseerd `avif/webp` in `public/`.
 - **Al gemaakt en goedgekeurd door Noah (11 beelden, 33 credits, 67 over):** staan als webp in `public/images/`, volledige lijst met doel en prompt in `reference/assets-log.md`. Gebruik ze met `next/image`. `hero-orb` en `hero-orb-portrait` zijn de fallback en de visuele referentie voor de 3D-hero (de echte scène is code). Vijf `service-*` beelden zijn per dienst, `handcraft-ai` voor de handcraft-sectie, `bg-*` als sectieachtergrond. Modelkeuze: `gpt_image_2_5`, variant `sunburst` voor nieuwe beelden (Noah's voorkeur), kwaliteit `high`, 2k, 3 credits per beeld. Er staat geen tekst in de beelden.
 

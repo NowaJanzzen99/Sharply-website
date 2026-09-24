@@ -54,7 +54,7 @@ export function Footer({ content, lang }: { content: Content; lang: Lang }) {
           <p className="text-[13px] text-text-faint">
             {year} Sharply. {content.footer.rights}
           </p>
-          <Mark className="h-4 w-4 shrink-0 text-text-faint" />
+          <Mark className="h-5 w-5 shrink-0 opacity-70" />
         </div>
       </div>
 

@@ -18,6 +18,13 @@ Alle beelden zijn zonder tekst gegenereerd. Typografie komt altijd uit code.
 | handcraft-ai.webp | 4:3 | flare | Handcraft x AI-sectie | Glazen bol op handgescheurd papier en collage |
 | bg-iridescent.webp | 16:9 | sunburst | Sectieachtergrond | Zijdeachtige iridescente vloeistofgolven, donkere randen |
 | bg-horizon.webp | 21:9 | sunburst | Sectieachtergrond | Cobalt horizon-boog onderaan, verder leeg |
+| logo-mark.webp (+ .png, src/app/icon.png) | 1:1 | sunburst | Logo | Monogram S uit twee scherpe glazen bladen, cobalt, iridescente facetranden, op zwart |
+
+## Logo
+
+Twee concepten gegenereerd (6 credits), Noah koos A (de kristallen S). De tweede (lint van vloeibaar glas) staat in `reference/logo/logo-b.png`.
+
+De uitsnede is met de hand gemaakt, niet met remove_background: de render staat op zwart en glas is licht op donker, dus de helderheid van een pixel is zijn dekking. Terugrekenen (kleur delen door helderheid) geeft een additieve uitsnede die op elk donker vlak klopt en de gloed aan de randen houdt. Het script staat in de git-geschiedenis bij deze commit. De ruwe PNG's staan bewust niet in git.
 
 ## Nog te maken (optioneel)
 - Deelafbeelding voor social media (kan met Next `opengraph-image` op basis van hero-orb plus tekst in code).
