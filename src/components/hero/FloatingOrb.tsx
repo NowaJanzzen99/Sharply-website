@@ -196,12 +196,17 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
     const gentle = reduce ? 0.55 : 1;
 
     /*
-      Each bubble bursts while it is still whole on screen, not on its way out.
-      data-pop-at is how much of the bubble still has to sit below the top edge,
-      measured in bubble heights, so 1 means it goes the moment its top edge
-      reaches the top of the window and anything above 1 means it goes while
-      there is still a gap. The small ones name a bigger number, so they go
-      first and the big one last. Scrolling back up re-forms them.
+      Each bubble bursts on how far the page itself has scrolled, in pixels,
+      not on where the bubble happens to sit on screen: data-pop-at is that
+      distance. An earlier version measured the bubble's own position instead,
+      and on a phone that bubble starts close to the top edge already, so a
+      quick flick carried it, mid-burst, straight past the reach of a glance:
+      it had happened, but nobody was still looking at that part of the screen
+      by the time it was done. Tying it to scroll distance instead means it
+      always fires within the very first, unhurried moment of scrolling,
+      whatever the device and whatever the bubble's own drift is doing. The
+      small ones name a smaller distance, so they go first and the big one
+      last. Scrolling back up re-forms them.
     */
     type Pop = {
       at: number;
@@ -299,15 +304,10 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
       const dt = Math.min(64, now - lastTick);
       lastTick = now;
 
+      const scrollY = window.scrollY;
+
       pops.forEach((pop, element) => {
-        // Measured on the element itself, so however the bubble got there
-        // (page scroll, its own drift, the trail) it bursts at the same place.
-        const box = element.getBoundingClientRect();
-        const showing = Math.max(0, box.bottom) / Math.max(box.height, 1);
-        // Only once the visitor has scrolled: in a short window (a phone on its
-        // side) the bubble can be taller than the screen and would otherwise
-        // burst on arrival.
-        const popping = window.scrollY > 40 && showing < pop.at;
+        const popping = scrollY > pop.at;
 
         pop.value = popping
           ? Math.min(1, pop.value + dt / POP_MS)
@@ -410,7 +410,7 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
         className="absolute left-1/2 top-[42%] h-[92vmin] w-[92vmin] -translate-x-1/2 -translate-y-1/2 rounded-[var(--radius-pill)] bg-[radial-gradient(circle,oklch(0.5_0.15_259/0.45)_0%,oklch(0.32_0.12_262/0.2)_40%,transparent_70%)] blur-3xl will-change-transform md:left-[70%]"
       />
 
-      {/* The bubble itself. It bursts as soon as it starts to leave the screen. */}
+      {/* The bubble itself. It bursts within the first breath of any scroll. */}
       <div
         data-orb-layer
         data-orb-main
@@ -419,7 +419,7 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
         data-drift-y="60"
         data-period="9"
         data-spin="3"
-        data-pop-at="1"
+        data-pop-at="70"
         data-base-opacity="1"
         className={`absolute ${
           compact
@@ -475,7 +475,7 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
         data-period="6.5"
         data-phase="0.35"
         data-spin="6"
-        data-pop-at="1.2"
+        data-pop-at="30"
         data-base-opacity="0.8"
         className={`absolute ${
           compact ? "left-[14%] top-[54%] w-[16vw]" : "left-[46%] top-[68%] w-[7vw] max-w-[96px]"
@@ -501,7 +501,7 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
         data-period="5.5"
         data-phase="0.7"
         data-spin="8"
-        data-pop-at="1.4"
+        data-pop-at="48"
         data-base-opacity="0.65"
         className={`absolute ${
           compact ? "right-[12%] top-[16%] w-[11vw]" : "left-[88%] top-[28%] w-[5vw] max-w-[68px]"
