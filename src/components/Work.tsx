@@ -26,7 +26,7 @@ function ProjectCard({
   lag?: number;
 }) {
   return (
-    <article data-scene data-scene-lag={lag} className={`group ${className}`}>
+    <article data-scene="photo" data-scene-lag={lag} className={`group ${className}`}>
       <RevealImage
         variant={variant}
         className="relative overflow-hidden rounded-[var(--radius-lg)] border border-hairline"
@@ -102,7 +102,7 @@ export function Work({ content }: { content: Content }) {
           />
 
           <Reveal className="md:col-span-4 md:self-end" delay={0.1}>
-            <div data-scene data-scene-lag={0.1} className="glass rounded-[var(--radius-lg)] p-7">
+            <div data-scene="panel" data-scene-variant="up" data-scene-lag={0.1} className="glass rounded-[var(--radius-lg)] p-7">
               <h3 className="font-display text-[24px] font-medium text-text">
                 {content.work.ctaTitle}
               </h3>

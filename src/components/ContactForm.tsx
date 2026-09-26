@@ -218,7 +218,8 @@ export function ContactForm({ content, lang }: { content: Content; lang: Lang })
           <Reveal className="lg:col-span-8" delay={0.08}>
             <div
               ref={panel}
-              data-scene
+              data-scene="panel"
+              data-scene-variant="up"
               className="glass scroll-mt-24 rounded-[var(--radius-lg)] p-5 sm:p-7 md:p-9"
             >
               <AnimatePresence mode="wait" initial={false}>

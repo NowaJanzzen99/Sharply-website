@@ -3,28 +3,59 @@
 import { useEffect } from "react";
 
 /*
-  Scroll-scrubbed entrances for every card on the page.
+  Scroll-scrubbed entrances for the page's cards and panels.
 
-  Any element with data-scene is driven by where it sits in the viewport, not
-  by a one-off trigger: it rises out of a slight backwards tilt, grows to full
-  size and comes into full light as it travels up the screen, and whatever is
-  marked data-scene-img inside it drifts against its frame the whole way
-  through, so the picture has depth. Scroll slowly and it moves slowly; scroll
-  back and it reverses. Same principle as the services reel.
+  Every element with data-scene is driven by where it sits in the viewport,
+  not by a one-off trigger, and travels back out the same way if you scroll
+  up: scroll slowly and it moves slowly, stop and it holds. One rAF loop for
+  the whole page, asleep whenever nothing is moving. Only transform and
+  opacity are written.
 
-  One scroll listener and one rAF loop for the whole page, and the loop sleeps
-  as soon as everything has settled. Only transform and opacity are written.
+  Three kinds, each with its own character, because a single move repeated on
+  every card is what makes a page read as a template rather than as design:
 
-  Kinds:
-    card  tilts back and rises (images, panels)
-    row   slides in from the side (list rows)
-  data-scene-lag="0.08" makes an element start a little later than its
-  neighbour, so a pair of cards never moves as one block.
+    photo  a project shot or the manifesto image. Slides in on its own axis
+           and rotates a touch as it lands, sharing the six-way vocabulary
+           (left/right/up/center/circle/diagonal) that RevealImage and the
+           services reel already use, so "left" always means the same kind of
+           motion wherever it appears on the page. Decorative, so it can
+           afford the flourish.
+    panel  a glass panel with real content: the demo's controls and preview,
+           the contact form, a text-only callout card. Reads as calmer and
+           more direct on purpose, since it is something to use, not to look
+           at: a straight slide with no rotation, shorter travel, quicker.
+    row    a line in a list (a step in the process rail). Slides in from the
+           side, already distinct from the two above.
+
+  Direction comes from data-scene-variant, or, failing that, from the variant
+  already sitting on a RevealImage child (its data-variant), so most photo
+  cards need no extra markup at all.
 */
+
+type Kind = "photo" | "panel" | "row";
+
+type Vector = { dx: number; dy: number; rot: number; zoom: number };
+
+/** Shared with RevealImage and the services reel: one name, one direction, everywhere. */
+const PHOTO_VECTORS: Record<string, Vector> = {
+  left: { dx: -100, dy: 14, rot: -2.4, zoom: 0.1 },
+  right: { dx: 100, dy: 14, rot: 2.4, zoom: 0.1 },
+  up: { dx: 0, dy: 140, rot: 0, zoom: 0.08 },
+  center: { dx: 0, dy: 60, rot: 0, zoom: 0.16 },
+  circle: { dx: 0, dy: 44, rot: 4, zoom: 0.2 },
+  diagonal: { dx: 78, dy: 72, rot: -3.4, zoom: 0.1 },
+};
+
+const PANEL_VECTORS: Record<string, Vector> = {
+  left: { dx: -70, dy: 0, rot: 0, zoom: 0.03 },
+  right: { dx: 70, dy: 0, rot: 0, zoom: 0.03 },
+  up: { dx: 0, dy: 60, rot: 0, zoom: 0.03 },
+};
 
 type Entry = {
   el: HTMLElement;
-  kind: string;
+  kind: Kind;
+  vector: Vector;
   lag: number;
   img: HTMLElement | null;
   enter: number;
@@ -44,14 +75,23 @@ export function ScrollScenes() {
     let running = false;
 
     const collect = () => {
-      entries = Array.from(document.querySelectorAll<HTMLElement>("[data-scene]")).map((el) => ({
-        el,
-        kind: el.dataset.scene ?? "card",
-        lag: Number(el.dataset.sceneLag ?? 0),
-        img: el.querySelector<HTMLElement>("[data-scene-img]"),
-        enter: 0,
-        pass: 0.5,
-      }));
+      entries = Array.from(document.querySelectorAll<HTMLElement>("[data-scene]")).map((el) => {
+        const kind = (el.dataset.scene || "photo") as Kind;
+        const named =
+          el.dataset.sceneVariant ??
+          el.querySelector<HTMLElement>("[data-img-reveal]")?.dataset.variant ??
+          "up";
+        const table = kind === "panel" ? PANEL_VECTORS : PHOTO_VECTORS;
+        return {
+          el,
+          kind,
+          vector: table[named] ?? PHOTO_VECTORS.up,
+          lag: Number(el.dataset.sceneLag ?? 0),
+          img: el.querySelector<HTMLElement>("[data-scene-img]"),
+          enter: 0,
+          pass: 0.5,
+        };
+      });
     };
 
     const step = () => {
@@ -79,20 +119,29 @@ export function ScrollScenes() {
 
         const e = ease(entry.enter);
         const rest = 1 - e;
+        const { dx, dy, rot, zoom } = entry.vector;
 
         if (entry.kind === "row") {
           entry.el.style.transform = `translate3d(${(rest * 140 * amp).toFixed(1)}px, ${(rest * 30 * amp).toFixed(1)}px, 0) rotate(${(rest * 3 * amp).toFixed(2)}deg)`;
           entry.el.style.opacity = (0.15 + 0.85 * e).toFixed(3);
+        } else if (entry.kind === "panel") {
+          // Direct: a slide and a fade, nothing rotating. Something to use,
+          // not to admire, so the motion stays out of the way of reading it.
+          entry.el.style.transform = `translate3d(${(rest * dx * amp).toFixed(1)}px, ${(rest * dy * amp).toFixed(1)}px, 0) scale(${(1 - rest * zoom * amp).toFixed(4)})`;
+          entry.el.style.opacity = (0.25 + 0.75 * e).toFixed(3);
         } else {
-          entry.el.style.transform = `perspective(1200px) translate3d(0, ${(rest * 170 * amp).toFixed(1)}px, 0) rotateX(${(rest * 28 * amp).toFixed(2)}deg) scale(${(1 - rest * 0.16 * amp).toFixed(4)})`;
+          // Photo: its own axis and a touch of rotation, so six neighbouring
+          // cards read as six separate things arriving rather than one card
+          // repeated. transform-origin is set per element below to match.
+          entry.el.style.transform = `translate3d(${(rest * dx * amp).toFixed(1)}px, ${(rest * dy * amp).toFixed(1)}px, 0) rotate(${(rest * rot * amp).toFixed(2)}deg) scale(${(1 - rest * zoom * amp).toFixed(4)})`;
           entry.el.style.opacity = (0.1 + 0.9 * e).toFixed(3);
         }
 
         if (entry.img) {
           // The picture also settles out of a zoom as the card lands.
           const drift = (entry.pass - 0.5) * -16 * amp;
-          const zoom = 1.2 + rest * 0.25 * amp;
-          entry.img.style.transform = `translate3d(0, ${drift.toFixed(2)}%, 0) scale(${zoom.toFixed(4)})`;
+          const imgZoom = 1.2 + rest * 0.25 * amp;
+          entry.img.style.transform = `translate3d(0, ${drift.toFixed(2)}%, 0) scale(${imgZoom.toFixed(4)})`;
         }
       });
 
@@ -113,7 +162,8 @@ export function ScrollScenes() {
     const boot = requestAnimationFrame(() => {
       collect();
       entries.forEach((entry) => {
-        entry.el.style.transformOrigin = "50% 100%";
+        entry.el.style.transformOrigin =
+          entry.kind === "photo" && entry.vector === PHOTO_VECTORS.up ? "50% 100%" : "50% 50%";
         entry.el.style.willChange = "transform, opacity";
         if (entry.img) entry.img.style.willChange = "transform";
       });
