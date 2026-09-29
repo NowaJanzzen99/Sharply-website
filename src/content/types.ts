@@ -75,19 +75,40 @@ export type ServiceDetail = {
   questions: { question: string; answer: string }[];
 };
 
+export type GalleryImage = {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+};
+
 export type WorkDetail = {
   slug: string;
   tagline: string;
   intro: string;
   sections: DetailSection[];
-  /** What the concept covers. Never a result, because there is no client yet. */
+  /** What was made. For a concept, what it covers: never a result. */
   scope: string[];
-  /** Repeated on every project page: these are our own designs, not client work. */
-  note: string;
+  /** Concepts only: says plainly that this is our own design, not client work. */
+  note?: string;
+  /** Real work only: the live address. */
+  url?: string;
+  /** Real work only: a screenshot of the whole page, scrolled inside a device. */
+  page?: GalleryImage;
+  /** Real work only: more pictures, shown in a gallery that moves with scroll. */
+  gallery?: GalleryImage[];
+  /** Facts shown under the title: who, what, where. Never numbers we cannot back. */
+  facts?: { label: string; value: string }[];
 };
 
 /** The shared furniture of a detail page: labels, links, the closing call. */
 export type DetailCopy = {
+  /** Link to a live client site. */
+  visit: string;
+  /** Heading over the gallery on a real case. */
+  gallery: string;
+  /** Heading over the scope list on a real case, where "concept" would be untrue. */
+  made: string;
   backToServices: string;
   backToWork: string;
   deliverables: string;
@@ -230,6 +251,8 @@ export type Content = {
     ctaTitle: string;
     ctaText: string;
     ctaButton: string;
+    /** Shown on real client work instead of conceptLabel. */
+    clientLabel: string;
     items: {
       key: string;
       title: string;
@@ -237,6 +260,8 @@ export type Content = {
       blurb: string;
       image: string;
       alt: string;
+      /** True for real client work. Everything else is labelled as a concept. */
+      real?: boolean;
     }[];
   };
   process: {

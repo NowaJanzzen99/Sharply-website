@@ -46,3 +46,6 @@ reference/logo/*.png
 
 # Raw service renders (large PNGs)
 reference/services-v2/*.png
+reference/logo-v2/*.png
+reference/lwp/*.png
+reference/lwp/*.webp

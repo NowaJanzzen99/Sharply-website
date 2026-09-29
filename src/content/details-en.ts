@@ -11,6 +11,9 @@ import type { Details } from "./types";
 */
 export const detailsEn: Details = {
   copy: {
+    visit: "Visit the site",
+    gallery: "Up close",
+    made: "What we made",
     backToServices: "All services",
     backToWork: "All work",
     deliverables: "What you get",
@@ -35,24 +38,12 @@ export const detailsEn: Details = {
       slug: "websites-and-webapps",
       tagline: "From a site that makes an impression to the platform your business runs on.",
       intro:
-        "Most websites are a brochure. We build the thing people actually do something in: read, request, log in, order, manage. How far that goes is up to you, but the base is always the same: fast, yours alone, and built to last for years.",
+        "Not a brochure, but the thing people actually do something in. Fast, yours alone, and built to last for years.",
       sections: [
-        {
-          title: "No theme, no page builder",
-          body: "We do not work with templates or drag and drop builders. Everything you see is designed for you and written in code. That takes more thinking up front and gives you a site nobody else has, one that never hits the ceiling of a theme, and one you can still extend in three years.",
-        },
-        {
-          title: "Fast, because slow costs money",
-          body: "Images are cut down to what a phone actually needs, pages are prepared in advance instead of assembled per visitor, and nothing loads that does nothing. That is not only pleasant for visitors: Google measures it and counts it.",
-        },
-        {
-          title: "Manage it yourself, without fear",
-          body: "You get a place to change text and images where you cannot break anything. What has to stay fixed, stays fixed. And if you would rather just say what you want, that works too: see the demo on the homepage.",
-        },
-        {
-          title: "Login, database, dashboard",
-          body: "The moment accounts, records and roles come into it, it is a webapp. We build those on the same foundation: same speed, same design, with a database underneath and an admin screen you and your team actually work in.",
-        },
+        { title: "No theme, no page builder", body: "Everything is designed for you and written in code, so you never hit the ceiling of a template." },
+        { title: "Fast, because slow costs money", body: "Images cut to size, pages prepared in advance, no script that does nothing. Google counts it." },
+        { title: "Manage it without fear", body: "You change text and images yourself, and what has to stay fixed cannot break." },
+        { title: "Login, database, dashboard", body: "Once accounts or records come in, it becomes a webapp on the same foundation." },
       ],
       deliverables: [
         "Design made for you, first on screen, then in code",
@@ -85,24 +76,12 @@ export const detailsEn: Details = {
       slug: "ai-chat-and-agents",
       tagline: "An assistant inside your own site that genuinely helps your customers.",
       intro:
-        "Not a chatbot that knows four questions and then points at a contact form. An assistant that knows your information, answers in your tone, and can do things: book an appointment, start a quote, look something up in your system.",
+        "Not a chatbot that knows four questions. An assistant that knows your information and can do things.",
       sections: [
-        {
-          title: "Trained on what you know",
-          body: "We feed it your documents, prices, terms and the questions you answer every week. It answers from those, and says honestly when it does not know instead of inventing something. That last part is where most chatbots fall apart.",
-        },
-        {
-          title: "It does more than talk",
-          body: "An assistant that only produces text is a search box with manners. We connect it to your calendar, your mail, your stock or your CRM, so it books the appointment and creates the request for real.",
-        },
-        {
-          title: "You see what happens",
-          body: "You get an overview of the conversations: what people ask, where it got stuck, which answers are missing. That is the best customer research list you can have, because it is literally your customers' questions.",
-        },
-        {
-          title: "Inside the lines",
-          body: "You decide what it talks about and what it does not, what it may do and what has to pass a human. Sensitive data stays out of the conversation, and we write down what happens to the rest.",
-        },
+        { title: "Trained on what you know", body: "It answers from your documents and prices, and says honestly when it does not know." },
+        { title: "It does more than talk", body: "Connected to calendar, mail or CRM, it books the appointment and creates the request for real." },
+        { title: "You see what happens", body: "Every conversation in one place: what people ask, and which answers are still missing." },
+        { title: "Inside the lines", body: "You decide what it talks about, and what has to pass a person first." },
       ],
       deliverables: [
         "An assistant in your own site, in your own styling",
@@ -134,24 +113,12 @@ export const detailsEn: Details = {
       slug: "webshops",
       tagline: "Selling through a shop that feels like a brand.",
       intro:
-        "A shop from a standard package looks like every other shop from that package. We design the store around your products, and make sure payment, stock and shipping work exactly the way you already work.",
+        "A store designed around your products. Payment, stock and shipping work the way you already work.",
       sections: [
-        {
-          title: "Products as objects",
-          body: "How a product sits on the screen decides how it feels. We spend time on imagery, detail pages and the route towards them, because that is the difference between a catalogue and a shop you want something out of.",
-        },
-        {
-          title: "Checkout without friction",
-          body: "iDEAL, credit card, Apple Pay and Bancontact. As few steps as possible, no forced account, shipping costs visible before the final screen. Every extra click costs orders.",
-        },
-        {
-          title: "Stock and shipping connected",
-          body: "We connect to your bookkeeping, your stock system or your carrier so you are not maintaining two places. Order in, label out, stock updated.",
-        },
-        {
-          title: "Room to grow",
-          body: "New product groups, a second language, a trade price list: that is already in the foundation. You do not start over the moment it starts working.",
-        },
+        { title: "Products as objects", body: "Imagery and product pages get the attention that separates a catalogue from a shop." },
+        { title: "Checkout without friction", body: "iDEAL, credit card and Apple Pay, as few steps as possible and no forced account." },
+        { title: "Stock and shipping connected", body: "Order in, label out, stock updated. Nothing kept twice." },
+        { title: "Room to grow", body: "A second language or a trade price list is already in the foundation." },
       ],
       deliverables: [
         "A store designed around your products",
@@ -184,24 +151,12 @@ export const detailsEn: Details = {
       slug: "integrations-and-automation",
       tagline: "Your systems joined up, so the work carries itself.",
       intro:
-        "Most of the wasted time in a business sits between two programs: retyping something, forwarding a file, keeping a list that already exists somewhere else. That is exactly the work a computer does better than you.",
+        "Most time leaks away between two programs. A computer does that work better than you.",
       sections: [
-        {
-          title: "First find where it jams",
-          body: "We start with your week rather than with technology. What do you redo every Monday? What breaks when someone is ill? That almost always points straight at the first three connections worth building.",
-        },
-        {
-          title: "Set up once, then silent",
-          body: "You do not notice a good integration. The invoice is in the bookkeeping, the appointment in the calendar, the customer in the CRM, without anyone retyping a thing. What we build keeps running when you are not there.",
-        },
-        {
-          title: "Reporting that adds up",
-          body: "When the data comes from one source, the numbers agree. You get an overview you can actually decide on, instead of three exports that contradict each other.",
-        },
-        {
-          title: "When it fails, you hear about it",
-          body: "Automation without supervision is a time bomb. We build alerts around it: if something fails you get a message, and the log shows exactly what happened.",
-        },
+        { title: "First find where it jams", body: "We start with your week, not with technology. That points at the first connections." },
+        { title: "Set up once, then silent", body: "Invoice in the books, appointment in the calendar, without anyone retyping a thing." },
+        { title: "Reporting that adds up", body: "Everything from one source, so numbers you can decide on." },
+        { title: "When it fails, you hear about it", body: "If something fails you get a message, and you see exactly what happened." },
       ],
       deliverables: [
         "A map of your current workflow and where it stalls",
@@ -234,24 +189,12 @@ export const detailsEn: Details = {
       slug: "branding-and-motion",
       tagline: "A brand that sounds the same on every channel.",
       intro:
-        "A logo is the smallest part of a brand. It is about the whole set: colour, typography, imagery, motion and tone, and about guidelines clear enough for your team to use without us.",
+        "A logo is the smallest part of a brand. We make the whole set, with guidelines your team uses on its own.",
       sections: [
-        {
-          title: "The story first, the shape after",
-          body: "We start with what you do, who for, and why anyone would pick you. Without that a brand becomes a conversation about taste, and conversations about taste last forever and settle nothing.",
-        },
-        {
-          title: "Made to be used",
-          body: "A brand has to work on a sign, in an email signature, on packaging and in a nine second story. We design the set for that, not for how it looks on one beautiful presentation slide.",
-        },
-        {
-          title: "Motion is part of it",
-          body: "How your logo arrives, how a button answers, how a headline enters: that is as much brand as your colour. We deliver that motion with the rest, as files and as a rule.",
-        },
-        {
-          title: "Guidelines somebody reads",
-          body: "Not a sixty page book that disappears into a folder. A set short enough to use and clear enough that nobody has to argue about it.",
-        },
+        { title: "The story first, the shape after", body: "What you do and for whom comes first, or a brand becomes a debate about taste." },
+        { title: "Made to be used", body: "From a shop sign to an email signature to a nine second story." },
+        { title: "Motion is part of it", body: "How your logo arrives and a button answers is as much brand as your colour." },
+        { title: "Guidelines somebody reads", body: "Short enough to use, clear enough that nobody argues about it." },
       ],
       deliverables: [
         "Logo and mark, in every file you need",
@@ -284,24 +227,12 @@ export const detailsEn: Details = {
       slug: "ai-content",
       tagline: "Imagery, video and animation for campaigns and social.",
       intro:
-        "With the right approach you can make imagery that used to take a shoot, a studio and a week of waiting. That is not pressing a button: it is prompting, selecting, retouching and taste. The generated part is the fastest part, not the hard part.",
+        "Imagery that used to take a shoot and a week of waiting. Generating is the fast part, not the hard part.",
       sections: [
-        {
-          title: "Consistent with your brand",
-          body: "Individually pretty pictures are worth nothing. We work with fixed setups, references and colour treatment, so twenty images look like each other and like your brand, rather than like twenty separate experiments.",
-        },
-        {
-          title: "Finished by hand",
-          body: "Hands, text, logos and details go wrong, every time. That is where our time goes: retouching, compositing, regenerating until it is right. What you get is finished, not nearly finished.",
-        },
-        {
-          title: "Campaign sets, not loose pieces",
-          body: "You get the whole run in the formats you need: landscape, portrait, square, with and without room for text. Ready to place without anyone having to crop anything.",
-        },
-        {
-          title: "Honest about what it is",
-          body: "We tell you where generating is the better choice and where a real photo or a real recording wins. For people, for products in the hand and for anything that has to earn trust, real is often better.",
-        },
+        { title: "Consistent with your brand", body: "Fixed setups and colour treatment, so twenty images look like each other and like you." },
+        { title: "Finished by hand", body: "Hands, text and details always go wrong. That is where our time goes." },
+        { title: "Campaign sets, not loose pieces", body: "Every format you need, ready to place." },
+        { title: "Honest about what it is", body: "We say so when a real photograph is the better choice." },
       ],
       deliverables: [
         "An image set in your brand style",
@@ -332,53 +263,48 @@ export const detailsEn: Details = {
   },
 
   work: {
-    noordlicht: {
-      slug: "noordlicht-keramiek",
-      tagline: "A brand site for a ceramics studio, where the workshop is as visible as the collection.",
+    liveweddingpaintings: {
+      slug: "live-wedding-paintings",
+      tagline: "A site that feels like a gallery, and books weddings.",
       intro:
-        "With handmade work you buy the maker as much as the object. This concept is built around that: stories from the workshop sit beside the collection instead of being hidden in a blog nobody finds.",
+        "Sara van Heukelom paints weddings live. We made her site, from the first design to the day it went live.",
+      url: "https://liveweddingpaintings.nl",
+      facts: [
+        { label: "Client", value: "Sara van Heukelom" },
+        { label: "What we did", value: "Everything, from design to launch" },
+        { label: "Languages", value: "Dutch and English" },
+      ],
       sections: [
-        {
-          title: "The idea",
-          body: "A small ceramics studio working in series, with pieces that differ from firing to firing. A standard shop layout would flatten that into stock. We gave the collection the calm of an exhibition, with room for the process in between.",
-        },
-        {
-          title: "What we designed",
-          body: "A light, quiet layout with plenty of white, large imagery and typography that does not ask for attention. The collection is a grid that breathes, each piece has its own page with the story of its series, and the workshop returns as a layer running through the site.",
-        },
-        {
-          title: "How it would be built",
-          body: "As a brand site with a light shop underneath: add series yourself, drag in images, write stories without needing a designer. Payment through iDEAL, shipping connected, and imagery that loads as well on a phone as on a screen in the studio.",
-        },
+        { title: "The painting leads", body: "Her work hangs in gold frames that move as you scroll. The product is the picture, so the picture goes first." },
+        { title: "Pick a format", body: "Three sizes to browse through, with the price beside each. No PDF, no emails back and forth." },
+        { title: "Booking in eight steps", body: "A form that asks what Sara needs to know, including when it is a gift for the couple." },
       ],
       scope: [
-        "Brand direction, colour and typography",
-        "Design for home, collection and product pages",
-        "Workshop stories as a permanent layer",
-        "Light shop with iDEAL",
-        "Manage series and imagery yourself",
+        "Design and look",
+        "Website in Dutch and English",
+        "Eight step booking form",
+        "Format picker with prices",
+        "Reviews and frequently asked questions",
+        "Hosting, launch and upkeep",
       ],
-      note: "This is a concept project we made ourselves to show how we work. Noordlicht Keramiek is an invented brand, not a client, and no results are attached to it.",
+      page: { src: "/images/lwp-page.webp", alt: "The full homepage of liveweddingpaintings.nl, top to bottom", width: 1200, height: 8835 },
+      gallery: [
+        { src: "/images/lwp-phones.webp", alt: "Two phones showing the booking form and the format picker of Live Wedding Paintings", width: 1800, height: 1344 },
+        { src: "/images/lwp-formaten.webp", alt: "The format picker: three paintings in gold frames with size and price", width: 1440, height: 900 },
+        { src: "/images/lwp-over.webp", alt: "The section about Sara, with a photo of her painting at a wedding", width: 1440, height: 900 },
+        { src: "/images/lwp-reviews.webp", alt: "Reviews from couples beside one of the paintings", width: 1440, height: 900 },
+      ],
     },
 
     halm: {
       slug: "halm",
       tagline: "A dark shop for skincare, built to show products as objects.",
       intro:
-        "Skincare is almost always presented light, soft and pastel. This concept does the opposite: a dark store where the bottles stand in the light like objects, the way you would show a watch or a perfume.",
+        "Skincare is almost always shown light and pastel. This concept does the opposite.",
       sections: [
-        {
-          title: "The idea",
-          body: "A brand with few products and a lot to say about them. A store full of cards and star ratings is the wrong tool for that. The question was how to make four products feel important without shouting.",
-        },
-        {
-          title: "What we designed",
-          body: "A dark background that lets the product glow, ingredients as a readable layer under the bottle instead of a list in small print, and a routine builder showing which product comes when. Motion is kept slow and heavy, in keeping with what the brand charges.",
-        },
-        {
-          title: "How it would be built",
-          body: "As a full shop: stock, variants, discount codes and a checkout of as few steps as possible. Subscriptions are allowed for in the setup, because skincare lends itself to them.",
-        },
+        { title: "The idea", body: "Four products that have to feel important, without shouting." },
+        { title: "What we designed", body: "A dark store where the bottles glow, with ingredients as a readable layer." },
+        { title: "How it would be built", body: "A full shop, with room for repeat orders." },
       ],
       scope: [
         "Store design, dark, built around the product",
@@ -394,20 +320,11 @@ export const detailsEn: Details = {
       slug: "routewerk",
       tagline: "A dashboard that tracks shipments, flags delays and shares out the work.",
       intro:
-        "This concept shows what we mean by an AI system: not a chat window bolted on the side, but software where the clever parts sit exactly where somebody would otherwise be clicking by hand.",
+        "What we mean by an AI system: the clever parts sit where somebody now clicks by hand.",
       sections: [
-        {
-          title: "The idea",
-          body: "A carrier with a few hundred shipments a week, where the planning lives in the heads of two people. That works until one of them is on holiday. The question was how to put that knowledge into a system without sidelining the people who hold it.",
-        },
-        {
-          title: "What we designed",
-          body: "An overview that shows in one glance what is running, what is stuck and what needs attention. Delays are flagged before the customer calls. Work is proposed and divided, but a person approves it. And there is an assistant that answers questions about the data, so nobody has to build a report to learn something simple.",
-        },
-        {
-          title: "How it would be built",
-          body: "As a webapp with login and roles, a database underneath and connections to the systems already in place. The automation runs in the background with alerts when something fails, because a planning system that fails quietly is worse than none.",
-        },
+        { title: "The idea", body: "A schedule that lives in two heads, and stalls the moment one of them is on holiday." },
+        { title: "What we designed", body: "One overview that sees a delay before the customer calls, and proposes work a person approves." },
+        { title: "How it would be built", body: "A webapp with roles and connections, and alerts when something fails." },
       ],
       scope: [
         "Dashboard with a live overview",

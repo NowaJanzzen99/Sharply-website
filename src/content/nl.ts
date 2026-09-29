@@ -155,21 +155,23 @@ export const nl: Content = {
   },
   work: {
     title: "Werk",
-    lead: "Drie conceptprojecten die laten zien hoe wij werken.",
-    body: "Dit zijn ontwerpen die wij zelf maakten om ons werk te tonen. Zodra de eerste klantprojecten live staan, komen ze hier te staan met echte resultaten.",
+    lead: "Een klant die live staat, en twee concepten die laten zien hoe ver het gaat.",
+    body: "Live Wedding Paintings is echt werk voor een echte klant. Halm en Routewerk zijn ontwerpen die wij zelf maakten, en zo staat het er ook bij.",
     conceptLabel: "Conceptproject",
+    clientLabel: "Klantproject",
     ctaTitle: "Jouw project hier?",
     ctaText: "Vertel wat je wilt bouwen, dan staat jouw werk hier straks.",
     ctaButton: "Start een project",
     items: [
       {
-        key: "noordlicht",
-        title: "Noordlicht Keramiek",
-        discipline: "Merk en website",
+        key: "liveweddingpaintings",
+        title: "Live Wedding Paintings",
+        discipline: "Merk, website en boekingen",
         blurb:
-          "Een rustige merksite voor een keramiekstudio, met verhalen uit het atelier naast de collectie.",
-        image: "/images/project-noordlicht.webp",
-        alt: "Laptop en telefoon met de website van een keramiekstudio in een lichte, rustige stijl",
+          "De site van Sara van Heukelom, die live schildert op bruiloften. Van eerste ontwerp tot boekingsformulier door ons gemaakt.",
+        image: "/images/project-liveweddingpaintings.webp",
+        alt: "Laptop en telefoon met de website van Live Wedding Paintings: schilderijen in gouden lijsten op een warme, lichte achtergrond",
+        real: true,
       },
       {
         key: "halm",
@@ -898,12 +900,9 @@ export const nl: Content = {
   footer: {
     contactTitle: "Aan de slag",
     email: "noah.janssen@sharply.nl",
-    legalNote: "Sharply, designstudio in Nederland.",
-    placeholders: [
-      "KVK-nummer volgt",
-      "Btw-nummer volgt",
-      "Adres volgt",
-    ],
+    legalNote: "Sharply, designstudio in Roermond.",
+    // Uit het Handelsregister (eenmanszaak, hoofdvestiging). Btw-nummer nog toevoegen.
+    placeholders: ["KvK 76336840", "Scheidingsweg 2", "6045 CR Roermond"],
     socialTitle: "Volgen",
     socialNote: "Kanalen volgen binnenkort.",
     rights: "Alle rechten voorbehouden.",

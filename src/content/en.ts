@@ -155,21 +155,23 @@ export const en: Content = {
   },
   work: {
     title: "Work",
-    lead: "Three concept projects that show how we work.",
-    body: "These are designs we made ourselves to show our work. As soon as the first client projects are live, they will sit here with real results.",
+    lead: "One client who is live, and two concepts that show how far it goes.",
+    body: "Live Wedding Paintings is real work for a real client. Halm and Routewerk are designs we made ourselves, and they are labelled that way.",
     conceptLabel: "Concept project",
+    clientLabel: "Client project",
     ctaTitle: "Your project here?",
     ctaText: "Tell us what you want to build and your work will sit here soon.",
     ctaButton: "Start a project",
     items: [
       {
-        key: "noordlicht",
-        title: "Noordlicht Keramiek",
-        discipline: "Brand and website",
+        key: "liveweddingpaintings",
+        title: "Live Wedding Paintings",
+        discipline: "Brand, website and bookings",
         blurb:
-          "A calm brand site for a ceramics studio, with stories from the workshop next to the collection.",
-        image: "/images/project-noordlicht.webp",
-        alt: "Laptop and phone showing a ceramics studio website in a light, calm style",
+          "The site of Sara van Heukelom, who paints weddings live. Made by us from the first design to the booking form.",
+        image: "/images/project-liveweddingpaintings.webp",
+        alt: "Laptop and phone showing the Live Wedding Paintings website: paintings in gold frames on a warm, light background",
+        real: true,
       },
       {
         key: "halm",
@@ -898,12 +900,9 @@ export const en: Content = {
   footer: {
     contactTitle: "Get started",
     email: "noah.janssen@sharply.nl",
-    legalNote: "Sharply, a design studio in the Netherlands.",
-    placeholders: [
-      "Chamber of Commerce number to follow",
-      "VAT number to follow",
-      "Address to follow",
-    ],
+    legalNote: "Sharply, a design studio in Roermond, the Netherlands.",
+    // From the Dutch trade register (sole proprietorship, head office). VAT number still to add.
+    placeholders: ["Chamber of Commerce 76336840", "Scheidingsweg 2", "6045 CR Roermond"],
     socialTitle: "Follow",
     socialNote: "Channels coming soon.",
     rights: "All rights reserved.",

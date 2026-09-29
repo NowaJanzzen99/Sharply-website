@@ -167,10 +167,19 @@ Diensten en projecten zijn nu klikbaar en hebben elk een eigen pagina.
 - **Nav en footer** staan nu in `src/app/[lang]/layout.tsx`, dus op elke pagina. De ankerlinks krijgen de homepage ervoor wanneer je niet op de homepage bent.
 - **Toegevoegd:** een eigen 404-pagina, `sitemap.xml` en `robots.txt`, beide opgebouwd uit dezelfde woordenboeken.
 
+## 10d. Logo, echte case, KvK en detailpagina's (29 september 2026)
+
+- **Logo:** een geconstrueerd beeldmerk, geen render meer. Eén S als band van gelijke dikte, twee bogen van concentrische cirkels, rechte stukken onder dezelfde hoek, twee mespunten, puntsymmetrisch. Gekozen uit vier gegenereerde richtingen (`reference/logo-v2/`), daarna opnieuw opgebouwd uit geometrie omdat overtrekken kerfjes gaf. De maten staan in `reference/logo-v2/construct.py`; het pad staat in `src/components/Wordmark.tsx` en neemt de tekstkleur over (`currentColor`). Favicon: `src/app/icon.svg` (witte S op kobalt), plus `apple-icon.png`. Noah wilde alleen een beeldmerk; de naam staat er in Sora naast.
+- **KvK:** Sharply, eenmanszaak, KvK 76336840, Scheidingsweg 2, 6045 CR Roermond. In de footer en als gestructureerde data (schema.org) in de layout. Btw-nummer staat niet openbaar; toevoegen zodra Noah het geeft.
+- **Echte case:** Noordlicht Keramiek is vervangen door Live Wedding Paintings (Sara van Heukelom, liveweddingpaintings.nl). Noah deed alles, van ontwerp tot livegang. Kaartje zegt "Klantproject" in de accentkleur; concepten blijven "Conceptproject".
+- **Beelden van de case:** echte screenshots, gemaakt met een eigen headless Chrome-script (`reference/lwp/capture.mjs`) dat echt scrolt zodat de reveals afgaan; de nieuwsbriefpop-up en cookiemelding worden alleen in die wegwerpbrowser verborgen. De apparaatscènes zijn gegenereerd met groene schermen en de echte screenshots zijn er met perspectief in gezet (`reference/lwp/composite.py`), zodat er geen verzonnen tekst op de schermen staat.
+- **Detailpagina's:** veel minder tekst (één regel per hoofdstuk) en een gepinde scène (`DetailScrolly`): links wisselen de hoofdstukken, rechts beweegt het beeld mee. Bij diensten en concepten zoomt de camera per hoofdstuk naar een ander deel van het beeld (`focus.ts`); bij de echte case scrolt de echte site mee in een browservenster en stopt bij de sectie waar het hoofdstuk over gaat. Een echte case krijgt ook feiten (klant, rol, talen), een knop naar de live site en een galerij die zijwaarts meeschuift (`DetailGallery`).
+- **Controleren van scrollanimaties:** het ingebouwde browserpaneel toont na scrollen vaak alleen zwart. `reference/snap.mjs` maakt screenshots op vaste scrollposities met een eigen headless Chrome; gebruik dat.
+
 ## 11. Open punten
 
 - Noah heeft nog geen definitieve diensten, prijzen of bewijs.
 - Kleur- en stijlrichting is afgeleid van het Pinterest-bord (donker/kobalt). Als het te veel op "elke AI-site" gaat lijken, is een lichtere hoofdrichting een terugvaloptie.
 - Resend en DNS moeten Noah nog inrichten (Mijndomein). Zonder `RESEND_API_KEY` geeft het formulier netjes een foutmelding met een mailadres als terugval.
-- Nog niet gedaan: een deelafbeelding voor social media (og:image).
+- Nog niet gedaan: een deelafbeelding voor social media (og:image), en het btw-nummer in de footer.
 - De sitemap gebruikt `NEXT_PUBLIC_SITE_URL` als die bestaat, anders het vercel.app-adres. Zet die variabele zodra sharply.nl gekoppeld is.

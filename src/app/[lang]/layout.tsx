@@ -65,6 +65,27 @@ export default async function LangLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${sora.variable} antialiased`}
     >
       <body>
+        {/* Who we are, for search engines: the same facts as the footer. */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "ProfessionalService",
+              name: "Sharply",
+              url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://sharply-website.vercel.app",
+              email: content.footer.email,
+              identifier: { "@type": "PropertyValue", propertyID: "KvK", value: "76336840" },
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: "Scheidingsweg 2",
+                postalCode: "6045 CR",
+                addressLocality: "Roermond",
+                addressCountry: "NL",
+              },
+            }),
+          }}
+        />
         <SmoothScroll />
         <PageChrome lang={lang as Lang} />
         <Nav content={content} lang={lang as Lang} alternates={alternates} />

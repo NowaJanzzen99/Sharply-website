@@ -7,13 +7,15 @@ import { workHref, type Content, type Lang } from "@/content";
 type Item = Content["work"]["items"][number];
 
 /**
- * Concept projects, made by Sharply to show how the work looks. They are
- * labelled as concepts in the interface and flagged in BRIEF.md, so nobody
- * mistakes them for client work and Noah can swap in real projects one by one.
+ * Real client work and concept projects side by side. Every card says which
+ * it is: a client project in the accent colour, a concept in grey, so nobody
+ * mistakes one for the other. Noah swaps concepts for real work one by one by
+ * setting `real: true` on an item in the content files.
  */
 function ProjectCard({
   item,
   label,
+  clientLabel,
   variant,
   className,
   lang,
@@ -22,6 +24,7 @@ function ProjectCard({
 }: {
   item: Item;
   label: string;
+  clientLabel: string;
   variant: string;
   className: string;
   lang: Lang;
@@ -70,8 +73,12 @@ function ProjectCard({
             </h3>
             <p className="mt-1 text-[15px] text-text-muted">{item.discipline}</p>
           </div>
-          <span className="mt-1.5 shrink-0 rounded-[var(--radius-pill)] border border-hairline px-3 py-1 text-[12px] text-text-faint">
-            {label}
+          <span
+            className={`mt-1.5 shrink-0 rounded-[var(--radius-pill)] border px-3 py-1 text-[12px] ${
+              item.real ? "border-accent/60 text-accent-bright" : "border-hairline text-text-faint"
+            }`}
+          >
+            {item.real ? clientLabel : label}
           </span>
         </div>
         <p className="mt-3 max-w-[50ch] text-[16px] leading-[1.6] text-text-muted">
@@ -85,6 +92,7 @@ function ProjectCard({
 export function Work({ content, lang }: { content: Content; lang: Lang }) {
   const [first, second, third] = content.work.items;
   const label = content.work.conceptLabel;
+  const clientLabel = content.work.clientLabel;
 
   return (
     <section id="werk" className="relative scroll-mt-24 border-t border-hairline py-24 md:py-32">
@@ -107,6 +115,7 @@ export function Work({ content, lang }: { content: Content; lang: Lang }) {
           <ProjectCard
             item={first}
             label={label}
+            clientLabel={clientLabel}
             lang={lang}
             variant="left"
             className="md:col-span-7"
@@ -114,6 +123,7 @@ export function Work({ content, lang }: { content: Content; lang: Lang }) {
           <ProjectCard
             item={second}
             label={label}
+            clientLabel={clientLabel}
             lang={lang}
             variant="circle"
             lag={0.12}
@@ -122,6 +132,7 @@ export function Work({ content, lang }: { content: Content; lang: Lang }) {
           <ProjectCard
             item={third}
             label={label}
+            clientLabel={clientLabel}
             lang={lang}
             variant="diagonal"
             wide

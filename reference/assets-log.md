@@ -38,7 +38,13 @@ iridescente randen, studiolicht linksboven). `gpt_image_2_5`, variant `sunburst`
 
 De originele PNG's staan in `reference/services-v2/` en bewust niet in git.
 
-## Logo
+## Logo en case (29 september 2026)
+
+- Vier logorichtingen, `gpt_image_2_5` sunburst, 2k, 1:1 (een generatie mislukte twee keer). Gekozen: de band-S. Daarna opnieuw geconstrueerd als vector, zie `reference/logo-v2/construct.py`. De eerdere kristallen S (logo-a) is vervangen.
+- Twee apparaatscènes met groene schermen, `gpt_image_2_5` sunburst, 2k (16:9 laptop plus telefoon, 4:3 twee telefoons). De schermen zijn gevuld met echte screenshots van liveweddingpaintings.nl.
+- Bestanden: `project-liveweddingpaintings.webp`, `lwp-phones.webp`, `lwp-page.webp` (volledige pagina, 1200 x 8835), `lwp-formaten.webp`, `lwp-over.webp`, `lwp-reviews.webp`, `lwp-mobile.webp`.
+
+## Logo (eerste ronde)
 
 Twee concepten gegenereerd (6 credits), Noah koos A (de kristallen S). De tweede (lint van vloeibaar glas) staat in `reference/logo/logo-b.png`.
 

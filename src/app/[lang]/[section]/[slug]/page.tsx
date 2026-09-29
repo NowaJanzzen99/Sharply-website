@@ -5,7 +5,9 @@ import { ArrowLeft, ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 import { Reveal, RevealLines } from "@/components/Reveal";
 import { DetailQuestions } from "@/components/detail/DetailQuestions";
 import { DetailStage } from "@/components/detail/DetailStage";
-import { DetailChapters } from "@/components/detail/DetailChapters";
+import { DetailScrolly } from "@/components/detail/DetailScrolly";
+import { DetailGallery } from "@/components/detail/DetailGallery";
+import { FOCUS, PAGE_STOPS } from "@/components/detail/focus";
 import { DetailList } from "@/components/detail/DetailList";
 import { DetailRelated } from "@/components/detail/DetailRelated";
 import {
@@ -136,7 +138,7 @@ function resolve(params: Params): Resolved | null {
     alt: project.alt,
     detail: details.work[key],
     discipline: project.discipline,
-    badge: content.work.conceptLabel,
+    badge: project.real ? content.work.clientLabel : content.work.conceptLabel,
   };
 }
 
@@ -213,7 +215,11 @@ export default async function DetailPage({ params }: { params: Promise<Params> }
             alt: item.alt,
           }));
 
-  const listTitle = isService ? copy.deliverables : copy.scope;
+  const listTitle = isService
+    ? copy.deliverables
+    : resolved.kind === "work" && resolved.detail.url
+      ? copy.made
+      : copy.scope;
   const listItems =
     resolved.kind === "services" ? resolved.detail.deliverables : resolved.detail.scope;
   const listNote = resolved.kind === "work" ? resolved.detail.note : undefined;
@@ -264,11 +270,50 @@ export default async function DetailPage({ params }: { params: Promise<Params> }
                   {discipline}
                 </span>
                 {badge ? (
-                  <span className="rounded-[var(--radius-pill)] border border-hairline px-3.5 py-1.5 text-[13px] text-text-faint">
+                  <span
+                    className={`rounded-[var(--radius-pill)] border px-3.5 py-1.5 text-[13px] ${
+                      resolved.kind === "work" && resolved.detail.url
+                        ? "border-accent/60 text-accent-bright"
+                        : "border-hairline text-text-faint"
+                    }`}
+                  >
                     {badge}
                   </span>
                 ) : null}
               </div>
+            ) : null}
+
+            {resolved.kind === "work" && resolved.detail.facts ? (
+              <dl
+                data-reveal-hero
+                style={{ animationDelay: "0.42s" }}
+                className="mt-12 grid max-w-[900px] gap-x-10 gap-y-6 border-t border-hairline pt-7 sm:grid-cols-3"
+              >
+                {resolved.detail.facts.map((fact) => (
+                  <div key={fact.label}>
+                    <dt className="text-[13px] text-text-faint">{fact.label}</dt>
+                    <dd className="mt-1.5 text-[16px] text-text">{fact.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            ) : null}
+
+            {resolved.kind === "work" && resolved.detail.url ? (
+              <a
+                href={resolved.detail.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-reveal-hero
+                style={{ animationDelay: "0.5s" }}
+                className="group mt-9 inline-flex items-center gap-2 rounded-[var(--radius-pill)] bg-accent px-6 py-3.5 text-[16px] font-medium text-accent-ink transition-[transform,background-color] duration-150 ease-[var(--ease-out)] active:scale-[0.97] hover-fine:hover:bg-accent-bright"
+              >
+                {copy.visit}
+                <ArrowUpRight
+                  size={18}
+                  weight="bold"
+                  className="transition-transform duration-200 ease-[var(--ease-out)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                />
+              </a>
             ) : null}
           </div>
         </header>
@@ -293,8 +338,30 @@ export default async function DetailPage({ params }: { params: Promise<Params> }
           </div>
         </div>
 
-        {/* The body, with an index that follows where you are reading. */}
-        <DetailChapters sections={detail.sections} />
+        {/* The chapters, pinned, with the picture answering the scroll. */}
+        <DetailScrolly
+          chapters={detail.sections}
+          visual={
+            resolved.kind === "work" && resolved.detail.page && resolved.detail.url
+              ? {
+                  kind: "page",
+                  page: resolved.detail.page,
+                  url: resolved.detail.url,
+                  stops: PAGE_STOPS[resolved.key] ?? detail.sections.map((_, i, all) => i / Math.max(1, all.length - 1)),
+                }
+              : {
+                  kind: "image",
+                  src: image,
+                  alt,
+                  focus: FOCUS[resolved.key] ?? detail.sections.map(() => ({ x: 50, y: 50, zoom: 1 })),
+                }
+          }
+        />
+
+        {/* Real work only: the screens up close. */}
+        {resolved.kind === "work" && resolved.detail.gallery ? (
+          <DetailGallery title={copy.gallery} images={resolved.detail.gallery} />
+        ) : null}
 
         {/* What you get, or what the concept covers. */}
         <DetailList title={listTitle} items={listItems} note={listNote} />
