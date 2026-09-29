@@ -22,18 +22,19 @@ export const en: Content = {
   hero: {
     lineOne: "Sharply designed.",
     lineTwo: "Intelligently built.",
-    body: "We build brands, websites and AI systems for companies that would rather not look like everyone else.",
+    body: "Websites at the level of a large agency, made by the person who builds them. And after launch you simply talk to your site to change it.",
     primary: "Start a project",
     secondary: "See the services",
     imageAlt:
       "Glass orb with an iridescent sheen above a blue horizon in deep dark space",
   },
   manifesto: {
-    title: "The hand stays in it",
-    lead: "AI makes it faster. The decisions stay ours.",
+    title: "Agency quality, without the agency",
+    lead: "What a large agency would build you, at a price that makes sense.",
     body: [
-      "We draw, write and direct the work ourselves. AI comes in where it raises the bar: a hundred variants in an afternoon, imagery that used to be out of budget, code that does exactly what it should.",
-      "So what you see is not a button someone pressed. It is craft with an engine under it.",
+      "We build sites at the level large marketing agencies advertise with: designed for you, written in code, fast, and finished down to the details. That is the craft, and it is what we do all day.",
+      "The difference is not the quality but the invoice. At an agency you pay for account managers, project leads, an office and the hours four people spend keeping each other informed. Here you talk to the person making it, and AI does the work that repeats.",
+      "So what you see is not a button someone pressed. It is craft, with an engine under it.",
     ],
     imageAlt:
       "A hand drawing a line on paper with a pen, blue threads of light lifting off it",
@@ -99,9 +100,9 @@ export const en: Content = {
     ],
   },
   demo: {
-    title: "Say what you want. The site adapts.",
-    lead: "This is how the sites we build work: you ask for a change, you see it straight away and you put it live. Try it here.",
-    note: "This is a demo of the idea, not of your own site. On a real project this is wired to your content and your domain.",
+    title: "Your site stays yours. After launch as well.",
+    lead: "Every site we build comes with an assistant that knows it. You say what you want changed, you see it happen, and you put it live yourself. No complicated content system, no waiting on an agency, no invoice for changing an opening time. Try it here.",
+    note: "This is a demo of the idea, not of your own site. On a real project it is wired to your content, your domain and your styling, and you decide what may and may not be changed.",
     tryTitle: "Try it yourself",
     tryHint: "Click an instruction, or type your own. You see it happen in the preview.",
     inputLabel: "Or type your own instruction",
@@ -249,6 +250,14 @@ export const en: Content = {
     errorTitle: "Sending did not work",
     errorBody:
       "Please try again, or email noah.janssen@sharply.nl directly.",
+    price: {
+      title: "An indication, from your answers",
+      to: "to",
+      driversTitle: "What sets this range",
+      care: "Looking after it afterwards: {low} to {high} a month.",
+      open: "You also picked something a form cannot price, so that is not in here yet.",
+      note: "This is a direction, not a quote. Half an hour on a call and I know what it really is, and then you get a fixed price. If it does not fit your budget, say so: there is nearly always a smaller first step.",
+    },
     steps: [
       {
         id: "needs",

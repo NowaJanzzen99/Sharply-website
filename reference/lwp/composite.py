@@ -11,7 +11,7 @@ letters, and a portfolio that misspells its own client is worse than none.
 Pure PIL, no numpy: the 8x8 solve for the perspective is done by hand.
 """
 
-from PIL import Image, ImageChops, ImageFilter
+from PIL import Image, ImageChops, ImageDraw, ImageFilter
 
 GREEN_MIN = 30  # green has to beat red and blue by this much to count
 
@@ -23,7 +23,7 @@ def green_alpha(scene):
     return excess.point(lambda v: 0 if v < GREEN_MIN else min(255, (v - GREEN_MIN) * 3))
 
 
-def components(alpha, scale=4):
+def components(alpha, scale=2):
     """Pixel sets of the separate green regions, largest first."""
     small = alpha.resize((alpha.width // scale, alpha.height // scale))
     w, h = small.size
@@ -88,11 +88,30 @@ def perspective_coeffs(dst, src):
     return solve(a, b)
 
 
-def place(scene, shot, pts, alpha):
+def place(scene, shot, pts, alpha, others=()):
     quad = corners(pts)
     tl, tr, br, bl = quad
     width = ((tr[0] - tl[0]) + (br[0] - bl[0])) / 2
     height = ((bl[1] - tl[1]) + (br[1] - tr[1])) / 2
+
+    # A screen standing behind another one shows only part of itself. Fitting
+    # the picture to the visible sliver would squeeze the page into it, so the
+    # whole screen is reconstructed from its height and the picture's own
+    # proportions, and the mask below shows only the part that is really there.
+    expected = height * (shot.width / shot.height)
+    if width < expected * 0.97 and others:
+        grow = expected - width
+        mine = sum(p[0] for p in pts) / len(pts)
+        theirs = sum(sum(q[0] for q in o) / len(o) for o in others) / len(others)
+        if theirs > mine:  # the other screen stands to the right, so this one is cut there
+            tr = (tr[0] + grow, tr[1])
+            br = (br[0] + grow, br[1])
+        else:
+            tl = (tl[0] - grow, tl[1])
+            bl = (bl[0] - grow, bl[1])
+        quad = [tl, tr, br, bl]
+        width = expected
+
     # Crop the screenshot to the screen's shape, anchored at the top of the page.
     want = width / height
     sw, sh = shot.size
@@ -105,18 +124,15 @@ def place(scene, shot, pts, alpha):
     coeffs = perspective_coeffs(quad, [(0, 0), (sw, 0), (sw, sh), (0, sh)])
     warped = shot.convert("RGB").transform(scene.size, Image.PERSPECTIVE, coeffs, Image.BICUBIC)
 
-    # Only this screen's green, not the other device's.
-    xs = [p[0] for p in pts]
-    ys = [p[1] for p in pts]
-    box = (
-        max(0, min(xs) - 12),
-        max(0, min(ys) - 12),
-        min(scene.width, max(xs) + 16),
-        min(scene.height, max(ys) + 16),
-    )
-    local = Image.new("L", scene.size, 0)
-    local.paste(alpha.crop(box), box[:2])
-    local = local.filter(ImageFilter.GaussianBlur(0.8))
+    # Only this screen's green, and only its own shape. Using the bounding box
+    # here let one phone's picture spill across the other, because two screens
+    # standing side by side have boxes that overlap even when the screens do not.
+    own = Image.new("L", scene.size, 0)
+    draw = ImageDraw.Draw(own)
+    for x, y in pts:
+        draw.rectangle((x, y, x + 4, y + 4), fill=255)
+    own = own.filter(ImageFilter.MaxFilter(5))
+    local = ImageChops.multiply(alpha, own).filter(ImageFilter.GaussianBlur(0.6))
 
     out = Image.composite(warped, scene.convert("RGB"), local)
     # A faint sheen, so it reads as a screen behind glass and not a sticker.
@@ -139,8 +155,9 @@ def run(scene_path, shots, out_path):
     regions = components(alpha)[: len(shots)]
     regions.sort(key=lambda pts: min(p[0] for p in pts))
     result = scene
-    for pts, shot_path in zip(regions, shots):
-        result = place(result, Image.open(shot_path), pts, alpha)
+    for i, (pts, shot_path) in enumerate(zip(regions, shots)):
+        others = [r for j, r in enumerate(regions) if j != i]
+        result = place(result, Image.open(shot_path), pts, alpha, others)
     result = despill(result)
     result.save(out_path, quality=90, method=6)
     print("wrote", out_path, result.size, "screens:", len(regions))

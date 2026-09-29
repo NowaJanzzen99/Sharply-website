@@ -38,10 +38,18 @@ export function Wordmark({
   markClassName?: string;
 }) {
   return (
+    /*
+      The mark is aligned to the ink of the word, not to its line box. A line
+      box carries room for accents above and descenders below, and centring on
+      that puts the mark visibly high next to a lowercase word. leading-none
+      trims the box to the letters, and the word is nudged by the difference
+      between its ascender and its descender so the pair sits on one optical
+      centre.
+    */
     <span className={`inline-flex items-center gap-2 ${className ?? ""}`}>
       <Mark className={markClassName ?? "h-6 w-6"} />
       <span
-        className="font-display font-semibold lowercase"
+        className="font-display font-semibold lowercase leading-none"
         style={{ letterSpacing: "-0.045em" }}
       >
         sharply

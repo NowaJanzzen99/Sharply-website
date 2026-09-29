@@ -5,6 +5,7 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowLeft, ArrowRight, Check, CheckCircle, PencilSimple } from "@phosphor-icons/react";
 import { Reveal, RevealLines, splitHeading } from "./Reveal";
+import { PriceEstimate } from "./contact/PriceEstimate";
 import { FieldControl } from "./contact/FieldControl";
 import {
   buildSections,
@@ -322,6 +323,10 @@ export function ContactForm({ content, lang }: { content: Content; lang: Lang })
                         >
                           {current.id === "review" ? (
                             <div className="flex flex-col gap-7">
+                              {/* The question everybody has, answered before
+                                  they have to ask it. */}
+                              <PriceEstimate copy={copy} values={values} lang={lang} />
+
                               <p className="text-[15px] leading-[1.6] text-text-muted">
                                 {copy.reviewIntro}
                               </p>

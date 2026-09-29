@@ -176,9 +176,17 @@ Diensten en projecten zijn nu klikbaar en hebben elk een eigen pagina.
 - **Detailpagina's:** veel minder tekst (één regel per hoofdstuk) en een gepinde scène (`DetailScrolly`): links wisselen de hoofdstukken, rechts beweegt het beeld mee. Bij diensten en concepten zoomt de camera per hoofdstuk naar een ander deel van het beeld (`focus.ts`); bij de echte case scrolt de echte site mee in een browservenster en stopt bij de sectie waar het hoofdstuk over gaat. Een echte case krijgt ook feiten (klant, rol, talen), een knop naar de live site en een galerij die zijwaarts meeschuift (`DetailGallery`).
 - **Controleren van scrollanimaties:** het ingebouwde browserpaneel toont na scrollen vaak alleen zwart. `reference/snap.mjs` maakt screenshots op vaste scrollposities met een eigen headless Chrome; gebruik dat.
 
+## 10e. Positionering, prijsindicatie en fixes (29 september 2026)
+
+- **Positionering.** De studio-sectie zegt nu waar het om gaat: bureaukwaliteit zonder het bureau. Belangrijk: de reden dat het goedkoper is wordt genoemd (geen accountmanagers, geen pand, AI doet het werk dat zich herhaalt) in plaats van alleen de lagere prijs. Zie de toelichting hieronder bij "prijs noemen".
+- **AI-agent als belofte.** De demo-sectie heet nu "Je site blijft van jou. Ook na oplevering." en legt uit dat bij elke site een assistent hoort waarmee de klant zelf wijzigingen doet: geen ingewikkeld beheersysteem, geen tussenpersoon, geen factuur voor een openingstijd.
+- **Prijsindicatie in het formulier.** Op stap 8 staat een kaart met een bedrag van-tot, opgebouwd uit de antwoorden. De logica staat in `src/lib/estimate.ts`, de bedragen staan daar in twee tabellen bovenaan en zijn het enige wat Noah moet nalopen. De getallen tellen op bij het verschijnen. Het is expliciet een richting, geen offerte, en er staat bij dat er bijna altijd een kleinere eerste stap is.
+- **Prijs noemen, waarom zo.** "Hetzelfde als een bureau maar goedkoper" nodigt uit tot vergelijken op prijs en maakt het werk de goedkope variant. De reden noemen maakt van de prijs een gevolg van hoe de studio werkt, niet een korting. Daarom staat er geen enkel percentage of "vanaf"-bedrag in de lopende tekst: het concrete getal komt pas na het formulier, als het ergens op gebaseerd is.
+- **Fixes.** Telefoonmockups: elk scherm wordt nu gemaskeerd op zijn eigen vorm in plaats van op zijn rechthoek (anders liep het ene scherm over het andere heen), en een scherm dat half achter een ander staat wordt eerst volledig teruggerekend zodat de pagina er niet in geperst wordt. Bel-pop: twee drempels in plaats van een (anders flikkert hij tijdens het uitrollen van de scroll), het beeld blijft heel tot de scherven al uit elkaar staan (anders zag je naden), en de scherven wachten nu ook op het laden van hun eigen afbeelding. Logo in de nav: de link was een tekstregel en dus hoger dan zijn inhoud, nu een flexbox met `leading-none`, gemeten op de pixel.
+
 ## 11. Open punten
 
-- Noah heeft nog geen definitieve diensten, prijzen of bewijs.
+- De bedragen in `src/lib/estimate.ts` zijn een eerste invulling en moeten door Noah bevestigd worden. Ze volgen de budgetstaffels uit het formulier.
 - Kleur- en stijlrichting is afgeleid van het Pinterest-bord (donker/kobalt). Als het te veel op "elke AI-site" gaat lijken, is een lichtere hoofdrichting een terugvaloptie.
 - Resend en DNS moeten Noah nog inrichten (Mijndomein). Zonder `RESEND_API_KEY` geeft het formulier netjes een foutmelding met een mailadres als terugval.
 - Nog niet gedaan: een deelafbeelding voor social media (og:image), en het btw-nummer in de footer.

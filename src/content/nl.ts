@@ -22,18 +22,19 @@ export const nl: Content = {
   hero: {
     lineOne: "Scherp ontworpen.",
     lineTwo: "Slim gebouwd.",
-    body: "Wij maken merken, websites en AI-systemen voor bedrijven die niet willen lijken op de rest.",
+    body: "Websites op het niveau van een groot bureau, gemaakt door de maker zelf. En na oplevering praat je gewoon met je site om hem aan te passen.",
     primary: "Start een project",
     secondary: "Bekijk de diensten",
     imageAlt:
       "Glazen bol met iridescente glans boven een blauwe horizon in een diepdonkere ruimte",
   },
   manifesto: {
-    title: "De hand blijft erin",
-    lead: "AI maakt het sneller. De keuzes blijven van ons.",
+    title: "Bureaukwaliteit, zonder het bureau",
+    lead: "Wat een groot bureau voor je maakt, maar voor een prijs die klopt.",
     body: [
-      "Wij tekenen, schrijven en regisseren zelf. AI zetten wij in waar het de kwaliteit verhoogt: honderd varianten in een middag, beeld dat anders niet te betalen was, code die precies doet wat het moet doen.",
-      "Wat je ziet is dus geen knop die is ingedrukt. Het is handwerk met een motor eronder.",
+      "Wij bouwen sites op het niveau waar grote marketingbureaus mee adverteren: eigen ontwerp, eigen code, snel, en tot in de details afgemaakt. Dat is het vak, en dat is wat wij de hele dag doen.",
+      "Het verschil zit niet in de kwaliteit maar in de rekening. Bij een bureau betaal je accountmanagers, projectleiders, een pand en de uren van vier mensen die elkaar op de hoogte houden. Hier praat je met de maker zelf, en doet AI het werk dat zich herhaalt.",
+      "Wat je ziet is dus geen knop die is ingedrukt. Het is handwerk, met een motor eronder.",
     ],
     imageAlt:
       "Hand die met een pen een lijn op papier tekent, waaruit blauwe lichtdraden opstijgen",
@@ -99,9 +100,9 @@ export const nl: Content = {
     ],
   },
   demo: {
-    title: "Zeg wat je wilt. De site past zich aan.",
-    lead: "Zo werken de sites die wij bouwen: jij vraagt een wijziging, je ziet hem meteen en zet hem live. Probeer het hier.",
-    note: "Dit is een demo van het idee, niet van je eigen site. Bij een echt project zit dit aan jouw content en domein vast.",
+    title: "Je site blijft van jou. Ook na oplevering.",
+    lead: "Bij elke site die wij bouwen hoort een assistent die jouw site kent. Je zegt wat je wilt veranderen, je ziet het meteen, en je zet het zelf live. Geen ingewikkeld beheersysteem, geen wachten op een bureau, geen factuur voor het wijzigen van een openingstijd. Probeer het hier.",
+    note: "Dit is een demo van het idee, niet van je eigen site. Bij een echt project zit dit vast aan jouw content, jouw domein en jouw huisstijl, en bepaal jij wat er wel en niet aangepast mag worden.",
     tryTitle: "Probeer het zelf",
     tryHint: "Klik een opdracht, of typ er zelf een. In de preview zie je het meteen gebeuren.",
     inputLabel: "Of typ je eigen opdracht",
@@ -249,6 +250,14 @@ export const nl: Content = {
     errorTitle: "Het versturen lukte niet",
     errorBody:
       "Probeer het opnieuw, of mail direct naar noah.janssen@sharply.nl.",
+    price: {
+      title: "Indicatie op basis van je antwoorden",
+      to: "tot",
+      driversTitle: "Wat deze richting bepaalt",
+      care: "Daarna beheer door ons: {low} tot {high} per maand.",
+      open: "Je koos ook iets dat niet in een formulier te vangen is, dus dat zit hier nog niet in.",
+      note: "Dit is een richting, geen offerte. Na een gesprek van een half uur weet ik wat het echt wordt, en dan krijg je een vaste prijs. Past het niet bij je budget, zeg het gerust: er is bijna altijd een kleinere eerste stap.",
+    },
     steps: [
       {
         id: "needs",

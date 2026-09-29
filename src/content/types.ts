@@ -303,6 +303,15 @@ export type Content = {
     errorBody: string;
     steps: FormStep[];
     detailGroups: DetailGroup[];
+    /** The indication shown on the last step, worked out from the answers. */
+    price: {
+      title: string;
+      to: string;
+      driversTitle: string;
+      care: string;
+      open: string;
+      note: string;
+    };
   };
   footer: {
     contactTitle: string;

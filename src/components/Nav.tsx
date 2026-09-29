@@ -67,7 +67,7 @@ export function Nav({
         >
           <Link
             href={`/${lang}`}
-            className="text-[17px] text-text"
+            className="flex items-center text-[17px] text-text"
             aria-label="Sharply"
           >
             <Wordmark />

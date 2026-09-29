@@ -217,6 +217,8 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
       shards: HTMLElement[];
       /** Where the film tears first, in radians. */
       rupture: number;
+      /** Latched by the two thresholds below, so a wobble cannot flip it. */
+      popping: boolean;
       /** Half the bubble's own width, which sets how far its pieces travel. */
       radius: number;
     };
@@ -233,6 +235,7 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
         image: el.querySelector<HTMLElement>("[data-orb-image]"),
         shards: Array.from(el.querySelectorAll<HTMLElement>("[data-shard]")),
         rupture: -Math.PI / 2 + order * 1.7,
+        popping: false,
         radius: el.offsetWidth / 2,
       });
     });
@@ -258,6 +261,12 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
 
     dressShards();
     window.addEventListener("load", dressShards);
+    // And once more when each picture itself arrives: a wedge with no
+    // background is an invisible wedge, which reads as the bubble simply
+    // blinking out instead of bursting.
+    pops.forEach((pop) => {
+      pop.image?.addEventListener("load", dressShards);
+    });
 
     const mainLayer = root.querySelector<HTMLElement>("[data-orb-main]");
     const rings = Array.from(root.querySelectorAll<HTMLElement>("[data-pop-ring]"));
@@ -307,16 +316,30 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
       const scrollY = window.scrollY;
 
       pops.forEach((pop, element) => {
-        const popping = scrollY > pop.at;
+        /*
+          Two thresholds, not one. Weighted scrolling drifts a few pixels back
+          and forth as it settles, and a single line to cross meant the bubble
+          could burst, re-form and burst again in the space of a moment. It
+          bursts on the way down at data-pop-at, and only re-forms once well
+          above it again.
+        */
+        pop.popping = scrollY > (pop.popping ? pop.at * 0.55 : pop.at);
 
-        pop.value = popping
+        pop.value = pop.popping
           ? Math.min(1, pop.value + dt / POP_MS)
           : Math.max(0, pop.value - dt / REFORM_MS);
         const p = pop.value;
-        const burst = p > 0.0015;
+        /*
+          The picture stays whole a moment longer than the burst starts. The
+          wedges are the same pixels, but sixteen of them laid edge to edge
+          each carry their own soft edge, and where those edges met the seams
+          showed as faint spokes. By the time the swap happens every wedge has
+          already stepped outwards (see the floor below), so no two edges are
+          still touching and there is nothing to seam.
+        */
+        const burst = p > 0.1;
 
         if (pop.image) {
-          // Whole or shattered, never both: the wedges are the same pixels.
           pop.image.style.opacity = burst ? "0" : String(pop.base);
         }
 
@@ -333,18 +356,14 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
           // wedge: the far side goes a beat after the rupture.
           let away = Math.abs(bearing - pop.rupture) % (Math.PI * 2);
           if (away > Math.PI) away = Math.PI * 2 - away;
-          const start = (away / Math.PI) * 0.16;
+          const start = (away / Math.PI) * 0.12;
           const t = Math.min(1, Math.max(0, (p - start) / (1 - start)));
 
-          if (t <= 0) {
-            shard.style.opacity = String(pop.base);
-            shard.style.transform = "";
-            return;
-          }
-
-          // Fast off the mark, slowing as the film runs out of tension.
+          // Fast off the mark, slowing as the film runs out of tension. The
+          // few pixels added on top are the gap that keeps the wedges from
+          // touching; at this size it reads as nothing at all.
           const out = 1 - (1 - t) ** 2.4;
-          const spread = pop.radius * (1.15 + (index % 3) * 0.22) * out;
+          const spread = pop.radius * (1.15 + (index % 3) * 0.22) * out + 5;
           const lift = out * out * pop.radius * 0.22;
           const spin = ((index % 2 ? 1 : -1) * 70 + (index % 5) * 12) * out;
 
@@ -392,6 +411,9 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("resize", measure);
       window.removeEventListener("load", dressShards);
+      pops.forEach((pop) => {
+        pop.image?.removeEventListener("load", dressShards);
+      });
       window.removeEventListener("deviceorientation", onOrient);
       window.removeEventListener("orientationchange", onTurn);
       if (askForPermission) window.removeEventListener("touchend", askForPermission);
