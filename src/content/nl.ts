@@ -48,7 +48,7 @@ export const nl: Content = {
         body: "Van een site die indruk maakt tot een platform met inlog, database en dashboard. Gebouwd om snel te laden en jaren mee te gaan.",
         points: ["Maatwerk ontwerp", "Database en inlog", "Zelf teksten beheren"],
         image: "/images/service-websites.webp",
-        alt: "Gelaagde matglazen panelen met blauw randlicht",
+        alt: "Een webpagina als gelaagde glazen panelen: een menubalk, een grote kop en een rij kaarten, zwevend in diepte",
         placeholder: true,
       },
       {
@@ -57,7 +57,7 @@ export const nl: Content = {
         body: "Een assistent in je eigen site die je klanten helpt, vragen beantwoordt, afspraken inplant en je systemen aanstuurt. Getraind op jouw informatie.",
         points: ["Getraind op je eigen content", "Plant afspraken in", "Praat met je systemen"],
         image: "/images/service-ai-chat.webp",
-        alt: "Kleine glazen bol in een matglazen kaart met een lint van blauw licht",
+        alt: "Glazen chatbubbels boven elkaar, waarvan er een blauw oplicht, met een glazen bol ernaast als assistent",
         placeholder: true,
       },
       {
@@ -66,7 +66,7 @@ export const nl: Content = {
         body: "Verkopen met een winkel die aanvoelt als een merk in plaats van een template. Betalen, voorraad en verzending werken zoals je gewend bent.",
         points: ["Eigen ontwerp", "iDEAL en creditcard", "Voorraad gekoppeld"],
         image: "/images/service-webshop.webp",
-        alt: "Doorschijnende glazen kubussen gestapeld als pakketten",
+        alt: "Drie glazen productkaarten met flessen erin, de middelste opgelicht, met een glazen winkeltas ervoor",
         placeholder: true,
       },
       {
@@ -75,7 +75,7 @@ export const nl: Content = {
         body: "Je systemen aan elkaar: agenda, mail, voorraad, facturen, CRM. Eén keer goed instellen, daarna draait het zonder jou.",
         points: ["Systemen verbonden", "Werk dat vanzelf gaat", "Rapportage die klopt"],
         image: "/images/service-integrations.webp",
-        alt: "Glazen bollen verbonden door dunne lichtgevende blauwe draden",
+        alt: "Vijf glazen app-tegels met agenda, mail, voorraad, grafiek en instellingen, verbonden met een centrale schijf door oplichtende kabels",
         placeholder: true,
       },
       {
@@ -84,7 +84,7 @@ export const nl: Content = {
         body: "Logo, kleur, typografie en bewegend beeld. Een merk dat op elk kanaal hetzelfde klinkt, met richtlijnen waar je team mee vooruit kan.",
         points: ["Logo en huisstijl", "Merkrichtlijnen", "Animatie en video"],
         image: "/images/service-branding-motion.webp",
-        alt: "Gedraaid lint van vloeibaar glas en chroom met bewegingsonscherpte",
+        alt: "Een glazen medaillon met een beeldmerk, omringd door kleurstalen en specimenplaten, met een lint van vloeibaar glas eromheen",
         placeholder: true,
       },
       {
@@ -93,7 +93,7 @@ export const nl: Content = {
         body: "Beeld, video en animatie voor campagnes en socials. Gegenereerd waar het kan, met de hand bijgewerkt waar het telt.",
         points: ["Beeld en video", "Campagnesets", "Consistent met je merk"],
         image: "/images/service-ai-content.webp",
-        alt: "Glazen prisma dat licht breekt in zwevende doorschijnende kaders",
+        alt: "Zwevende glazen beeldkaders met een afspeelknop, waarvan er een opbouwt uit een wolk van blauwe deeltjes",
         placeholder: true,
       },
     ],

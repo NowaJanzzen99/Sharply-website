@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
-import { Reveal, RevealImage, RevealLines } from "@/components/Reveal";
+import { Reveal, RevealLines } from "@/components/Reveal";
 import { DetailQuestions } from "@/components/detail/DetailQuestions";
+import { DetailStage } from "@/components/detail/DetailStage";
+import { DetailChapters } from "@/components/detail/DetailChapters";
+import { DetailList } from "@/components/detail/DetailList";
+import { DetailRelated } from "@/components/detail/DetailRelated";
 import {
   getContent,
   getDetails,
@@ -197,6 +200,8 @@ export default async function DetailPage({ params }: { params: Promise<Params> }
             href: serviceHref(lang, item.key),
             title: item.title,
             note: details.services[item.key].tagline,
+            image: item.image,
+            alt: item.alt,
           }))
       : content.work.items
           .filter((item) => item.key !== resolved.key)
@@ -204,11 +209,14 @@ export default async function DetailPage({ params }: { params: Promise<Params> }
             href: workHref(lang, item.key),
             title: item.title,
             note: item.discipline,
+            image: item.image,
+            alt: item.alt,
           }));
 
   const listTitle = isService ? copy.deliverables : copy.scope;
   const listItems =
     resolved.kind === "services" ? resolved.detail.deliverables : resolved.detail.scope;
+  const listNote = resolved.kind === "work" ? resolved.detail.note : undefined;
 
   return (
     <main id="main">
@@ -265,89 +273,31 @@ export default async function DetailPage({ params }: { params: Promise<Params> }
           </div>
         </header>
 
-        {/* The picture, full width. */}
-        <div className="container-page -mt-px">
-          <RevealImage
-            variant="up"
-            className="relative mt-12 overflow-hidden rounded-[var(--radius-lg)] border border-hairline md:mt-16"
-          >
-            <div className="relative aspect-[16/10]">
-              <Image
-                src={image}
-                alt={alt}
-                fill
-                priority
-                sizes="(min-width: 1360px) 1280px, 100vw"
-                className="object-cover"
-              />
-            </div>
-          </RevealImage>
+        {/* The picture. It opens as you scroll the first screen. */}
+        <div className="mt-12 md:mt-16">
+          <DetailStage src={image} alt={alt} priority />
         </div>
 
+        {/* The one sentence that has to land. Set large, alone on the page. */}
         <div className="container-page">
-          <div className="grid gap-y-16 py-20 md:grid-cols-12 md:gap-x-10 md:py-28">
-            {/* Intro and the prose. */}
-            <div className="md:col-span-7">
-              <Reveal>
-                <p className="font-display text-[clamp(1.3rem,2.6vw,1.85rem)] font-medium leading-[1.35] tracking-[-0.02em] text-text">
-                  {detail.intro}
-                </p>
-              </Reveal>
-
-              <div className="mt-14 flex flex-col gap-12">
-                {detail.sections.map((section, index) => (
-                  <section key={section.title} data-scene="panel" data-scene-variant="up">
-                    <h2 className="font-display text-[clamp(1.35rem,2.4vw,1.75rem)] font-medium text-text">
-                      {section.title}
-                    </h2>
-                    <p className="mt-3.5 max-w-[62ch] text-[17px] leading-[1.65] text-text-muted">
-                      {section.body}
-                    </p>
-                    {index < detail.sections.length - 1 ? (
-                      <span
-                        aria-hidden="true"
-                        className="mt-12 block h-px w-16 bg-hairline-strong"
-                      />
-                    ) : null}
-                  </section>
-                ))}
-              </div>
-            </div>
-
-            {/* The list: what you get, or what the concept covers. */}
-            <aside className="md:col-span-4 md:col-start-9">
-              <div
+          <div className="border-b border-hairline py-20 md:py-28">
+            <div className="md:grid md:grid-cols-12">
+              <p
                 data-scene="panel"
-                data-scene-variant="right"
-                className="glass rounded-[var(--radius-lg)] p-7 md:sticky md:top-28"
+                data-scene-variant="up"
+                className="font-display text-[clamp(1.45rem,3.4vw,2.5rem)] font-medium leading-[1.3] tracking-[-0.025em] text-text md:col-span-10 md:col-start-2"
               >
-                <h2 className="font-display text-[19px] font-medium text-text">
-                  {listTitle}
-                </h2>
-                <ul className="mt-5 flex flex-col gap-3.5">
-                  {listItems.map((item) => (
-                    <li
-                      key={item}
-                      className="flex gap-3 text-[15px] leading-[1.5] text-text-muted"
-                    >
-                      <span
-                        aria-hidden="true"
-                        className="mt-[0.5em] h-1 w-1 shrink-0 rounded-full bg-accent"
-                      />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-
-                {resolved.kind === "work" ? (
-                  <p className="mt-6 border-t border-hairline pt-5 text-[13px] leading-[1.55] text-text-faint">
-                    {resolved.detail.note}
-                  </p>
-                ) : null}
-              </div>
-            </aside>
+                {detail.intro}
+              </p>
+            </div>
           </div>
         </div>
+
+        {/* The body, with an index that follows where you are reading. */}
+        <DetailChapters sections={detail.sections} />
+
+        {/* What you get, or what the concept covers. */}
+        <DetailList title={listTitle} items={listItems} note={listNote} />
 
         {/* Questions, on service pages only: a project has no buyer to reassure. */}
         {resolved.kind === "services" ? (
@@ -355,44 +305,11 @@ export default async function DetailPage({ params }: { params: Promise<Params> }
         ) : null}
 
         {/* Where to go next. */}
-        <section className="border-t border-hairline py-20 md:py-28">
-          <div className="container-page">
-            <h2 className="font-display text-[clamp(1.5rem,3vw,2rem)] font-medium text-text">
-              <RevealLines
-                lines={[isService ? copy.otherServices : copy.otherWork]}
-                onView
-              />
-            </h2>
-
-            <ul className="mt-10 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-              {siblings.map((sibling, index) => (
-                <li key={sibling.href}>
-                  <Link
-                    href={sibling.href}
-                    data-scene="panel"
-                    data-scene-variant={index === 0 ? "left" : index === 1 ? "up" : "right"}
-                    className="group flex h-full flex-col rounded-[var(--radius-lg)] border border-hairline p-6 transition-[border-color,background-color] duration-200 ease-out hover-fine:hover:border-hairline-strong hover-fine:hover:bg-canvas-raised"
-                  >
-                    <span className="font-display text-[20px] font-medium text-text">
-                      {sibling.title}
-                    </span>
-                    <span className="mt-2 text-[15px] leading-[1.55] text-text-muted">
-                      {sibling.note}
-                    </span>
-                    <span className="mt-5 inline-flex items-center gap-1.5 text-[14px] text-text-faint transition-colors duration-200 ease-out group-hover:text-accent-bright">
-                      {copy.readMore}
-                      <ArrowUpRight
-                        size={14}
-                        weight="bold"
-                        className="transition-transform duration-200 ease-[var(--ease-out)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                      />
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
+        <DetailRelated
+          title={isService ? copy.otherServices : copy.otherWork}
+          readMore={copy.readMore}
+          items={siblings}
+        />
 
         {/* Closing call. */}
         <section className="border-t border-hairline py-20 md:py-28">

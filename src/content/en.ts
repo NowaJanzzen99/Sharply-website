@@ -48,7 +48,7 @@ export const en: Content = {
         body: "From a site that lands to a platform with logins, a database and a dashboard. Built to load fast and last for years.",
         points: ["Designed from scratch", "Database and logins", "Edit your own copy"],
         image: "/images/service-websites.webp",
-        alt: "Layered frosted glass panels catching blue rim light",
+        alt: "A web page as layered glass panels: a menu bar, a large headline and a row of cards, floating in depth",
         placeholder: true,
       },
       {
@@ -57,7 +57,7 @@ export const en: Content = {
         body: "An assistant inside your own site that helps your customers, answers questions, books appointments and drives your systems. Trained on your information.",
         points: ["Trained on your content", "Books appointments", "Talks to your systems"],
         image: "/images/service-ai-chat.webp",
-        alt: "Small glass sphere in a frosted card with a ribbon of blue light",
+        alt: "Glass chat bubbles stacked above each other, one glowing blue, with a glass sphere beside them as the assistant",
         placeholder: true,
       },
       {
@@ -66,7 +66,7 @@ export const en: Content = {
         body: "Selling through a shop that feels like a brand instead of a template. Payments, stock and shipping work the way you expect.",
         points: ["Designed for your brand", "Cards and local payments", "Stock kept in sync"],
         image: "/images/service-webshop.webp",
-        alt: "Translucent glass cubes stacked like parcels",
+        alt: "Three glass product cards holding bottles, the middle one lit, with a glass shopping bag in front",
         placeholder: true,
       },
       {
@@ -75,7 +75,7 @@ export const en: Content = {
         body: "Your systems joined up: calendar, mail, stock, invoices, CRM. Set up properly once, then it runs without you.",
         points: ["Systems connected", "Work that runs itself", "Reporting you can trust"],
         image: "/images/service-integrations.webp",
-        alt: "Glass spheres connected by thin glowing blue threads",
+        alt: "Five glass app tiles for calendar, mail, stock, charts and settings, wired to a central disc by glowing cables",
         placeholder: true,
       },
       {
@@ -84,7 +84,7 @@ export const en: Content = {
         body: "Logo, colour, typography and moving image. A brand that sounds the same everywhere, with guidelines your team can actually use.",
         points: ["Logo and identity", "Brand guidelines", "Animation and video"],
         image: "/images/service-branding-motion.webp",
-        alt: "Twisting ribbon of liquid glass and chrome with motion blur",
+        alt: "A glass medallion carrying a mark, surrounded by colour swatches and specimen plates, with a ribbon of liquid glass around it",
         placeholder: true,
       },
       {
@@ -93,7 +93,7 @@ export const en: Content = {
         body: "Imagery, video and animation for campaigns and social. Generated where it can be, finished by hand where it counts.",
         points: ["Stills and video", "Campaign sets", "Consistent with your brand"],
         image: "/images/service-ai-content.webp",
-        alt: "Glass prism splitting light into floating translucent frames",
+        alt: "Floating glass picture frames with a play button, one of them forming out of a cloud of blue particles",
         placeholder: true,
       },
     ],
