@@ -14,12 +14,33 @@ import { Mark } from "./Wordmark";
   the burst. The hero bubble does the same thing later on scroll, so the first
   and last thing the visitor sees of the intro is the idea the page is built on.
 
-  Once per browsing session. A small inline script reads that before the first
-  paint, so a returning visitor never even sees a flash of it. If script fails
-  altogether, a CSS failsafe removes the screen after a few seconds anyway.
+  Once per browsing session, and that means three different arrivals have to be
+  told apart:
+
+    a fresh load          play it
+    a reload, or a second tab in the same session
+                          skip it, before the first paint: the inline script
+                          below marks the document and a CSS rule hides the
+                          screen, so there is not even a flash
+    coming back from a
+    detail page           skip it, and without mounting it at all
+
+  The last one is why `played` sits outside the component. Moving between pages
+  is a client navigation: the module stays loaded, the page component is thrown
+  away and built again, and the inline script does not run a second time because
+  React does not execute scripts it inserts after hydration. A module level flag
+  survives exactly as long as the browser tab does, which is the same lifetime
+  as the session storage key, and it is readable during render, so the screen is
+  never mounted rather than mounted and then hidden.
+
+  It is deliberately false on the server and on the first client render, so the
+  markup matches on both sides and hydration has nothing to complain about.
 */
 
 const SEEN_KEY = "sharply:intro-seen";
+
+/** Set the moment the screen has run, or been skipped, in this tab. */
+let played = false;
 const LETTERS = "sharply".split("");
 
 /** Never shorter than this, so it reads as a moment and not a flicker. */
@@ -28,15 +49,38 @@ const MIN_MS = 1500;
 const MAX_MS = 4200;
 
 export function Intro() {
-  const [phase, setPhase] = useState<"loading" | "bursting" | "gone">("loading");
+  const [phase, setPhase] = useState<"loading" | "bursting" | "gone">(() =>
+    played ? "gone" : "loading",
+  );
   const count = useRef<HTMLSpanElement>(null);
   const line = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
-    if (document.documentElement.dataset.introSeen === "true") {
+    if (played) return;
+
+    /*
+      Two ways of knowing we have already been here, and both are checked. The
+      attribute is set by the inline script before the first paint; the storage
+      key is the same answer read straight from the source, for the case where
+      the script was skipped, blocked or never re-ran.
+    */
+    let seen = document.documentElement.dataset.introSeen === "true";
+    if (!seen) {
+      try {
+        seen = sessionStorage.getItem(SEEN_KEY) === "1";
+      } catch {
+        // Storage blocked: treat it as seen rather than replaying on every visit.
+        seen = true;
+      }
+    }
+
+    if (seen) {
+      played = true;
       const skip = setTimeout(() => setPhase("gone"), 0);
       return () => clearTimeout(skip);
     }
+
+    played = true;
 
     try {
       sessionStorage.setItem(SEEN_KEY, "1");
