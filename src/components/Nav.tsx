@@ -6,9 +6,19 @@ import { usePathname } from "next/navigation";
 import { motion, useMotionValueEvent, useScroll } from "motion/react";
 import { List, X } from "@phosphor-icons/react";
 import { Wordmark } from "./Wordmark";
+import { LangLink } from "./LangLink";
 import type { Content, Lang } from "@/content";
 
-export function Nav({ content, lang }: { content: Content; lang: Lang }) {
+export function Nav({
+  content,
+  lang,
+  alternates,
+}: {
+  content: Content;
+  lang: Lang;
+  /** Every detail page mapped to its counterpart in the other language. */
+  alternates: Record<string, string>;
+}) {
   const [condensed, setCondensed] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const { scrollY } = useScroll();
@@ -32,7 +42,15 @@ export function Nav({ content, lang }: { content: Content; lang: Lang }) {
   }, [menuOpen]);
 
   const otherLang: Lang = lang === "nl" ? "en" : "nl";
-  const otherHref = pathname.replace(`/${lang}`, `/${otherLang}`) || `/${otherLang}`;
+
+  /*
+    The menu points at sections of the homepage. On a detail page those anchors
+    have nothing to land on, so they get the homepage in front of them. A plain
+    <a> then becomes a real navigation instead of a jump to nowhere.
+  */
+  const home = `/${lang}`;
+  const onHome = pathname === home || pathname === `${home}/`;
+  const section = (href: string) => (onHome ? href : `${home}${href}`);
 
   return (
     <header
@@ -59,7 +77,7 @@ export function Nav({ content, lang }: { content: Content; lang: Lang }) {
             {content.nav.links.map((link) => (
               <a
                 key={link.href}
-                href={link.href}
+                href={section(link.href)}
                 className="rounded-[var(--radius-pill)] px-4 py-2 text-[15px] text-text-muted transition-colors duration-200 ease-out hover:text-text"
               >
                 {link.label}
@@ -79,16 +97,18 @@ export function Nav({ content, lang }: { content: Content; lang: Lang }) {
               >
                 {lang}
               </span>
-              <Link
-                href={otherHref}
+              <LangLink
+                lang={lang}
+                other={otherLang}
+                alternates={alternates}
                 className="rounded-[var(--radius-pill)] px-2.5 py-1 font-mono text-[11px] uppercase text-text-faint transition-colors duration-200 ease-out hover:text-text"
               >
                 {otherLang}
-              </Link>
+              </LangLink>
             </div>
 
             <a
-              href="#contact"
+              href={section("#contact")}
               className="hidden rounded-[var(--radius-pill)] bg-text px-4 py-2.5 text-[14px] font-medium text-canvas-deep transition-transform duration-150 ease-[var(--ease-out)] active:scale-[0.97] sm:inline-block"
             >
               {content.nav.cta}
@@ -131,7 +151,7 @@ export function Nav({ content, lang }: { content: Content; lang: Lang }) {
               {content.nav.links.map((link) => (
                 <a
                   key={link.href}
-                  href={link.href}
+                  href={section(link.href)}
                   onClick={() => setMenuOpen(false)}
                   className="font-display text-[32px] font-medium tracking-[-0.03em] text-text"
                 >
@@ -142,19 +162,21 @@ export function Nav({ content, lang }: { content: Content; lang: Lang }) {
 
             <div className="mt-auto mb-10 flex flex-col gap-4">
               <a
-                href="#contact"
+                href={section("#contact")}
                 onClick={() => setMenuOpen(false)}
                 className="rounded-[var(--radius-pill)] bg-accent px-5 py-3.5 text-center text-[16px] font-medium text-accent-ink transition-transform duration-150 ease-[var(--ease-out)] active:scale-[0.97]"
               >
                 {content.nav.cta}
               </a>
-              <Link
-                href={otherHref}
+              <LangLink
+                lang={lang}
+                other={otherLang}
+                alternates={alternates}
                 onClick={() => setMenuOpen(false)}
                 className="text-center text-[15px] text-text-muted"
               >
                 {otherLang === "en" ? "English" : "Nederlands"}
-              </Link>
+              </LangLink>
             </div>
           </div>
         </motion.div>

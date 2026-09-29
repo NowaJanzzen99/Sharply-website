@@ -1,9 +1,17 @@
-import Link from "next/link";
 import { Mark } from "./Wordmark";
+import { LangLink } from "./LangLink";
 import { FooterWordmark } from "./FooterWordmark";
 import type { Content, Lang } from "@/content";
 
-export function Footer({ content, lang }: { content: Content; lang: Lang }) {
+export function Footer({
+  content,
+  lang,
+  alternates,
+}: {
+  content: Content;
+  lang: Lang;
+  alternates: Record<string, string>;
+}) {
   const otherLang: Lang = lang === "nl" ? "en" : "nl";
   const year = new Date().getFullYear();
 
@@ -41,12 +49,14 @@ export function Footer({ content, lang }: { content: Content; lang: Lang }) {
                 </li>
               ))}
             </ul>
-            <Link
-              href={`/${otherLang}`}
+            <LangLink
+              lang={lang}
+              other={otherLang}
+              alternates={alternates}
               className="mt-5 inline-block font-mono text-[12px] uppercase tracking-[0.12em] text-text-muted transition-colors duration-200 ease-out hover:text-text"
             >
               {otherLang === "en" ? "English" : "Nederlands"}
-            </Link>
+            </LangLink>
           </div>
         </div>
 

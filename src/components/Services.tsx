@@ -2,8 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { ArrowUpRight } from "@phosphor-icons/react";
 import { Reveal, RevealImage, RevealLines, RevealStagger } from "./Reveal";
-import type { Content, Service } from "@/content";
+import { serviceHref, type Content, type Lang, type Service } from "@/content";
 
 /*
   Desktop turns the service list into a horizontal reel. The stage pins, and as
@@ -48,7 +50,7 @@ const clamp = (value: number, low = 0, high = 1) => Math.min(high, Math.max(low,
  * One service. Its look is written by the scrub effect in Services; the card
  * itself renders once and never changes.
  */
-function Card({ service }: { service: Service }) {
+function Card({ service, lang }: { service: Service; lang: Lang }) {
   const signature = SIGNATURE[service.key] ?? SIGNATURE.websites;
 
   return (
@@ -57,9 +59,9 @@ function Card({ service }: { service: Service }) {
       data-variant={signature.variant}
       data-vx={signature.vx}
       data-vy={signature.vy}
-      className="w-[min(62vw,920px)] shrink-0 origin-left will-change-transform"
+      className="group relative w-[min(62vw,920px)] shrink-0 origin-left will-change-transform"
     >
-      <div className="frame rounded-[var(--radius-lg)] p-2">
+      <div className="frame overflow-hidden rounded-[var(--radius-lg)] p-2">
         <div className="relative h-[min(46vh,520px)] min-h-[260px] overflow-hidden rounded-[calc(var(--radius-lg)-6px)]">
           <Image
             data-card-img
@@ -67,7 +69,7 @@ function Card({ service }: { service: Service }) {
             alt={service.alt}
             fill
             sizes="(min-width: 768px) 62vw, 100vw"
-            className="object-cover will-change-transform"
+            className="object-cover transition-transform duration-700 ease-[var(--ease-out)] will-change-transform"
           />
         </div>
       </div>
@@ -77,7 +79,19 @@ function Card({ service }: { service: Service }) {
           data-card-el
           className="col-span-5 font-display text-[clamp(1.75rem,2.8vw,2.5rem)] font-medium text-text"
         >
-          {service.title}
+          {/* The link stretches over the whole card, so the card is clickable
+              but a screen reader still reads one link named after the service. */}
+          <Link
+            href={serviceHref(lang, service.key)}
+            className="inline-flex items-start gap-2.5 after:absolute after:inset-0 after:content-['']"
+          >
+            {service.title}
+            <ArrowUpRight
+              size={20}
+              weight="bold"
+              className="mt-[0.35em] shrink-0 text-text-faint transition-[transform,color] duration-200 ease-[var(--ease-out)] group-hover:text-accent-bright hover-fine:group-hover:translate-x-0.5 hover-fine:group-hover:-translate-y-0.5"
+            />
+          </Link>
         </h3>
         <div className="col-span-7 flex flex-col">
           <p
@@ -102,7 +116,7 @@ function Card({ service }: { service: Service }) {
   );
 }
 
-export function Services({ content }: { content: Content }) {
+export function Services({ content, lang }: { content: Content; lang: Lang }) {
   const items = content.services.items;
   const count = items.length;
   const container = useRef<HTMLDivElement>(null);
@@ -275,7 +289,7 @@ export function Services({ content }: { content: Content }) {
             style={{ paddingLeft: "max(2.5rem, calc((100vw - 1360px) / 2 + 2.5rem))" }}
           >
             {items.map((service) => (
-              <Card key={service.key} service={service} />
+              <Card key={service.key} service={service} lang={lang} />
             ))}
           </div>
 
@@ -314,7 +328,7 @@ export function Services({ content }: { content: Content }) {
       <div className="container-page md:hidden">
         <div className="mt-14 flex flex-col gap-14 pb-28">
           {items.map((service, position) => (
-            <article key={service.key} data-scene="photo">
+            <article key={service.key} data-scene="photo" className="group relative">
               <RevealImage
                 variant={MOBILE_VARIANTS[position % MOBILE_VARIANTS.length]}
                 className="relative aspect-[4/3] overflow-hidden rounded-[var(--radius-lg)] border border-hairline"
@@ -329,7 +343,17 @@ export function Services({ content }: { content: Content }) {
                 />
               </RevealImage>
               <h3 className="mt-6 font-display text-[22px] font-medium text-text">
-                {service.title}
+                <Link
+                  href={serviceHref(lang, service.key)}
+                  className="inline-flex items-start gap-2 after:absolute after:inset-0 after:content-['']"
+                >
+                  {service.title}
+                  <ArrowUpRight
+                    size={17}
+                    weight="bold"
+                    className="mt-[0.3em] shrink-0 text-text-faint"
+                  />
+                </Link>
               </h3>
               <p className="mt-3 text-[16px] leading-[1.6] text-text-muted">
                 {service.body}

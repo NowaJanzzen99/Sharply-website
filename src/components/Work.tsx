@@ -1,7 +1,8 @@
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 import { Reveal, RevealImage, RevealLines } from "./Reveal";
-import type { Content } from "@/content";
+import { workHref, type Content, type Lang } from "@/content";
 
 type Item = Content["work"]["items"][number];
 
@@ -15,6 +16,7 @@ function ProjectCard({
   label,
   variant,
   className,
+  lang,
   wide = false,
   lag = 0,
 }: {
@@ -22,11 +24,16 @@ function ProjectCard({
   label: string;
   variant: string;
   className: string;
+  lang: Lang;
   wide?: boolean;
   lag?: number;
 }) {
   return (
-    <article data-scene="photo" data-scene-lag={lag} className={`group ${className}`}>
+    <article
+      data-scene="photo"
+      data-scene-lag={lag}
+      className={`group relative ${className}`}
+    >
       <RevealImage
         variant={variant}
         className="relative overflow-hidden rounded-[var(--radius-lg)] border border-hairline"
@@ -47,7 +54,19 @@ function ProjectCard({
         <div className="mt-5 flex items-start justify-between gap-6">
           <div>
             <h3 className="font-display text-[22px] font-medium text-text md:text-[26px]">
-              {item.title}
+              {/* Stretched over the card, so the whole thing is a target and
+                  the link is still named after the project. */}
+              <Link
+                href={workHref(lang, item.key)}
+                className="inline-flex items-start gap-2 after:absolute after:inset-0 after:content-['']"
+              >
+                {item.title}
+                <ArrowUpRight
+                  size={18}
+                  weight="bold"
+                  className="mt-[0.35em] shrink-0 text-text-faint transition-[transform,color] duration-200 ease-[var(--ease-out)] group-hover:text-accent-bright hover-fine:group-hover:translate-x-0.5 hover-fine:group-hover:-translate-y-0.5"
+                />
+              </Link>
             </h3>
             <p className="mt-1 text-[15px] text-text-muted">{item.discipline}</p>
           </div>
@@ -63,12 +82,12 @@ function ProjectCard({
   );
 }
 
-export function Work({ content }: { content: Content }) {
+export function Work({ content, lang }: { content: Content; lang: Lang }) {
   const [first, second, third] = content.work.items;
   const label = content.work.conceptLabel;
 
   return (
-    <section className="relative border-t border-hairline py-24 md:py-32">
+    <section id="werk" className="relative scroll-mt-24 border-t border-hairline py-24 md:py-32">
       <div className="container-page">
         <div className="flex flex-col gap-5 md:max-w-[62ch]">
           <h2 className="font-display text-[clamp(2rem,5.5vw,3.5rem)] font-semibold text-text">
@@ -85,10 +104,17 @@ export function Work({ content }: { content: Content }) {
         </div>
 
         <div className="mt-14 grid gap-x-8 gap-y-16 md:grid-cols-12">
-          <ProjectCard item={first} label={label} variant="left" className="md:col-span-7" />
+          <ProjectCard
+            item={first}
+            label={label}
+            lang={lang}
+            variant="left"
+            className="md:col-span-7"
+          />
           <ProjectCard
             item={second}
             label={label}
+            lang={lang}
             variant="circle"
             lag={0.12}
             className="md:col-span-5 md:mt-28"
@@ -96,6 +122,7 @@ export function Work({ content }: { content: Content }) {
           <ProjectCard
             item={third}
             label={label}
+            lang={lang}
             variant="diagonal"
             wide
             className="md:col-span-8"

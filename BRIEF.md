@@ -154,10 +154,23 @@ De enige openstaande creatieve taak is de hero-scène. In `src/components/Hero.t
 - **Contactformulier is acht stappen**: wat je nodig hebt, over jullie, doel, details, stijl en materiaal, budget en planning, contact, overzicht. De detailstap bouwt zijn vragen op uit de diensten die je koos (`detailGroups` in `nl.ts` en `en.ts`). Velden staan als data in de content en worden door een generieke renderer getoond (`src/components/contact/`). Bijlagen: maximaal 3, samen 4 MB, alleen pdf, afbeeldingen en Office. Het overzicht en de mail gebruiken dezelfde `buildSections`. De API is `multipart/form-data`, geen JSON meer.
 - **Telefoon**: de bel reageert op kantelen (`deviceorientation`). Android werkt direct, iOS vraagt bij de eerste tik om toestemming, wat het platform verplicht stelt.
 
+## 10c. Detailpagina's (29 september 2026)
+
+Diensten en projecten zijn nu klikbaar en hebben elk een eigen pagina.
+
+- **Eén route voor alles:** `src/app/[lang]/[section]/[slug]/page.tsx`. De padsegmenten zijn vertaald (`/nl/diensten/webshops` tegenover `/en/services/webshops`), en de slug ook. Dat zou normaal vier routemappen kosten; door het segment tegen het woordenboek te valideren blijft het er één. Een derde taal is daarmee een kwestie van tekst schrijven, niet van mappen verplaatsen.
+- **Teksten** staan in `src/content/details-nl.ts` en `details-en.ts`, apart van `nl.ts` en `en.ts`. Reden: de overzichtstekst is één regel per dienst en de detailtekst is een pagina. In één bestand is geen van beide meer te bewerken zonder scrollen. Ze horen bij elkaar via dezelfde sleutel.
+- **Zes dienstpagina's** met inleiding, vier tekstblokken, een lijst "wat je krijgt" en drie veelgestelde vragen in een openklapper.
+- **Drie projectpagina's** met inleiding, drie blokken, een lijst "wat het concept omvat" en op elke pagina de mededeling dat het een eigen concept is en geen klantwerk. Geen verzonnen cijfers of resultaten, ook niet op de detailpagina's.
+- **Kaarten zijn klikbaar** via een uitgerekte link over de hele kaart, met de titel als toegankelijke naam. Zo is het hele vlak een doelwit terwijl een schermlezer één link met een zinnige naam voorleest.
+- **Taalwisselaar:** `/nl` omzetten naar `/en` landt op een detailpagina op niets, omdat pad én slug vertaald zijn. De server bouwt daarom een kaart van tegenhangers (`getAlternates`) en geeft die aan `LangLink`. De grote tekstbestanden blijven daarmee op de server, de kaart zelf is een paar honderd bytes.
+- **Nav en footer** staan nu in `src/app/[lang]/layout.tsx`, dus op elke pagina. De ankerlinks krijgen de homepage ervoor wanneer je niet op de homepage bent.
+- **Toegevoegd:** een eigen 404-pagina, `sitemap.xml` en `robots.txt`, beide opgebouwd uit dezelfde woordenboeken.
+
 ## 11. Open punten
 
 - Noah heeft nog geen definitieve diensten, prijzen of bewijs.
 - Kleur- en stijlrichting is afgeleid van het Pinterest-bord (donker/kobalt). Als het te veel op "elke AI-site" gaat lijken, is een lichtere hoofdrichting een terugvaloptie.
 - Resend en DNS moeten Noah nog inrichten (Mijndomein). Zonder `RESEND_API_KEY` geeft het formulier netjes een foutmelding met een mailadres als terugval.
-- De 3D-hero moet nog gebouwd worden (Fable).
-- Nog niet gedaan: een skip-link naar de hoofdinhoud, en een deelafbeelding voor social media.
+- Nog niet gedaan: een deelafbeelding voor social media (og:image).
+- De sitemap gebruikt `NEXT_PUBLIC_SITE_URL` als die bestaat, anders het vercel.app-adres. Zet die variabele zodra sharply.nl gekoppeld is.

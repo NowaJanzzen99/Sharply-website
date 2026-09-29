@@ -26,6 +26,92 @@ export type Service = {
   placeholder: true;
 };
 
+/*
+  Detail pages.
+
+  The overview copy and the detail copy live apart on purpose: the overview is
+  one tight line per service, written to be scanned in a reel, and the detail is
+  the page someone lands on when that line worked. Keeping them in one object
+  would push nl.ts past the point where either can be edited without scrolling.
+  They are joined by the same key, in src/content/details-nl.ts and -en.ts.
+
+  Every path segment is translated, so a Dutch visitor never sees an English URL.
+  One route handles both: src/app/[lang]/[section]/[slug].
+*/
+export const SECTION_PATHS = {
+  nl: { services: "diensten", work: "werk" },
+  en: { services: "services", work: "work" },
+} as const;
+
+export type SectionKind = keyof (typeof SECTION_PATHS)["nl"];
+
+export function sectionPath(lang: Lang, kind: SectionKind): string {
+  return SECTION_PATHS[lang][kind];
+}
+
+/** Which kind of page a path segment belongs to, or null if it is not one of ours. */
+export function sectionKind(lang: Lang, segment: string): SectionKind | null {
+  const paths = SECTION_PATHS[lang];
+  if (segment === paths.services) return "services";
+  if (segment === paths.work) return "work";
+  return null;
+}
+
+export type DetailSection = {
+  title: string;
+  body: string;
+};
+
+export type ServiceDetail = {
+  /** Translated, so /nl/diensten/ai-chat and /en/services/ai-chat can differ. */
+  slug: string;
+  /** One line under the title. Not a repeat of the overview line. */
+  tagline: string;
+  intro: string;
+  sections: DetailSection[];
+  /** What is actually handed over at the end. */
+  deliverables: string[];
+  /** Straight answers to the questions people ask before they get in touch. */
+  questions: { question: string; answer: string }[];
+};
+
+export type WorkDetail = {
+  slug: string;
+  tagline: string;
+  intro: string;
+  sections: DetailSection[];
+  /** What the concept covers. Never a result, because there is no client yet. */
+  scope: string[];
+  /** Repeated on every project page: these are our own designs, not client work. */
+  note: string;
+};
+
+/** The shared furniture of a detail page: labels, links, the closing call. */
+export type DetailCopy = {
+  backToServices: string;
+  backToWork: string;
+  deliverables: string;
+  questions: string;
+  scope: string;
+  otherServices: string;
+  otherWork: string;
+  readMore: string;
+  ctaTitle: string;
+  ctaBody: string;
+  ctaButton: string;
+  notFound: {
+    title: string;
+    body: string;
+    home: string;
+  };
+};
+
+export type Details = {
+  copy: DetailCopy;
+  services: Record<ServiceKey, ServiceDetail>;
+  work: Record<string, WorkDetail>;
+};
+
 export type DemoCommand = {
   id: "headline" | "light" | "shop" | "publish";
   label: string;
