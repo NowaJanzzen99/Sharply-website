@@ -529,16 +529,21 @@
   }
 
   /*
-    The grain sits behind the content, not in front of it. As a positioned
-    ::after with no z-index it painted over every unpositioned child, and the
-    white headline came out grey and speckled. z-index -1 keeps it above the
-    section's own background (the section is isolated) and below the words.
+    The grain is a positioned ::after, so it paints over every unpositioned
+    child: the hero headline came out grey and speckled underneath it. The fix
+    is on the other side: the words are lifted above it (see Hero.tsx, the
+    content container is relative z-[1]).
+
+    Not by pushing the grain down to z-index -1, which was tried first: that
+    made Chrome drop the big hero bubble entirely, while the small ones stayed.
+    Measured in a headless render, the bubble's area went from a brightness of
+    49 to 18. Leave the grain on top of the picture and put the text on top of
+    the grain.
   */
   .grain::after {
     content: "";
     position: absolute;
     inset: 0;
-    z-index: -1;
     pointer-events: none;
     /*
       No blend mode. mix-blend-mode: overlay made the browser re-blend the whole

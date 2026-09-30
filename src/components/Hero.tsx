@@ -56,7 +56,8 @@ export function Hero({ content }: { content: Content }) {
         className="absolute inset-0 -z-10 bg-[linear-gradient(to_top,oklch(0.09_0.022_264)_22%,oklch(0.09_0.022_264/0.84)_48%,oklch(0.09_0.022_264/0.28)_70%,transparent_92%)] md:bg-[linear-gradient(to_right,oklch(0.09_0.022_264)_12%,oklch(0.09_0.022_264/0.78)_40%,oklch(0.09_0.022_264/0.2)_62%,transparent_84%)]"
       />
 
-      <div className="container-page">
+      {/* Above the grain, which would otherwise dull the headline. */}
+      <div className="container-page relative z-[1]">
         <h1 className="font-display text-[clamp(2.1rem,6.6vw,4.6rem)] font-semibold text-text">
           <RevealLines
             lines={[content.hero.lineOne, content.hero.lineTwo]}
