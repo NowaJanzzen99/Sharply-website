@@ -16,6 +16,8 @@ export const nl: Content = {
       { href: "#prijzen", label: "Prijzen" },
     ],
     cta: "Start een project",
+    stickyText: "Zie direct wat het ongeveer kost",
+    stickyButton: "Start een project",
     menuOpen: "Menu openen",
     menuClose: "Menu sluiten",
     langLabel: "Taal",

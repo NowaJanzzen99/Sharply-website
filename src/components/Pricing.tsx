@@ -51,8 +51,8 @@ export function Pricing({ content, lang }: { content: Content; lang: Lang }) {
             {copy.tiers.map((tier, index) => (
               <li
                 key={tier.name}
-                data-scene={tier.recommended ? "panel" : "row"}
-                data-scene-variant={tier.recommended ? "up" : undefined}
+                data-scene="panel"
+                data-scene-variant="up"
                 data-scene-lag={index * 0.05}
                 className={
                   tier.recommended
@@ -171,7 +171,8 @@ export function Pricing({ content, lang }: { content: Content; lang: Lang }) {
             {copy.other.map((item, index) => (
               <div
                 key={item.name}
-                data-scene="row"
+                data-scene="panel"
+                data-scene-variant="up"
                 data-scene-lag={index * 0.04}
                 className="flex items-baseline justify-between gap-6 border-b border-hairline py-4 first:border-t"
               >

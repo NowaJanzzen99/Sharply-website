@@ -6,6 +6,7 @@ import { SmoothScroll } from "@/components/SmoothScroll";
 import { PageChrome } from "@/components/PageChrome";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
+import { StickyCta } from "@/components/StickyCta";
 import { getAlternates, getContent, isLang, LANGS, type Lang } from "@/content";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -91,6 +92,11 @@ export default async function LangLayout({
         <Nav content={content} lang={lang as Lang} alternates={alternates} />
         {children}
         <Footer content={content} lang={lang as Lang} alternates={alternates} />
+        <StickyCta
+          lang={lang as Lang}
+          text={content.nav.stickyText}
+          button={content.nav.stickyButton}
+        />
       </body>
     </html>
   );

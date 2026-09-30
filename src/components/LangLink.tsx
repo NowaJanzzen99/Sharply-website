@@ -34,7 +34,17 @@ export function LangLink({
   const href = alternates[clean] ?? clean.replace(`/${lang}`, `/${other}`) ?? `/${other}`;
 
   return (
-    <Link href={href} hrefLang={other} className={className} onClick={onClick}>
+    <Link
+      href={href}
+      hrefLang={other}
+      className={className}
+      onClick={() => {
+        // Remember the choice for a year, so a bare address keeps sending this
+        // visitor to the language they picked. Read by src/proxy.ts.
+        document.cookie = `sharply-lang=${other}; path=/; max-age=31536000; samesite=lax`;
+        onClick?.();
+      }}
+    >
       {children}
     </Link>
   );

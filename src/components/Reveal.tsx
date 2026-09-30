@@ -103,16 +103,32 @@ export function RevealLines({
   /** Trigger on scroll instead of on mount. */
   onView?: boolean;
 }) {
-  const { ref, shown: inView } = useInViewOnce<HTMLSpanElement>(0.4);
-  const [mounted, setMounted] = useState(false);
+  const { ref, shown } = useInViewOnce<HTMLSpanElement>(0.4);
 
-  useEffect(() => {
-    if (onView) return;
-    const frame = requestAnimationFrame(() => setMounted(true));
-    return () => cancelAnimationFrame(frame);
-  }, [onView]);
-
-  const shown = onView ? inView : mounted;
+  /*
+    On mount (the hero, a page title) the lines rise with a CSS animation, so
+    the words are on screen the moment the stylesheet is, with no wait for
+    JavaScript. These are the largest text on the page and often the element
+    the browser times the page load by; hiding them until hydration made them
+    appear late on a slow phone. Only the scroll-triggered kind needs script.
+  */
+  if (!onView) {
+    return (
+      <span className={className}>
+        {lines.map((line, index) => (
+          <span key={line} className="block overflow-hidden pb-[0.08em]">
+            <span
+              data-line-mount
+              style={{ animationDelay: `${0.12 + index * 0.08}s` }}
+              className={`block ${lineClassName ?? ""}`}
+            >
+              {line}
+            </span>
+          </span>
+        ))}
+      </span>
+    );
+  }
 
   return (
     <span ref={ref} className={className}>

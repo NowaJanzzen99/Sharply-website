@@ -182,6 +182,17 @@
     transform: translateY(0);
   }
 
+  [data-line-mount] {
+    animation: line-rise 900ms var(--ease-out) both;
+  }
+
+  @keyframes line-rise {
+    from {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+  }
+
   /*
     A vocabulary, not one reveal repeated everywhere: headings clip up behind a
     mask, body copy rises, images open like a curtain and settle out of a slight
@@ -439,7 +450,8 @@
       clip-path: none !important;
     }
 
-    [data-reveal-hero] {
+    [data-reveal-hero],
+    [data-line-mount] {
       animation: none;
     }
   }
@@ -516,10 +528,17 @@
     }
   }
 
+  /*
+    The grain sits behind the content, not in front of it. As a positioned
+    ::after with no z-index it painted over every unpositioned child, and the
+    white headline came out grey and speckled. z-index -1 keeps it above the
+    section's own background (the section is isolated) and below the words.
+  */
   .grain::after {
     content: "";
     position: absolute;
     inset: 0;
+    z-index: -1;
     pointer-events: none;
     /*
       No blend mode. mix-blend-mode: overlay made the browser re-blend the whole

@@ -69,7 +69,13 @@ function Card({ service, lang }: { service: Service; lang: Lang }) {
             alt={service.alt}
             fill
             sizes="(min-width: 768px) 62vw, 100vw"
-            className="object-cover transition-transform duration-700 ease-[var(--ease-out)] will-change-transform"
+            // The cards arrive sideways, from off screen, where lazy loading
+            // does not see them coming: they showed as empty frames. Six
+            // pictures of under 100KB each, so load them all up front.
+            loading="eager"
+            // No CSS transition here: the scrub writes this transform every
+            // frame, and a transition chasing it made the picture lag and jolt.
+            className="object-cover will-change-transform"
           />
         </div>
       </div>

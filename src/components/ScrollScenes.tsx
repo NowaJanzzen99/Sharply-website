@@ -122,7 +122,8 @@ export function ScrollScenes() {
         const { dx, dy, rot, zoom } = entry.vector;
 
         if (entry.kind === "row") {
-          entry.el.style.transform = `translate3d(${(rest * 140 * amp).toFixed(1)}px, ${(rest * 30 * amp).toFixed(1)}px, 0) rotate(${(rest * 3 * amp).toFixed(2)}deg)`;
+          const travel = Math.min(140, window.innerWidth * 0.12);
+          entry.el.style.transform = `translate3d(${(rest * travel * amp).toFixed(1)}px, ${(rest * 30 * amp).toFixed(1)}px, 0) rotate(${(rest * 3 * amp).toFixed(2)}deg)`;
           entry.el.style.opacity = (0.15 + 0.85 * e).toFixed(3);
         } else if (entry.kind === "panel") {
           // Direct: a slide and a fade, nothing rotating. Something to use,

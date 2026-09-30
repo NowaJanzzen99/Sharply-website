@@ -19,7 +19,7 @@ export function Footer({
     <footer className="relative overflow-hidden border-t border-hairline bg-canvas-deep pt-20">
       <div className="container-page">
         <div className="grid gap-10 pb-16 md:grid-cols-12">
-          <div className="md:col-span-5">
+          <div className="md:col-span-7">
             <h2 className="font-display text-[clamp(1.5rem,3vw,2rem)] font-medium text-text">
               {content.footer.contactTitle}
             </h2>
@@ -31,16 +31,7 @@ export function Footer({
             </a>
           </div>
 
-          <div className="md:col-span-3">
-            <p className="text-[14px] font-medium text-text">
-              {content.footer.socialTitle}
-            </p>
-            <p className="mt-3 text-[15px] text-text-faint">
-              {content.footer.socialNote}
-            </p>
-          </div>
-
-          <div className="md:col-span-4">
+          <div className="md:col-span-5">
             <p className="text-[15px] text-text-muted">{content.footer.legalNote}</p>
             <ul className="mt-3 flex flex-col gap-1">
               {content.footer.placeholders.map((item) => (
@@ -62,7 +53,7 @@ export function Footer({
 
         <div className="flex items-center justify-between gap-6 border-t border-hairline py-6">
           <p className="text-[13px] text-text-faint">
-            {year} Sharply. {content.footer.rights}
+            © {year} Sharply. {content.footer.rights}
           </p>
           <Mark className="h-5 w-5 shrink-0 opacity-70" />
         </div>
