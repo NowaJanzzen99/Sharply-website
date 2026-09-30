@@ -253,6 +253,7 @@ export const en: Content = {
     price: {
       title: "An indication, from your answers",
       to: "to",
+      vat: "Amounts exclude VAT.",
       driversTitle: "What sets this range",
       care: "Looking after it afterwards: {low} to {high} a month.",
       open: "You also picked something a form cannot price, so that is not in here yet.",

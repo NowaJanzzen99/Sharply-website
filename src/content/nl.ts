@@ -253,6 +253,7 @@ export const nl: Content = {
     price: {
       title: "Indicatie op basis van je antwoorden",
       to: "tot",
+      vat: "Bedragen zijn exclusief btw.",
       driversTitle: "Wat deze richting bepaalt",
       care: "Daarna beheer door ons: {low} tot {high} per maand.",
       open: "Je koos ook iets dat niet in een formulier te vangen is, dus dat zit hier nog niet in.",

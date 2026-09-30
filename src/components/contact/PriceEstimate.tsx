@@ -89,6 +89,8 @@ export function PriceEstimate({
         <Counter to={result.high} lang={lang} />
       </p>
 
+      <p className="mt-2 text-[13px] text-text-faint">{price.vat}</p>
+
       {result.monthly ? (
         <p className="mt-2 text-[15px] text-text-muted">
           {price.care

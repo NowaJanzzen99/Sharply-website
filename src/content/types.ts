@@ -307,6 +307,8 @@ export type Content = {
     price: {
       title: string;
       to: string;
+      /** Said right under the amount: businesses read a price as excluding VAT unless told. */
+      vat: string;
       driversTitle: string;
       care: string;
       open: string;
