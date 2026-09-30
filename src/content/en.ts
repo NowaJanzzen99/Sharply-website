@@ -16,7 +16,6 @@ export const en: Content = {
       { href: "#prijzen", label: "Pricing" },
     ],
     cta: "Start a project",
-    stickyText: "See roughly what it costs, straight away",
     stickyButton: "Start a project",
     menuOpen: "Open menu",
     menuClose: "Close menu",

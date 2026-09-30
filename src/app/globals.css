@@ -475,6 +475,31 @@
   }
 
   /*
+    The call-to-action pill: one piece of dark frosted glass, lighter towards
+    the bottom the way a lit pane is, with a thin bright rim, a highlight along
+    its top edge and a faint cobalt glow held inside its lower lip. It has to
+    stay legible over anything scrolling beneath it, so it blurs and darkens
+    what is behind it. It only ever moves when it appears or leaves, which is
+    why a backdrop blur is affordable here and not on the reel.
+  */
+  .pill {
+    background:
+      linear-gradient(180deg, oklch(0.27 0.03 264 / 0.62) 0%, oklch(0.36 0.04 262 / 0.72) 100%);
+    border: 1px solid oklch(0.88 0.03 264 / 0.26);
+    backdrop-filter: blur(20px) saturate(170%);
+    box-shadow:
+      inset 0 1px 0 oklch(1 0 0 / 0.24),
+      inset 0 -12px 20px oklch(0.62 0.16 259 / 0.14),
+      0 16px 44px oklch(0.05 0.02 264 / 0.55);
+  }
+
+  @supports not (backdrop-filter: blur(1px)) {
+    .pill {
+      background: var(--canvas-raised);
+    }
+  }
+
+  /*
     Frosted panel. The highlight along the top edge and the inset line just
     inside the border are what separate glass from a grey box: light catches
     the lip of a real pane before it catches its face.

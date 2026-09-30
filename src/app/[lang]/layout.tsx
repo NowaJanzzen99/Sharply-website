@@ -92,11 +92,7 @@ export default async function LangLayout({
         <Nav content={content} lang={lang as Lang} alternates={alternates} />
         {children}
         <Footer content={content} lang={lang as Lang} alternates={alternates} />
-        <StickyCta
-          lang={lang as Lang}
-          text={content.nav.stickyText}
-          button={content.nav.stickyButton}
-        />
+        <StickyCta lang={lang as Lang} label={content.nav.stickyButton} />
       </body>
     </html>
   );

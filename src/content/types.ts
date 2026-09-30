@@ -192,7 +192,6 @@ export type Content = {
     links: { href: string; label: string }[];
     cta: string;
     /** The glass pill at the foot of the screen. */
-    stickyText: string;
     stickyButton: string;
     menuOpen: string;
     menuClose: string;

@@ -8,7 +8,8 @@ import type { Lang } from "@/content";
 
 /*
   The glass pill at the foot of the screen: one way into the form, always in
-  reach, wherever someone is on the site.
+  reach, wherever someone is on the site. The whole pill is the button, and it
+  carries one line, so it reads at a glance and never competes with the page.
 
   It steps aside twice, on purpose. Over the first screen of the homepage the
   hero already carries the same button, and two identical calls to action on
@@ -19,15 +20,7 @@ import type { Lang } from "@/content";
   It moves on transform and opacity only, and sits above the device's own
   home indicator on phones (env(safe-area-inset-bottom)).
 */
-export function StickyCta({
-  lang,
-  text,
-  button,
-}: {
-  lang: Lang;
-  text: string;
-  button: string;
-}) {
+export function StickyCta({ lang, label }: { lang: Lang; label: string }) {
   const pathname = usePathname();
   const home = `/${lang}`;
   const onHome = pathname === home || pathname === `${home}/`;
@@ -64,33 +57,29 @@ export function StickyCta({
     <div
       className="pointer-events-none fixed inset-x-0 flex justify-center px-4"
       style={{
-        bottom: "max(16px, env(safe-area-inset-bottom))",
+        bottom: "max(18px, env(safe-area-inset-bottom))",
         zIndex: "var(--z-sticky)",
       }}
     >
-      <div
+      <Link
+        href={href}
         aria-hidden={!shown}
-        className="glass flex items-center gap-2 rounded-[var(--radius-pill)] p-1.5 pl-5 shadow-[0_18px_50px_oklch(0.06_0.02_264/0.55)] transition-[transform,opacity] duration-500 ease-[var(--ease-out)] motion-reduce:transition-opacity"
+        tabIndex={shown ? 0 : -1}
+        className="pill group flex h-14 items-center gap-5 rounded-[var(--radius-pill)] pl-7 pr-2 text-[16px] font-medium text-text transition-[transform,opacity,filter] duration-500 ease-[var(--ease-out)] active:scale-[0.97] hover-fine:hover:brightness-125 motion-reduce:transition-opacity"
         style={{
-          transform: shown ? "translateY(0)" : "translateY(140%)",
+          transform: shown ? "translateY(0)" : "translateY(160%)",
           opacity: shown ? 1 : 0,
           pointerEvents: shown ? "auto" : "none",
         }}
       >
-        <span className="hidden text-[14px] text-text-muted sm:inline">{text}</span>
-        <Link
-          href={href}
-          tabIndex={shown ? 0 : -1}
-          className="group inline-flex items-center gap-2 rounded-[var(--radius-pill)] bg-accent px-5 py-2.5 text-[15px] font-medium text-accent-ink transition-[transform,background-color] duration-150 ease-[var(--ease-out)] active:scale-[0.97] hover-fine:hover:bg-accent-bright"
+        {label}
+        <span
+          aria-hidden="true"
+          className="flex h-10 w-10 items-center justify-center rounded-full bg-accent text-accent-ink shadow-[0_0_22px_oklch(0.64_0.178_259/0.55)] transition-transform duration-300 ease-[var(--ease-out)] group-hover:translate-x-0.5"
         >
-          {button}
-          <ArrowRight
-            size={16}
-            weight="bold"
-            className="transition-transform duration-200 ease-[var(--ease-out)] group-hover:translate-x-0.5"
-          />
-        </Link>
-      </div>
+          <ArrowRight size={17} weight="bold" />
+        </span>
+      </Link>
     </div>
   );
 }
