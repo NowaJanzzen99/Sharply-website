@@ -184,9 +184,41 @@ Diensten en projecten zijn nu klikbaar en hebben elk een eigen pagina.
 - **Prijs noemen, waarom zo.** "Hetzelfde als een bureau maar goedkoper" nodigt uit tot vergelijken op prijs en maakt het werk de goedkope variant. De reden noemen maakt van de prijs een gevolg van hoe de studio werkt, niet een korting. Daarom staat er geen enkel percentage of "vanaf"-bedrag in de lopende tekst: het concrete getal komt pas na het formulier, als het ergens op gebaseerd is.
 - **Fixes.** Telefoonmockups: elk scherm wordt nu gemaskeerd op zijn eigen vorm in plaats van op zijn rechthoek (anders liep het ene scherm over het andere heen), en een scherm dat half achter een ander staat wordt eerst volledig teruggerekend zodat de pagina er niet in geperst wordt. Bel-pop: twee drempels in plaats van een (anders flikkert hij tijdens het uitrollen van de scroll), het beeld blijft heel tot de scherven al uit elkaar staan (anders zag je naden), en de scherven wachten nu ook op het laden van hun eigen afbeelding. Logo in de nav: de link was een tekstregel en dus hoger dan zijn inhoud, nu een flexbox met `leading-none`, gemeten op de pixel.
 
+## 10f. Prijzen (30 september 2026)
+
+Onderzoek gedaan op de Nederlandse markt (bronnen onderaan deze sectie), en de uitkomst staat nu op de site.
+
+**Wat de markt vraagt** (alles exclusief btw; vooral blogs van bureaus, dus een bandbreedte en geen waarheid):
+- Zakelijke website: freelancer 800 tot 3.000 (een goede 2.500 tot 5.000), klein bureau 3.000 tot 12.000. Boutique-studio's op Framer of Webflow: 3.000 tot 8.000 voor een kleine merksite met animatie, 5.000 tot 15.000 middenklasse.
+- Uurtarief: freelancer 60 tot 120, senior developer 90 tot 120, klein bureau 85 tot 140, groot bureau 120 tot 200+.
+- Webshop: 8.000 tot 18.000 (MKB via bureau), 18.000 tot 45.000+ maatwerk.
+- Huisstijl: freelancer 500 tot 3.000, klein bureau 2.000 tot 5.000, groter 5.000 tot 15.000+.
+- Onderhoud per maand: mediaan 45. Sjabloon-abonnementen "alles erbij" 45 tot 99. Beheerde AI-chatbot bij Nederlandse aanbieders 800 tot 2.000 per maand.
+- Niet gevonden: wat Nederlandse MKB'ers gemiddeld aan een site besteden, en wat de echte toptudio's vragen (die zetten het niet online).
+
+**De redenering achter de bedragen**
+1. Prijs volgt positie. Een premium tarief moet verdedigbaar zijn tegenover mensen die jou nooit ontmoeten, en dat vraagt vergelijkbaar bewijs. Met een echte klant en twee concepten is het plafond de bovenkant van de kleine-studio-band, niet een bureautarief.
+2. De vergelijking is de boutique-studio op Framer of Webflow, niet het grote marketingbureau. Dat maakt "bureaukwaliteit voor een studioprijs" verdedigbaar.
+3. Ronde bedragen: bij maatwerk lezen 99-eindes als korting.
+4. Drie pakketten met een aanbevolen middelste en een duurste ernaast als anker.
+5. De maandprijs is de echte vloer. Onder 99 concurreer je met sjablonen en onderschat je de assistent, boven ongeveer 250 heeft een kleine ondernemer een verhaal nodig.
+
+**Wat er nu staat**
+- Websites: Start 3.500, Studio 6.500 (aanbevolen), Signature vanaf 11.500.
+- Maandelijks, met hosting, updates en de assistent: Basis 99, Groei 199 (aanbevolen), Volledig 399.
+- Overig: huisstijl 2.500 tot 6.000, webshop vanaf 9.000, AI-assistent in een bestaande site vanaf 3.500, koppelingen vanaf 2.000, motion vanaf 1.200, AI-content vanaf 900.
+- De prijskaart in het formulier (`src/lib/estimate.ts`) is gekalibreerd op deze pakketten: een site die precies bij Studio past komt op 6.500 aan de onderkant uit, Signature begint op 11.400. Een tegenspraak tussen de sectie en het formulier is het eerste wat een kritische klant opmerkt, dus houd die twee samen. Testscript-scenario's staan in de git-geschiedenis van deze commit.
+
+**Nog te bevestigen door Noah**
+- Uren van Live Wedding Paintings: prijs gedeeld door uren moet minstens 90 tot 120 per uur zijn (senior freelancer) of hoger. Klopt dat niet, dan moeten de pakketten omhoog.
+- De maandplannen gaan uit van een beperkt aantal uren en een beperkt AI-verbruik per klant. Meet het echte verbruik na de eerste klanten en pas zo nodig aan.
+- Van Westendorp-onderzoek (vier vragen aan 15 tot 20 mensen uit de doelgroep) om te toetsen of het bereik klopt. Werkt pas echt bij 50 tot 100 antwoorden.
+
+**Bronnen**: SearchLab, ZA Creatives, Appfront (websites); Codeloods, Knab, ZZP Centrum (uurtarieven); Opklopper, DigiSwift (webshops); SearchLab, Aanloop AI, OpenKlauw (AI); SearchLab, DesignDash (huisstijl); Zazou Totaal, Webtify, Sorora Studio, DigiDan (onderhoud en abonnementen); Branded Agency, Amply (boutique-studio's); Inkbot Design, Shopify Partners, Simon-Kucher (positionering en prijspsychologie); Quantilope, Conjointly (Van Westendorp).
+
 ## 11. Open punten
 
-- De bedragen in `src/lib/estimate.ts` zijn een eerste invulling en moeten door Noah bevestigd worden. Ze volgen de budgetstaffels uit het formulier.
+- De bedragen op de site en in `src/lib/estimate.ts` zijn een onderbouwd voorstel (zie 10f), nog niet getoetst bij echte prospects. Noah controleert ze aan de hand van zijn uren.
 - Kleur- en stijlrichting is afgeleid van het Pinterest-bord (donker/kobalt). Als het te veel op "elke AI-site" gaat lijken, is een lichtere hoofdrichting een terugvaloptie.
 - Resend en DNS moeten Noah nog inrichten (Mijndomein). Zonder `RESEND_API_KEY` geeft het formulier netjes een foutmelding met een mailadres als terugval.
 - Nog niet gedaan: een deelafbeelding voor social media (og:image), en het btw-nummer in de footer.

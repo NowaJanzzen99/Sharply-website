@@ -310,10 +310,39 @@ export type Content = {
       /** Said right under the amount: businesses read a price as excluding VAT unless told. */
       vat: string;
       driversTitle: string;
+      /** {plan} and {price} are filled in: "Basis", "€99". */
       care: string;
+      plans: { basis: string; groei: string; volledig: string };
       open: string;
       note: string;
     };
+  };
+  /** The public price list. Amounts are numbers, formatted per language. */
+  pricing: {
+    title: string;
+    lead: string;
+    vatNote: string;
+    websitesTitle: string;
+    tiers: {
+      name: string;
+      price: number;
+      /** Prefix the price with "from": the top tier has no ceiling. */
+      from?: boolean;
+      body: string;
+      points: string[];
+      recommended?: boolean;
+    }[];
+    careTitle: string;
+    careLead: string;
+    plans: { name: string; price: number; body: string; recommended?: boolean }[];
+    perMonth: string;
+    from: string;
+    recommended: string;
+    otherTitle: string;
+    other: { name: string; price: string }[];
+    ctaTitle: string;
+    ctaText: string;
+    ctaButton: string;
   };
   footer: {
     contactTitle: string;

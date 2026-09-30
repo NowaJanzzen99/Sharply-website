@@ -94,8 +94,8 @@ export function PriceEstimate({
       {result.monthly ? (
         <p className="mt-2 text-[15px] text-text-muted">
           {price.care
-            .replace("{low}", formatEuro(result.monthly[0], lang))
-            .replace("{high}", formatEuro(result.monthly[1], lang))}
+            .replace("{plan}", price.plans[result.monthly.plan])
+            .replace("{price}", formatEuro(result.monthly.price, lang))}
         </p>
       ) : null}
 
