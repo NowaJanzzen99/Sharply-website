@@ -18,14 +18,14 @@ export const detailsEn: Details = {
     backToServices: "All services",
     backToWork: "All work",
     deliverables: "What you get",
-    questions: "Questions I get a lot",
+    questions: "Frequently asked questions",
     scope: "What the concept covers",
     otherServices: "Other services",
     otherWork: "Other work",
     readMore: "Read on",
-    ctaTitle: "Ready to start?",
+    ctaTitle: "Ready for the first step?",
     ctaBody:
-      "Tell me in the form what you want to build. The more you fill in, the sharper my first answer.",
+      "Tell me in the form what you have in mind. I reply personally, within two working days.",
     ctaButton: "Start a project",
     notFound: {
       title: "This page does not exist",
@@ -39,12 +39,12 @@ export const detailsEn: Details = {
       slug: "websites-and-webapps",
       tagline: "From a site that makes an impression to the platform your business runs on.",
       intro:
-        "Not a brochure, but the thing people actually do something in. Fast, yours alone, and built to last for years.",
+        "More than a brochure: the place where visitors become customers. Fast, entirely yours, and built for the long term.",
       sections: [
-        { title: "No theme, no page builder", body: "Everything is designed for you and written in code, so you never hit the ceiling of a template." },
-        { title: "Fast, because slow costs money", body: "Images cut to size, pages prepared in advance, no script that does nothing. Google counts it." },
-        { title: "Manage it without fear", body: "You change text and images yourself, and what has to stay fixed cannot break." },
-        { title: "Login, database, dashboard", body: "Once accounts or records come in, it becomes a webapp on the same foundation." },
+        { title: "Bespoke, down to the detail", body: "Everything is designed for you and written in code, so no template decides what is possible." },
+        { title: "Fast, because speed sells", body: "Images cut to size, pages prepared in advance and nothing superfluous in the code. Visitors stay longer and Google rewards it." },
+        { title: "Manage it with confidence", body: "You change text and images yourself, while the design stays unbreakable." },
+        { title: "Login, database, dashboard", body: "Once accounts or records come in, your site grows into a web app on the same foundation." },
       ],
       deliverables: [
         "Design made for you, first on screen, then in code",
@@ -58,17 +58,17 @@ export const detailsEn: Details = {
         {
           question: "How long does it take?",
           answer:
-            "A solid brand site is usually a matter of weeks, a platform with login and database longer. After the first conversation you get a schedule that is true rather than one that sounds good.",
+            "A brand site is typically a matter of weeks, a platform with login and database a little longer. After the introduction you receive a schedule with fixed milestones.",
         },
         {
           question: "Can I keep my current site?",
           answer:
-            "Text, images and your domain come along. I replace the technology underneath, because that is usually exactly the problem you want solved.",
+            "I carry over your text, images and domain. The technology underneath I rebuild, so you get a solid foundation.",
         },
         {
           question: "What if I want to add something later?",
           answer:
-            "That is the point of building it properly. An extra section, a second language, a shop on top: it can all go on without rebuilding the site.",
+            "That is why I build to measure. An extra section, a new language or a shop fits right in, without starting over.",
         },
       ],
     },
@@ -77,12 +77,12 @@ export const detailsEn: Details = {
       slug: "ai-chat-and-agents",
       tagline: "An assistant inside your own site that genuinely helps your customers.",
       intro:
-        "Not a chatbot that knows four questions. An assistant that knows your information and can do things.",
+        "More than a chat window: an assistant that knows your business and gets things done for your customers.",
       sections: [
-        { title: "Trained on what you know", body: "It answers from your documents and prices, and says honestly when it does not know." },
-        { title: "It does more than talk", body: "Connected to calendar, mail or CRM, it books the appointment and creates the request for real." },
-        { title: "You see what happens", body: "Every conversation in one place: what people ask, and which answers are still missing." },
-        { title: "Inside the lines", body: "You decide what it talks about, and what has to pass a person first." },
+        { title: "Trained on what you know", body: "It answers from your documents and prices, and tells you when it is not sure." },
+        { title: "It does more than talk", body: "Connected to calendar, mail or CRM, it books appointments and creates requests." },
+        { title: "You stay in control", body: "Every conversation in one place: what people ask and where your answers can be sharper." },
+        { title: "Within your boundaries", body: "You decide what it talks about and what passes a person first." },
       ],
       deliverables: [
         "An assistant in your own site, in your own styling",
@@ -96,30 +96,31 @@ export const detailsEn: Details = {
         {
           question: "Will it make things up?",
           answer:
-            "That is where most of the work goes. It answers from your sources and says so when something is not in them. Before it goes live I test it on the questions you cannot afford it to get wrong.",
+            "That deserves the most attention. It answers from your sources and says so when something is not in them. Before launch I test it on the questions where it must not go wrong.",
         },
         {
           question: "What does it cost per month?",
           answer:
-            "There are usage costs, depending on how many conversations you have. I work that out up front with your expected numbers, so there is no surprise.",
+            "There are usage costs, depending on the number of conversations. I work them out in advance with your expected volumes.",
         },
         {
           question: "Does it speak Dutch and English?",
-          answer: "Yes, and it follows the language of whoever is talking to it.",
+          answer:
+            "Yes, and it follows the language of whoever is talking to it.",
         },
       ],
     },
 
     webshop: {
       slug: "webshops",
-      tagline: "Selling through a shop that feels like a brand.",
+      tagline: "Selling through a shop that feels like your brand.",
       intro:
-        "A store designed around your products. Payment, stock and shipping work the way you already work.",
+        "A shop designed around your products. Payment, stock and shipping work the way you are used to.",
       sections: [
-        { title: "Products as objects", body: "Imagery and product pages get the attention that separates a catalogue from a shop." },
-        { title: "Checkout without friction", body: "iDEAL, credit card and Apple Pay, as few steps as possible and no forced account." },
-        { title: "Stock and shipping connected", body: "Order in, label out, stock updated. Nothing kept twice." },
-        { title: "Room to grow", body: "A second language or a trade price list is already in the foundation." },
+        { title: "Products in the lead", body: "Imagery and product pages get the attention that turns a catalogue into a shop." },
+        { title: "Checkout in a heartbeat", body: "iDEAL, credit card and Apple Pay, in as few steps as possible and with no forced account." },
+        { title: "Stock and shipping connected", body: "Order in, label ready, stock updated. Nothing is kept twice." },
+        { title: "Room to grow", body: "A second language or a trade price list already fits on the foundation." },
       ],
       deliverables: [
         "A store designed around your products",
@@ -133,31 +134,31 @@ export const detailsEn: Details = {
         {
           question: "Can I move over from Shopify or WooCommerce?",
           answer:
-            "Yes. Products, customers and orders come along. I build the new store next to the old one and only switch when everything checks out.",
+            "Yes. I carry over products, customers and orders. The new shop is ready alongside the old one and goes live only when everything checks out.",
         },
         {
           question: "How many products can it handle?",
           answer:
-            "From ten handmade pieces to thousands of variants. At large numbers I set up search and filtering differently, and I discuss that up front.",
+            "From ten handmade pieces to thousands of variants. For large catalogues I set up search and filtering accordingly, and we discuss that up front.",
         },
         {
           question: "Who arranges the payment provider?",
           answer:
-            "I set it up technically. The contract with the payment provider is in your name, because it is your money going through it.",
+            "I set up the technical connection. The contract with the payment provider is in your name, because it is your revenue that flows through it.",
         },
       ],
     },
 
     integrations: {
       slug: "integrations-and-automation",
-      tagline: "Your systems joined up, so the work carries itself.",
+      tagline: "Your systems on one line, so the work carries itself.",
       intro:
-        "Most time leaks away between two programs. A computer does that work better than you.",
+        "Most time leaks away between two programs. A computer can handle that handover faster and without slips.",
       sections: [
-        { title: "First find where it jams", body: "I start with your week, not with technology. That points at the first connections." },
-        { title: "Set up once, then silent", body: "Invoice in the books, appointment in the calendar, without anyone retyping a thing." },
-        { title: "Reporting that adds up", body: "Everything from one source, so numbers you can decide on." },
-        { title: "When it fails, you hear about it", body: "If something fails you get a message, and you see exactly what happened." },
+        { title: "Map it first", body: "I start with your working week, not with technology. That way we find the connections with the most impact." },
+        { title: "Set up once, then in the background", body: "An invoice lands in the books, an appointment in the calendar, without anyone retyping a thing." },
+        { title: "Reporting to steer by", body: "Everything from one source, so numbers you can base decisions on." },
+        { title: "Always in view", body: "If something fails you get a notification and see exactly what happened." },
       ],
       deliverables: [
         "A map of your current workflow and where it stalls",
@@ -169,33 +170,33 @@ export const detailsEn: Details = {
       ],
       questions: [
         {
-          question: "Does this work with the software we already have?",
+          question: "Does this work with the software we already use?",
           answer:
-            "Almost always. I connect to anything with an open interface, and most packages have one. When in doubt I check before I start, not after.",
+            "Almost always. I connect to anything with an open interface, and most packages have one. If in doubt, I check up front.",
         },
         {
           question: "Do we have to switch systems?",
           answer:
-            "Preferably not. Migrating costs your team more than it solves. I work with what is there, unless something genuinely cannot be connected.",
+            "Usually not. I work with what you have, so your team does not have to move.",
         },
         {
           question: "What if our process changes later?",
           answer:
-            "Then I change it with you. That is why I document how it fits together, so a change is an afternoon and not a new project.",
+            "Then I adapt the connections. I document everything, so a change is an afternoon and not a new project.",
         },
       ],
     },
 
     branding: {
       slug: "branding-and-motion",
-      tagline: "A brand that sounds the same on every channel.",
+      tagline: "A brand that speaks the same language on every channel.",
       intro:
-        "A logo is the smallest part of a brand. I make the whole set, with guidelines your team uses on its own.",
+        "A logo is only the beginning. I make the complete set, with guidelines your team can start using straight away.",
       sections: [
-        { title: "The story first, the shape after", body: "What you do and for whom comes first, or a brand becomes a debate about taste." },
-        { title: "Made to be used", body: "From a shop sign to an email signature to a nine second story." },
-        { title: "Motion is part of it", body: "How your logo arrives and a button answers is as much brand as your colour." },
-        { title: "Guidelines somebody reads", body: "Short enough to use, clear enough that nobody argues about it." },
+        { title: "The story first, the shape after", body: "What you do and for whom comes first, so your identity is an answer and not a matter of taste." },
+        { title: "Made to be used", body: "From a shop sign to an email signature to a nine-second story." },
+        { title: "Motion is part of it", body: "How your logo arrives and a button responds is as much brand as your colour." },
+        { title: "Guidelines that get read", body: "Compact enough to use, clear enough to prevent any debate." },
       ],
       deliverables: [
         "Logo and mark, in every file you need",
@@ -209,17 +210,17 @@ export const detailsEn: Details = {
         {
           question: "Does my current logo have to go?",
           answer:
-            "Not necessarily. Sometimes the logo is fine and everything around it is the problem. I tell you honestly what I would keep.",
+            "Not necessarily. Sometimes the logo works and the gain is in everything else. I advise you on what to keep.",
         },
         {
           question: "Do we get the source files?",
           answer:
-            "Always, and without discussion. It is your brand. You have to be able to take it to another designer.",
+            "Always. It is your brand, and you can continue with any designer.",
         },
         {
           question: "Can we do it in stages?",
           answer:
-            "Yes. Plenty of companies start with logo and colour and add motion and templates later.",
+            "Certainly. Many companies start with logo and colour and expand later with motion and templates.",
         },
       ],
     },
@@ -228,12 +229,12 @@ export const detailsEn: Details = {
       slug: "ai-content",
       tagline: "Imagery, video and animation for campaigns and social.",
       intro:
-        "Imagery that used to take a shoot and a week of waiting. Generating is the fast part, not the hard part.",
+        "Imagery that once took a photo shoot and a week of waiting. Generating is the fast part, the finishing makes the difference.",
       sections: [
         { title: "Consistent with your brand", body: "Fixed setups and colour treatment, so twenty images look like each other and like you." },
-        { title: "Finished by hand", body: "Hands, text and details always go wrong. That is where my time goes." },
-        { title: "Campaign sets, not loose pieces", body: "Every format you need, ready to place." },
-        { title: "Honest about what it is", body: "I say so when a real photograph is the better choice." },
+        { title: "Finished by hand", body: "Hands, text and details need attention. That is where my time goes." },
+        { title: "Campaign sets, not loose images", body: "Every format you need, ready to place." },
+        { title: "Open about the method", body: "If a real photograph is the better choice, I say so." },
       ],
       deliverables: [
         "An image set in your brand style",
@@ -247,17 +248,17 @@ export const detailsEn: Details = {
         {
           question: "Can I use this commercially?",
           answer:
-            "I work with tools whose terms allow commercial use, and I record per set what you may do with it. When in doubt I take the safe route.",
+            "I work with tools whose terms allow commercial use, and I record per set what you may do with it.",
         },
         {
           question: "Can people tell it was generated?",
           answer:
-            "With bad work, instantly. That is why most of my time goes into finishing. And where the brand calls for it, I say that it was made.",
+            "With rushed work, yes. That is why most of my time goes into finishing. If your brand calls for transparency, I note the origin.",
         },
         {
           question: "Can you use our own products?",
           answer:
-            "Yes. I can take your own photographs as the base, so the product is right and the world around it is made.",
+            "Certainly. I use your photos as the base, so the product is right and the surroundings are created around it.",
         },
       ],
     },
@@ -268,7 +269,7 @@ export const detailsEn: Details = {
       slug: "live-wedding-paintings",
       tagline: "A site that feels like a gallery, and books weddings.",
       intro:
-        "Sara van Heukelom paints weddings live. I made her site, from the first design to the day it went live.",
+        "Sara van Heukelom paints live at weddings. I made her website, from the first design to launch.",
       url: "https://liveweddingpaintings.nl",
       facts: [
         { label: "Client", value: "Sara van Heukelom" },
@@ -276,9 +277,9 @@ export const detailsEn: Details = {
         { label: "Languages", value: "Dutch and English" },
       ],
       sections: [
-        { title: "The painting leads", body: "Her work hangs in gold frames that move as you scroll. The product is the picture, so the picture goes first." },
-        { title: "Pick a format", body: "Three sizes to browse through, with the price beside each. No PDF, no emails back and forth." },
-        { title: "Booking in eight steps", body: "A form that asks what Sara needs to know, including when it is a gift for the couple." },
+        { title: "The painting in the lead", body: "Her work hangs in gold frames that move as you scroll. The picture is the product, so the picture comes first." },
+        { title: "Pick a format", body: "Three sizes to browse through, with the price beside each. No PDF and no emails back and forth." },
+        { title: "Booking in eight steps", body: "A form that asks what Sara needs to know, including when it is a surprise for the couple." },
       ],
       scope: [
         "Design and look",
