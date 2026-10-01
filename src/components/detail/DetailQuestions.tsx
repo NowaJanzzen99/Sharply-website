@@ -19,12 +19,20 @@ import { Reveal, RevealLines } from "../Reveal";
 
 type Item = { question: string; answer: string };
 
-export function DetailQuestions({ title, items }: { title: string; items: Item[] }) {
+export function DetailQuestions({
+  title,
+  items,
+  id,
+}: {
+  title: string;
+  items: Item[];
+  id?: string;
+}) {
   const [open, setOpen] = useState<number | null>(0);
   const uid = useId().replace(/:/g, "");
 
   return (
-    <section className="border-t border-hairline py-20 md:py-28">
+    <section id={id} className="scroll-mt-24 border-t border-hairline py-20 md:py-28">
       <div className="container-page">
         <div className="grid gap-10 md:grid-cols-12">
           <h2 className="font-display text-[clamp(1.5rem,3vw,2rem)] font-medium text-text md:col-span-4">

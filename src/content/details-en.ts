@@ -6,25 +6,26 @@ import type { Details } from "./types";
   English when they are rebuilt rather than carried across.
 
   Same rules as the Dutch file: no promised results, no numbers, no client
-  names. Everything here is about what we make and how, because that is all
+  names. Everything here is about what I make and how, because that is all
   that is true today.
 */
 export const detailsEn: Details = {
   copy: {
+    moreServices: "What else I make",
     visit: "Visit the site",
     gallery: "Up close",
-    made: "What we made",
+    made: "What I made",
     backToServices: "All services",
     backToWork: "All work",
     deliverables: "What you get",
-    questions: "Questions we get a lot",
+    questions: "Questions I get a lot",
     scope: "What the concept covers",
     otherServices: "Other services",
     otherWork: "Other work",
     readMore: "Read on",
     ctaTitle: "Ready to start?",
     ctaBody:
-      "Tell us in the form what you want to build. The more you fill in, the sharper our first answer.",
+      "Tell me in the form what you want to build. The more you fill in, the sharper my first answer.",
     ctaButton: "Start a project",
     notFound: {
       title: "This page does not exist",
@@ -51,7 +52,7 @@ export const detailsEn: Details = {
         "Manage your own text and images",
         "Optional login, database and dashboard",
         "Hosting set up, domain connected, SSL handled",
-        "A handover where we show you how it all works",
+        "A handover where I show you how it all works",
       ],
       questions: [
         {
@@ -62,7 +63,7 @@ export const detailsEn: Details = {
         {
           question: "Can I keep my current site?",
           answer:
-            "Text, images and your domain come along. We replace the technology underneath, because that is usually exactly the problem you want solved.",
+            "Text, images and your domain come along. I replace the technology underneath, because that is usually exactly the problem you want solved.",
         },
         {
           question: "What if I want to add something later?",
@@ -95,12 +96,12 @@ export const detailsEn: Details = {
         {
           question: "Will it make things up?",
           answer:
-            "That is where most of the work goes. It answers from your sources and says so when something is not in them. Before it goes live we test it on the questions you cannot afford it to get wrong.",
+            "That is where most of the work goes. It answers from your sources and says so when something is not in them. Before it goes live I test it on the questions you cannot afford it to get wrong.",
         },
         {
           question: "What does it cost per month?",
           answer:
-            "There are usage costs, depending on how many conversations you have. We work that out up front with your expected numbers, so there is no surprise.",
+            "There are usage costs, depending on how many conversations you have. I work that out up front with your expected numbers, so there is no surprise.",
         },
         {
           question: "Does it speak Dutch and English?",
@@ -132,17 +133,17 @@ export const detailsEn: Details = {
         {
           question: "Can I move over from Shopify or WooCommerce?",
           answer:
-            "Yes. Products, customers and orders come along. We build the new store next to the old one and only switch when everything checks out.",
+            "Yes. Products, customers and orders come along. I build the new store next to the old one and only switch when everything checks out.",
         },
         {
           question: "How many products can it handle?",
           answer:
-            "From ten handmade pieces to thousands of variants. At large numbers we set up search and filtering differently, and we discuss that up front.",
+            "From ten handmade pieces to thousands of variants. At large numbers I set up search and filtering differently, and I discuss that up front.",
         },
         {
           question: "Who arranges the payment provider?",
           answer:
-            "We set it up technically. The contract with the payment provider is in your name, because it is your money going through it.",
+            "I set it up technically. The contract with the payment provider is in your name, because it is your money going through it.",
         },
       ],
     },
@@ -153,7 +154,7 @@ export const detailsEn: Details = {
       intro:
         "Most time leaks away between two programs. A computer does that work better than you.",
       sections: [
-        { title: "First find where it jams", body: "We start with your week, not with technology. That points at the first connections." },
+        { title: "First find where it jams", body: "I start with your week, not with technology. That points at the first connections." },
         { title: "Set up once, then silent", body: "Invoice in the books, appointment in the calendar, without anyone retyping a thing." },
         { title: "Reporting that adds up", body: "Everything from one source, so numbers you can decide on." },
         { title: "When it fails, you hear about it", body: "If something fails you get a message, and you see exactly what happened." },
@@ -164,23 +165,23 @@ export const detailsEn: Details = {
         "Automation of the work that repeats",
         "Alerts when something goes wrong",
         "Reporting from a single source",
-        "Documentation, so it does not depend on us",
+        "Documentation, so it does not depend on me",
       ],
       questions: [
         {
           question: "Does this work with the software we already have?",
           answer:
-            "Almost always. We connect to anything with an open interface, and most packages have one. When in doubt we check before we start, not after.",
+            "Almost always. I connect to anything with an open interface, and most packages have one. When in doubt I check before I start, not after.",
         },
         {
           question: "Do we have to switch systems?",
           answer:
-            "Preferably not. Migrating costs your team more than it solves. We work with what is there, unless something genuinely cannot be connected.",
+            "Preferably not. Migrating costs your team more than it solves. I work with what is there, unless something genuinely cannot be connected.",
         },
         {
           question: "What if our process changes later?",
           answer:
-            "Then we change it with you. That is why we document how it fits together, so a change is an afternoon and not a new project.",
+            "Then I change it with you. That is why I document how it fits together, so a change is an afternoon and not a new project.",
         },
       ],
     },
@@ -189,7 +190,7 @@ export const detailsEn: Details = {
       slug: "branding-and-motion",
       tagline: "A brand that sounds the same on every channel.",
       intro:
-        "A logo is the smallest part of a brand. We make the whole set, with guidelines your team uses on its own.",
+        "A logo is the smallest part of a brand. I make the whole set, with guidelines your team uses on its own.",
       sections: [
         { title: "The story first, the shape after", body: "What you do and for whom comes first, or a brand becomes a debate about taste." },
         { title: "Made to be used", body: "From a shop sign to an email signature to a nine second story." },
@@ -208,7 +209,7 @@ export const detailsEn: Details = {
         {
           question: "Does my current logo have to go?",
           answer:
-            "Not necessarily. Sometimes the logo is fine and everything around it is the problem. We tell you honestly what we would keep.",
+            "Not necessarily. Sometimes the logo is fine and everything around it is the problem. I tell you honestly what I would keep.",
         },
         {
           question: "Do we get the source files?",
@@ -230,9 +231,9 @@ export const detailsEn: Details = {
         "Imagery that used to take a shoot and a week of waiting. Generating is the fast part, not the hard part.",
       sections: [
         { title: "Consistent with your brand", body: "Fixed setups and colour treatment, so twenty images look like each other and like you." },
-        { title: "Finished by hand", body: "Hands, text and details always go wrong. That is where our time goes." },
+        { title: "Finished by hand", body: "Hands, text and details always go wrong. That is where my time goes." },
         { title: "Campaign sets, not loose pieces", body: "Every format you need, ready to place." },
-        { title: "Honest about what it is", body: "We say so when a real photograph is the better choice." },
+        { title: "Honest about what it is", body: "I say so when a real photograph is the better choice." },
       ],
       deliverables: [
         "An image set in your brand style",
@@ -246,17 +247,17 @@ export const detailsEn: Details = {
         {
           question: "Can I use this commercially?",
           answer:
-            "We work with tools whose terms allow commercial use, and we record per set what you may do with it. When in doubt we take the safe route.",
+            "I work with tools whose terms allow commercial use, and I record per set what you may do with it. When in doubt I take the safe route.",
         },
         {
           question: "Can people tell it was generated?",
           answer:
-            "With bad work, instantly. That is why most of our time goes into finishing. And where the brand calls for it, we say that it was made.",
+            "With bad work, instantly. That is why most of my time goes into finishing. And where the brand calls for it, I say that it was made.",
         },
         {
           question: "Can you use our own products?",
           answer:
-            "Yes. We can take your own photographs as the base, so the product is right and the world around it is made.",
+            "Yes. I can take your own photographs as the base, so the product is right and the world around it is made.",
         },
       ],
     },
@@ -267,11 +268,11 @@ export const detailsEn: Details = {
       slug: "live-wedding-paintings",
       tagline: "A site that feels like a gallery, and books weddings.",
       intro:
-        "Sara van Heukelom paints weddings live. We made her site, from the first design to the day it went live.",
+        "Sara van Heukelom paints weddings live. I made her site, from the first design to the day it went live.",
       url: "https://liveweddingpaintings.nl",
       facts: [
         { label: "Client", value: "Sara van Heukelom" },
-        { label: "What we did", value: "Everything, from design to launch" },
+        { label: "What I did", value: "Everything, from design to launch" },
         { label: "Languages", value: "Dutch and English" },
       ],
       sections: [
@@ -296,44 +297,6 @@ export const detailsEn: Details = {
       ],
     },
 
-    halm: {
-      slug: "halm",
-      tagline: "A dark shop for skincare, built to show products as objects.",
-      intro:
-        "Skincare is almost always shown light and pastel. This concept does the opposite.",
-      sections: [
-        { title: "The idea", body: "Four products that have to feel important, without shouting." },
-        { title: "What we designed", body: "A dark store where the bottles glow, with ingredients as a readable layer." },
-        { title: "How it would be built", body: "A full shop, with room for repeat orders." },
-      ],
-      scope: [
-        "Store design, dark, built around the product",
-        "Product page with ingredients and routine",
-        "Checkout in as few steps as possible",
-        "Structure for repeat orders",
-        "Stock and shipping connected",
-      ],
-      note: "This is a concept project we made ourselves to show how we work. Halm is an invented brand, not a client, and no results are attached to it.",
-    },
 
-    routewerk: {
-      slug: "routewerk",
-      tagline: "A dashboard that tracks shipments, flags delays and shares out the work.",
-      intro:
-        "What we mean by an AI system: the clever parts sit where somebody now clicks by hand.",
-      sections: [
-        { title: "The idea", body: "A schedule that lives in two heads, and stalls the moment one of them is on holiday." },
-        { title: "What we designed", body: "One overview that sees a delay before the customer calls, and proposes work a person approves." },
-        { title: "How it would be built", body: "A webapp with roles and connections, and alerts when something fails." },
-      ],
-      scope: [
-        "Dashboard with a live overview",
-        "Flagging of delays and exceptions",
-        "Proposed work distribution, approved by a person",
-        "An assistant that answers questions about the data",
-        "Login, roles and connections to existing systems",
-      ],
-      note: "This is a concept project we made ourselves to show how we work. Routewerk is an invented brand, not a client, and no results are attached to it.",
-    },
   },
 };

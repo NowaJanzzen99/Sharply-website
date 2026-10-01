@@ -192,20 +192,19 @@ export default async function DetailPage({ params }: { params: Promise<Params> }
   const backHref = isService ? `/${lang}#diensten` : `/${lang}#werk`;
   const backLabel = isService ? copy.backToServices : copy.backToWork;
 
-  // Three siblings to move on to, so the page never dead ends.
-  const siblings =
-    resolved.kind === "services"
-      ? content.services.items
-          .filter((item) => item.key !== resolved.key)
-          .slice(0, 3)
-          .map((item) => ({
-            href: serviceHref(lang, item.key),
-            title: item.title,
-            note: details.services[item.key].tagline,
-            image: item.image,
-            alt: item.alt,
-          }))
-      : content.work.items
+  // Something to move on to, so the page never dead ends. With a single
+  // project there is no sibling project, so the services fill the space.
+  const serviceCards = (keys: typeof content.services.items) =>
+    keys.map((item) => ({
+      href: serviceHref(lang, item.key),
+      title: item.title,
+      note: details.services[item.key].tagline,
+      image: item.image,
+      alt: item.alt,
+    }));
+  const workSiblings =
+    resolved.kind === "work"
+      ? content.work.items
           .filter((item) => item.key !== resolved.key)
           .map((item) => ({
             href: workHref(lang, item.key),
@@ -213,7 +212,19 @@ export default async function DetailPage({ params }: { params: Promise<Params> }
             note: item.discipline,
             image: item.image,
             alt: item.alt,
-          }));
+          }))
+      : [];
+  const siblings =
+    resolved.kind === "services"
+      ? serviceCards(content.services.items.filter((item) => item.key !== resolved.key).slice(0, 3))
+      : workSiblings.length > 0
+        ? workSiblings
+        : serviceCards(content.services.items.slice(0, 3));
+  const siblingsTitle = isService
+    ? copy.otherServices
+    : workSiblings.length > 0
+      ? copy.otherWork
+      : copy.moreServices;
 
   const listTitle = isService
     ? copy.deliverables
@@ -373,7 +384,7 @@ export default async function DetailPage({ params }: { params: Promise<Params> }
 
         {/* Where to go next. */}
         <DetailRelated
-          title={isService ? copy.otherServices : copy.otherWork}
+          title={siblingsTitle}
           readMore={copy.readMore}
           items={siblings}
         />

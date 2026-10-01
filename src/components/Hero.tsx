@@ -90,7 +90,7 @@ export function Hero({ content }: { content: Content }) {
             />
           </MagneticButton>
           <MagneticButton
-            href="#diensten"
+            href="#prijzen"
             className="inline-flex items-center justify-center rounded-[var(--radius-pill)] border border-hairline-strong px-6 py-3.5 text-[16px] text-text transition-[transform,background-color] duration-150 ease-[var(--ease-out)] hover:bg-canvas-raised active:scale-[0.97]"
           >
             {content.hero.secondary}

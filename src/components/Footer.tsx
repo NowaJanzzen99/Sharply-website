@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Mark } from "./Wordmark";
 import { LangLink } from "./LangLink";
 import { FooterWordmark } from "./FooterWordmark";
@@ -53,7 +54,13 @@ export function Footer({
 
         <div className="flex items-center justify-between gap-6 border-t border-hairline py-6">
           <p className="text-[13px] text-text-faint">
-            © {year} Sharply. {content.footer.rights}
+            © {year} Sharply. {content.footer.rights}{" "}
+            <Link
+              href={`/${lang}/privacy`}
+              className="underline decoration-hairline-strong underline-offset-4 transition-colors duration-200 ease-out hover:text-text"
+            >
+              {content.footer.privacy}
+            </Link>
           </p>
           <Mark className="h-5 w-5 shrink-0 opacity-70" />
         </div>

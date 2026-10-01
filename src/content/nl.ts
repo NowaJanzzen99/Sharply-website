@@ -2,14 +2,14 @@ import type { Content } from "./types";
 
 export const nl: Content = {
   meta: {
-    title: "Sharply, designstudio voor merken, websites en AI-systemen",
+    title: "Sharply | Websites van bureauniveau, door Noah Janssen",
     description:
-      "Sharply ontwerpt merken en bouwt high-end websites, webshops en AI-systemen die je zelf bestuurt.",
+      "Websites, webshops en AI-systemen van bureauniveau, ontworpen en gebouwd door één maker. Na oplevering pas je je site zelf aan door tegen hem te praten.",
     localeTag: "nl_NL",
   },
   nav: {
     links: [
-      { href: "#studio", label: "Studio" },
+      { href: "#studio", label: "Over mij" },
       { href: "#diensten", label: "Diensten" },
       { href: "#demo", label: "Demo" },
       { href: "#werkwijze", label: "Werkwijze" },
@@ -22,51 +22,51 @@ export const nl: Content = {
     langLabel: "Taal",
   },
   hero: {
-    lineOne: "Scherp ontworpen.",
-    lineTwo: "Slim gebouwd.",
-    body: "Websites op het niveau van een groot bureau, gemaakt door de maker zelf. En na oplevering praat je gewoon met je site om hem aan te passen.",
+    lineOne: "Een website van",
+    lineTwo: "bureauniveau.",
+    body: "Ik ontwerp en bouw hem zelf, voor ondernemers die serieus willen groeien. Je praat met mij, niet met een team. En daarna pas je hem aan door tegen hem te praten.",
     primary: "Start een project",
-    secondary: "Bekijk de diensten",
+    secondary: "Bekijk de prijzen",
     imageAlt:
       "Glazen bol met iridescente glans boven een blauwe horizon in een diepdonkere ruimte",
   },
   manifesto: {
     title: "Bureaukwaliteit, zonder het bureau",
-    lead: "Wat een groot bureau voor je maakt, maar voor een prijs die klopt.",
+    lead: "Het niveau van een groot bureau, met de maker zelf aan de lijn.",
     body: [
-      "Wij bouwen sites op het niveau waar grote marketingbureaus mee adverteren: eigen ontwerp, eigen code, snel, en tot in de details afgemaakt. Dat is het vak, en dat is wat wij de hele dag doen.",
-      "Het verschil zit niet in de kwaliteit maar in de rekening. Bij een bureau betaal je accountmanagers, projectleiders, een pand en de uren van vier mensen die elkaar op de hoogte houden. Hier praat je met de maker zelf, en doet AI het werk dat zich herhaalt.",
-      "Wat je ziet is dus geen knop die is ingedrukt. Het is handwerk, met een motor eronder.",
+      "Ik ben Noah. Ik ontwerp en bouw websites en AI-systemen, helemaal zelf: ontwerp, code en beeld. Zo maak ik sites op het niveau waar grote marketingbureaus mee adverteren: eigen ontwerp, eigen code, snel en tot in de details afgemaakt.",
+      "Het verschil zit niet in de kwaliteit maar in de rekening. Bij een bureau betaal je accountmanagers, projectleiders, een pand en de uren van vier mensen die elkaar op de hoogte houden. Bij mij praat je met degene die het maakt, en doet AI het werk dat zich herhaalt.",
+      "Ik neem bewust een beperkt aantal opdrachten tegelijk aan, zodat je mijn volle aandacht hebt. Ik werk met ondernemers die willen investeren in een site die voor ze werkt.",
     ],
-    imageAlt:
-      "Hand die met een pen een lijn op papier tekent, waaruit blauwe lichtdraden opstijgen",
+    imageAlt: "Portret van Noah Janssen",
+    caption: "Noah Janssen, Roermond",
   },
   services: {
-    title: "Wat we maken",
+    title: "Wat ik maak",
     lead: "Van een merk dat er staat tot een systeem dat blijft draaien als je slaapt.",
     items: [
       {
         key: "websites",
-        title: "Websites en webapps",
-        body: "Van een site die indruk maakt tot een platform met inlog, database en dashboard. Gebouwd om snel te laden en jaren mee te gaan.",
-        points: ["Maatwerk ontwerp", "Database en inlog", "Zelf teksten beheren"],
+        title: "Een site die klanten oplevert",
+        body: "Oogt je site verouderd, of levert hij te weinig aanvragen op? Ik ontwerp en bouw hem opnieuw: snel, volledig van jou, en met inlog en database als je meer nodig hebt.",
+        points: ["Eigen ontwerp, geen sjabloon", "Snel op elk scherm", "Zelf teksten aanpassen"],
         image: "/images/service-websites.webp",
         alt: "Een webpagina als gelaagde glazen panelen: een menubalk, een grote kop en een rij kaarten, zwevend in diepte",
         placeholder: true,
       },
       {
         key: "aiChat",
-        title: "AI-chat en agents",
-        body: "Een assistent in je eigen site die je klanten helpt, vragen beantwoordt, afspraken inplant en je systemen aanstuurt. Getraind op jouw informatie.",
-        points: ["Getraind op je eigen content", "Plant afspraken in", "Praat met je systemen"],
+        title: "Een assistent die je klanten helpt",
+        body: "Beantwoord je elke dag dezelfde vragen? Een assistent in je eigen site doet dat voor je, plant afspraken in en kent jouw informatie.",
+        points: ["Kent je eigen content", "Plant afspraken in", "Praat met je systemen"],
         image: "/images/service-ai-chat.webp",
         alt: "Glazen chatbubbels boven elkaar, waarvan er een blauw oplicht, met een glazen bol ernaast als assistent",
         placeholder: true,
       },
       {
         key: "webshop",
-        title: "Webshops",
-        body: "Verkopen met een winkel die aanvoelt als een merk in plaats van een template. Betalen, voorraad en verzending werken zoals je gewend bent.",
+        title: "Een webshop die verkoopt",
+        body: "Wil je online verkopen zonder dat het op een standaardwinkel lijkt? Een winkel die aanvoelt als je merk, met betalen, voorraad en verzending zoals je gewend bent.",
         points: ["Eigen ontwerp", "iDEAL en creditcard", "Voorraad gekoppeld"],
         image: "/images/service-webshop.webp",
         alt: "Drie glazen productkaarten met flessen erin, de middelste opgelicht, met een glazen winkeltas ervoor",
@@ -74,8 +74,8 @@ export const nl: Content = {
       },
       {
         key: "integrations",
-        title: "Koppelingen en automatisering",
-        body: "Je systemen aan elkaar: agenda, mail, voorraad, facturen, CRM. Eén keer goed instellen, daarna draait het zonder jou.",
+        title: "Minder handwerk, meer tijd",
+        body: "Typ je dingen over van het ene programma naar het andere? Ik koppel agenda, mail, voorraad, facturen en CRM, zodat het vanzelf doorloopt.",
         points: ["Systemen verbonden", "Werk dat vanzelf gaat", "Rapportage die klopt"],
         image: "/images/service-integrations.webp",
         alt: "Vijf glazen app-tegels met agenda, mail, voorraad, grafiek en instellingen, verbonden met een centrale schijf door oplichtende kabels",
@@ -83,8 +83,8 @@ export const nl: Content = {
       },
       {
         key: "branding",
-        title: "Branding en motion",
-        body: "Logo, kleur, typografie en bewegend beeld. Een merk dat op elk kanaal hetzelfde klinkt, met richtlijnen waar je team mee vooruit kan.",
+        title: "Een merk dat blijft hangen",
+        body: "Ziet je merk er overal net iets anders uit? Logo, kleur, typografie en bewegend beeld, met richtlijnen waar je team mee vooruit kan.",
         points: ["Logo en huisstijl", "Merkrichtlijnen", "Animatie en video"],
         image: "/images/service-branding-motion.webp",
         alt: "Een glazen medaillon met een beeldmerk, omringd door kleurstalen en specimenplaten, met een lint van vloeibaar glas eromheen",
@@ -92,8 +92,8 @@ export const nl: Content = {
       },
       {
         key: "aiContent",
-        title: "AI-content",
-        body: "Beeld, video en animatie voor campagnes en socials. Gegenereerd waar het kan, met de hand bijgewerkt waar het telt.",
+        title: "Beeld en video zonder fotoshoot",
+        body: "Heb je steeds nieuw beeld nodig voor campagnes en socials? Ik maak het met AI waar dat kan, en werk het met de hand bij waar het telt.",
         points: ["Beeld en video", "Campagnesets", "Consistent met je merk"],
         image: "/images/service-ai-content.webp",
         alt: "Zwevende glazen beeldkaders met een afspeelknop, waarvan er een opbouwt uit een wolk van blauwe deeltjes",
@@ -103,7 +103,7 @@ export const nl: Content = {
   },
   demo: {
     title: "Je site blijft van jou. Ook na oplevering.",
-    lead: "Bij elke site die wij bouwen hoort een assistent die jouw site kent. Je zegt wat je wilt veranderen, je ziet het meteen, en je zet het zelf live. Geen ingewikkeld beheersysteem, geen wachten op een bureau, geen factuur voor het wijzigen van een openingstijd. Probeer het hier.",
+    lead: "Bij elke site die ik bouw hoort een assistent die jouw site kent. Je zegt wat je wilt veranderen, je ziet het meteen, en je zet het zelf live. Geen ingewikkeld beheersysteem, geen wachten op een bureau, geen factuur voor het wijzigen van een openingstijd. Probeer het hier.",
     note: "Dit is een demo van het idee, niet van je eigen site. Bij een echt project zit dit vast aan jouw content, jouw domein en jouw huisstijl, en bepaal jij wat er wel en niet aangepast mag worden.",
     tryTitle: "Probeer het zelf",
     tryHint: "Klik een opdracht, of typ er zelf een. In de preview zie je het meteen gebeuren.",
@@ -158,8 +158,8 @@ export const nl: Content = {
   },
   work: {
     title: "Werk",
-    lead: "Een klant die live staat, en twee concepten die laten zien hoe ver het gaat.",
-    body: "Live Wedding Paintings is echt werk voor een echte klant. Halm en Routewerk zijn ontwerpen die wij zelf maakten, en zo staat het er ook bij.",
+    lead: "Mijn eerste klantproject, van ontwerp tot livegang.",
+    body: "Er komen binnenkort meer projecten bij.",
     conceptLabel: "Conceptproject",
     clientLabel: "Klantproject",
     ctaTitle: "Jouw project hier?",
@@ -171,28 +171,10 @@ export const nl: Content = {
         title: "Live Wedding Paintings",
         discipline: "Merk, website en boekingen",
         blurb:
-          "De site van Sara van Heukelom, die live schildert op bruiloften. Van eerste ontwerp tot boekingsformulier door ons gemaakt.",
+          "De site van Sara van Heukelom, die live schildert op bruiloften. Van eerste ontwerp tot boekingsformulier door mij gemaakt.",
         image: "/images/project-liveweddingpaintings.webp",
         alt: "Laptop en telefoon met de website van Live Wedding Paintings: schilderijen in gouden lijsten op een warme, lichte achtergrond",
         real: true,
-      },
-      {
-        key: "halm",
-        title: "Halm",
-        discipline: "Webshop",
-        blurb:
-          "Een donkere webshop voor een huidverzorgingsmerk, gebouwd om producten als objecten te tonen.",
-        image: "/images/project-halm.webp",
-        alt: "Laptop en telefoon met een donkere webshop voor huidverzorging",
-      },
-      {
-        key: "routewerk",
-        title: "Routewerk",
-        discipline: "AI-systeem",
-        blurb:
-          "Een dashboard dat zendingen volgt, vertragingen signaleert en werk vanzelf verdeelt, met een assistent erin.",
-        image: "/images/project-routewerk.webp",
-        alt: "Laptop met een donker dashboard met kaart, zendingen, automatisering en een AI-assistent",
       },
     ],
   },
@@ -202,7 +184,7 @@ export const nl: Content = {
     steps: [
       {
         title: "Luisteren",
-        body: "We beginnen met je bedrijf, je klanten en wat er nu misgaat. Daar komt een plan uit dat je begrijpt, zonder vaktaal.",
+        body: "Ik begin met je bedrijf, je klanten en wat er nu misgaat. Daar komt een plan uit dat je begrijpt, zonder vaktaal.",
       },
       {
         title: "Ontwerpen",
@@ -210,11 +192,11 @@ export const nl: Content = {
       },
       {
         title: "Bouwen",
-        body: "Wij bouwen het in code, niet in een bouwer. Je volgt de voortgang op een testadres en kunt elke week meekijken.",
+        body: "Ik bouw het in code, niet in een bouwer. Je volgt de voortgang op een testadres en kunt elke week meekijken.",
       },
       {
         title: "Live zetten",
-        body: "Wij regelen domein, hosting en snelheid. Daarna leren we je hoe je zelf aanpassingen doet, door het simpelweg te vragen.",
+        body: "Ik regel domein, hosting en snelheid. Daarna leer ik je hoe je zelf aanpassingen doet, door het simpelweg te vragen.",
       },
     ],
   },
@@ -235,20 +217,21 @@ export const nl: Content = {
     sending: "Versturen",
     edit: "Aanpassen",
     reviewTitle: "Alles op een rij",
-    reviewIntro: "Controleer je aanvraag. Klopt alles, dan gaat hij naar Noah.",
+    reviewIntro: "Controleer je aanvraag. Klopt alles, dan gaat hij naar mij.",
     empty: "Niet ingevuld",
-    noDetails: "Voor de onderdelen die je koos hebben we geen aanvullende vragen. Ga gerust door.",
+    noDetails: "Voor de onderdelen die je koos heb ik geen aanvullende vragen. Ga gerust door.",
     selectPlaceholder: "Kies een optie",
     filesHint: "Maximaal 3 bestanden, samen 4 MB. PDF, afbeelding of Word.",
     filesAdd: "Bestanden toevoegen",
     filesRemove: "Verwijderen",
     filesTooBig: "Deze bestanden zijn samen groter dan 4 MB",
     filesTooMany: "Je kunt maximaal 3 bestanden meesturen",
-    filesType: "Dit bestandstype accepteren we niet",
+    filesType: "Dit bestandstype accepteer ik niet",
     successTitle: "Je aanvraag is binnen",
     successBody:
-      "Noah leest hem persoonlijk en antwoordt binnen twee werkdagen. Check ook je spamfolder.",
+      "Ik lees hem persoonlijk en antwoord binnen twee werkdagen. Check ook je spamfolder.",
     againLabel: "Nog een aanvraag sturen",
+    privacyLink: "Lees mijn privacyverklaring",
     errorTitle: "Het versturen lukte niet",
     errorBody:
       "Probeer het opnieuw, of mail direct naar noah.janssen@sharply.nl.",
@@ -257,10 +240,10 @@ export const nl: Content = {
       to: "tot",
       vat: "Bedragen zijn exclusief btw.",
       driversTitle: "Wat deze richting bepaalt",
-      care: "Daarna beheer door ons, plan {plan}: {price} per maand.",
+      care: "Daarna beheer door mij, plan {plan}: {price} per maand.",
       plans: { basis: "Basis", groei: "Groei", volledig: "Volledig" },
       open: "Je koos ook iets dat niet in een formulier te vangen is, dus dat zit hier nog niet in.",
-      note: "Dit is een richting, geen offerte. Na een gesprek van een half uur weten wij wat het echt wordt, en dan krijg je een vaste prijs. Past het niet bij je budget, zeg het gerust: er is bijna altijd een kleinere eerste stap.",
+      note: "Dit is een richting, geen offerte. Na een gesprek van een half uur weet ik wat het echt wordt, en dan krijg je een vaste prijs. Past het niet bij je budget, zeg het gerust: er is bijna altijd een kleinere eerste stap.",
     },
     steps: [
       {
@@ -273,15 +256,15 @@ export const nl: Content = {
             kind: "chips",
             multi: true,
             required: true,
-            label: "Waar kunnen we mee helpen",
+            label: "Waar kan ik mee helpen",
             options: [
-              { id: "website", label: "Website of webapp" },
-              { id: "webshop", label: "Webshop" },
-              { id: "ai-chat", label: "AI-chat of agent" },
-              { id: "automation", label: "Koppelingen en automatisering" },
-              { id: "branding", label: "Branding" },
+              { id: "website", label: "Een nieuwe website of webapp" },
+              { id: "webshop", label: "Een webshop" },
+              { id: "ai-chat", label: "Een AI-assistent voor mijn klanten" },
+              { id: "automation", label: "Werk automatiseren" },
+              { id: "branding", label: "Een nieuw merk of huisstijl" },
               { id: "motion", label: "Motion en video" },
-              { id: "ai-content", label: "AI-content" },
+              { id: "ai-content", label: "Beeld en content met AI" },
               { id: "other", label: "Iets anders" },
             ],
           },
@@ -290,7 +273,7 @@ export const nl: Content = {
       {
         id: "about",
         title: "Over jullie",
-        hint: "Zodat we begrijpen voor wie we bouwen.",
+        hint: "Zodat ik begrijp voor wie ik bouw.",
         fields: [
           {
             id: "about.company",
@@ -402,7 +385,7 @@ export const nl: Content = {
             id: "goals.success",
             kind: "area",
             rows: 2,
-            label: "Hoe weten we dat het geslaagd is",
+            label: "Hoe weet ik dat het geslaagd is",
             placeholder:
               "Bijvoorbeeld twee keer zoveel aanvragen, of tien uur per week minder handwerk.",
           },
@@ -417,7 +400,7 @@ export const nl: Content = {
       {
         id: "style",
         title: "Stijl en materiaal",
-        hint: "Laat ons zien wat je mooi vindt en wat je al hebt.",
+        hint: "Laat me zien wat je mooi vindt en wat je al hebt.",
         fields: [
           {
             id: "style.mood",
@@ -469,7 +452,7 @@ export const nl: Content = {
             id: "style.files",
             kind: "files",
             label: "Bijlagen",
-            hint: "Een briefing, logo of voorbeeld helpt ons om sneller te antwoorden.",
+            hint: "Een briefing, logo of voorbeeld helpt me om sneller te antwoorden.",
           },
         ],
       },
@@ -535,7 +518,7 @@ export const nl: Content = {
       {
         id: "contact",
         title: "Contact",
-        hint: "Zodat Noah kan antwoorden.",
+        hint: "Zodat ik kan antwoorden.",
         fields: [
           {
             id: "contact.name",
@@ -564,7 +547,7 @@ export const nl: Content = {
             id: "contact.source",
             kind: "select",
             half: true,
-            label: "Hoe kwam je bij ons uit",
+            label: "Hoe kwam je bij mij uit",
             options: [
               { id: "search", label: "Zoekmachine" },
               { id: "social", label: "Social media" },
@@ -576,7 +559,7 @@ export const nl: Content = {
           {
             id: "contact.preferred",
             kind: "chips",
-            label: "Hoe hoor je liefst van ons",
+            label: "Hoe hoor je liefst van mij",
             options: [
               { id: "mail", label: "Per e-mail" },
               { id: "phone", label: "Telefonisch" },
@@ -961,12 +944,101 @@ export const nl: Content = {
     ctaTitle: "Weet je nog niet wat jij nodig hebt?",
     ctaText: "Vul het formulier in en je ziet meteen een indicatie, op basis van je eigen antwoorden.",
     ctaButton: "Krijg een indicatie",
-    ctaMail: "Liever eerst even praten? Mail ons",
+    ctaMail: "Liever eerst even praten? Mail me",
+  },
+  faq: {
+    title: "Vragen die je misschien hebt",
+    items: [
+      {
+        question: "Wat kost een website?",
+        answer: "De pakketten staan hierboven en beginnen bij €3.500, exclusief btw. Na een gesprek van een half uur krijg je een vaste prijs. Is €3.500 meer dan je wilt besteden, dan ben ik niet de juiste keuze: een sjabloonsite brengt je dan sneller en goedkoper online.",
+      },
+      {
+        question: "Hoe lang duurt het?",
+        answer: "Een Start-site staat meestal binnen vier tot zes weken online, een Studio-site binnen zes tot tien. Na het eerste gesprek krijg je een planning die klopt, niet een die mooi klinkt.",
+      },
+      {
+        question: "Van wie is de website en de code?",
+        answer: "Van jou. Je krijgt de bronbestanden en je eigen hosting- en domeinaccount, zodat je nooit vastzit aan mij.",
+      },
+      {
+        question: "Wat als ik het ontwerp niet mooi vind?",
+        answer: "Je ziet het ontwerp voordat ik een regel code schrijf, en je geeft eerst akkoord. Zo bouw ik nooit op een ontwerp dat je niet wilde.",
+      },
+      {
+        question: "Ik ben niet technisch. Kan ik hem zelf aanpassen?",
+        answer: "Ja, daar is de assistent voor. Je zegt wat je wilt veranderen, zoals een tekst, een foto of een openingstijd, je ziet het meteen, en je zet het zelf live. Er is geen beheersysteem om te leren.",
+      },
+      {
+        question: "Wie schrijft de teksten en levert de beelden?",
+        answer: "Jij levert de feiten en de beelden die je hebt, ik maak er scherpe teksten van. Ontbreekt er beeld, dan maak ik het met AI of werk ik het met de hand bij.",
+      },
+      {
+        question: "Hoe en wanneer betaal ik?",
+        answer: "Een deel bij de start, de rest bij oplevering. De precieze verdeling staat in je offerte, zodat je vooraf weet waar je aan toe bent.",
+      },
+    ],
+  },
+  privacy: {
+    title: "Privacyverklaring",
+    updated: "Laatst bijgewerkt: 1 oktober 2026",
+    sections: [
+      {
+        title: "Wie ik ben",
+        body: [
+          "Sharply is een eenmanszaak van Noah Janssen, Scheidingsweg 2, 6045 CR Roermond, KvK 76336840. Ik ben verantwoordelijk voor de verwerking van je gegevens.",
+          "Vragen hierover? Mail naar noah.janssen@sharply.nl.",
+        ],
+      },
+      {
+        title: "Welke gegevens ik verwerk",
+        body: [
+          "Alleen wat je zelf invult in het aanvraagformulier: je naam, e-mailadres, telefoonnummer (als je dat invult), bedrijfsnaam, je antwoorden op de vragen en de bestanden die je meestuurt (maximaal drie, samen 4 MB).",
+          "Mail je me rechtstreeks, dan bewaar ik die mail.",
+        ],
+      },
+      {
+        title: "Waarvoor ik ze gebruik",
+        body: [
+          "Om je aanvraag te beantwoorden en een offerte te maken. Niet voor reclame of nieuwsbrieven, tenzij je daar zelf om vraagt.",
+          "De grondslag is dat je zelf contact opneemt en ik stappen zet op je verzoek voordat we een overeenkomst sluiten.",
+        ],
+      },
+      {
+        title: "Cookies en tracking",
+        body: [
+          "Deze site gebruikt geen tracking- of analysecookies en toont daarom geen cookiebanner.",
+          "Er is één functioneel cookie, sharply-lang, dat een jaar je taalkeuze onthoudt. Je browser onthoudt daarnaast tijdens je bezoek dat je het laadscherm al hebt gezien. Geen van beide bevat persoonsgegevens.",
+        ],
+      },
+      {
+        title: "Met wie ik gegevens deel",
+        body: [
+          "Met Resend, dat de e-mails van het formulier verstuurt, en met Vercel, waar de site draait. Zij verwerken gegevens in mijn opdracht en kunnen dat buiten de Europese Economische Ruimte doen.",
+          "Ik verkoop je gegevens nooit en geef ze niet door aan anderen.",
+        ],
+      },
+      {
+        title: "Hoe lang ik ze bewaar",
+        body: [
+          "Aanvragen die niet tot een opdracht leiden verwijder ik uiterlijk twaalf maanden na ontvangst.",
+          "Gegevens die ik nodig heb voor de administratie van een opdracht bewaar ik zeven jaar, want zo lang schrijft de wet dat voor.",
+        ],
+      },
+      {
+        title: "Jouw rechten",
+        body: [
+          "Je mag je gegevens inzien, laten corrigeren of laten verwijderen, bezwaar maken tegen de verwerking en je gegevens meenemen. Mail me, dan reageer ik binnen vier weken.",
+          "Ben je het er niet mee eens, dan kun je een klacht indienen bij de Autoriteit Persoonsgegevens.",
+        ],
+      },
+    ],
   },
   footer: {
+    privacy: "Privacy",
     contactTitle: "Aan de slag",
     email: "noah.janssen@sharply.nl",
-    legalNote: "Sharply, designstudio in Roermond.",
+    legalNote: "Sharply is de studio van Noah Janssen in Roermond.",
     // Uit het Handelsregister (eenmanszaak, hoofdvestiging). Btw-nummer nog toevoegen.
     placeholders: ["KvK 76336840", "Scheidingsweg 2", "6045 CR Roermond"],
     socialTitle: "Volgen",

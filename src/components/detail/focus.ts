@@ -24,9 +24,6 @@ export const FOCUS: Record<string, Focus[]> = {
   branding: [WHOLE, { x: 50, y: 46, zoom: 1.7 }, { x: 24, y: 30, zoom: 1.8 }, { x: 78, y: 40, zoom: 1.6 }],
   // Frames being made: the play frame, the particles, the grid.
   aiContent: [WHOLE, { x: 42, y: 56, zoom: 1.7 }, { x: 80, y: 46, zoom: 1.8 }, { x: 30, y: 22, zoom: 1.6 }],
-  // Concept projects: laptop screen, then phone.
-  halm: [WHOLE, { x: 62, y: 42, zoom: 1.6 }, { x: 24, y: 58, zoom: 1.8 }],
-  routewerk: [WHOLE, { x: 58, y: 40, zoom: 1.6 }, { x: 36, y: 66, zoom: 1.7 }],
 };
 
 /*

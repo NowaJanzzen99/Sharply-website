@@ -2,6 +2,7 @@
 
 import { useId, useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowLeft, ArrowRight, Check, CheckCircle, PencilSimple } from "@phosphor-icons/react";
 import { Reveal, RevealLines, splitHeading } from "./Reveal";
@@ -468,6 +469,16 @@ export function ContactForm({ content, lang }: { content: Content; lang: Lang })
                         </button>
                       )}
                     </div>
+                    {step === last ? (
+                      <p className="mt-4 text-[13px] text-text-faint">
+                        <Link
+                          href={`/${lang}/privacy`}
+                          className="underline decoration-hairline-strong underline-offset-4 transition-colors duration-200 ease-out hover:text-text"
+                        >
+                          {copy.privacyLink}
+                        </Link>
+                      </p>
+                    ) : null}
                   </motion.form>
                 )}
               </AnimatePresence>

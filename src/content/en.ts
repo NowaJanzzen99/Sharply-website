@@ -2,14 +2,14 @@ import type { Content } from "./types";
 
 export const en: Content = {
   meta: {
-    title: "Sharply, design studio for brands, websites and AI systems",
+    title: "Sharply | Agency-level websites, built by Noah Janssen",
     description:
-      "Sharply designs brands and builds high-end websites, online shops and AI systems you run yourself.",
+      "Websites, shops and AI systems at agency level, designed and built by one maker. After launch you change your site yourself by talking to it.",
     localeTag: "en_GB",
   },
   nav: {
     links: [
-      { href: "#studio", label: "Studio" },
+      { href: "#studio", label: "About me" },
       { href: "#diensten", label: "Services" },
       { href: "#demo", label: "Demo" },
       { href: "#werkwijze", label: "Process" },
@@ -22,42 +22,42 @@ export const en: Content = {
     langLabel: "Language",
   },
   hero: {
-    lineOne: "Sharply designed.",
-    lineTwo: "Intelligently built.",
-    body: "Websites at the level of a large agency, made by the person who builds them. And after launch you simply talk to your site to change it.",
+    lineOne: "A website at",
+    lineTwo: "agency level.",
+    body: "I design and build it myself, for business owners who want to grow. You talk to me, not to a team. And afterwards you change it by talking to it.",
     primary: "Start a project",
-    secondary: "See the services",
+    secondary: "See the prices",
     imageAlt:
       "Glass orb with an iridescent sheen above a blue horizon in deep dark space",
   },
   manifesto: {
     title: "Agency quality, without the agency",
-    lead: "What a large agency would build you, at a price that makes sense.",
+    lead: "The level of a large agency, with the maker on the line.",
     body: [
-      "We build sites at the level large marketing agencies advertise with: designed for you, written in code, fast, and finished down to the details. That is the craft, and it is what we do all day.",
-      "The difference is not the quality but the invoice. At an agency you pay for account managers, project leads, an office and the hours four people spend keeping each other informed. Here you talk to the person making it, and AI does the work that repeats.",
-      "So what you see is not a button someone pressed. It is craft, with an engine under it.",
+      "I am Noah. I design and build websites and AI systems, entirely myself: design, code and imagery. That is how I make sites at the level large marketing agencies advertise with: designed for you, written in code, fast, and finished down to the details.",
+      "The difference is not the quality but the invoice. At an agency you pay for account managers, project leads, an office and the hours four people spend keeping each other informed. With me you talk to the person making it, and AI does the work that repeats.",
+      "I deliberately take on a limited number of projects at a time, so you have my full attention. I work with business owners who want to invest in a site that works for them.",
     ],
-    imageAlt:
-      "A hand drawing a line on paper with a pen, blue threads of light lifting off it",
+    imageAlt: "Portrait of Noah Janssen",
+    caption: "Noah Janssen, Roermond",
   },
   services: {
-    title: "What we make",
+    title: "What I make",
     lead: "From a brand that holds up to a system that keeps running while you sleep.",
     items: [
       {
         key: "websites",
-        title: "Websites and web apps",
-        body: "From a site that lands to a platform with logins, a database and a dashboard. Built to load fast and last for years.",
-        points: ["Designed from scratch", "Database and logins", "Edit your own copy"],
+        title: "A site that brings in customers",
+        body: "Does your site look dated, or bring in too few enquiries? I design and build a new one: fast, fully yours, and with logins and a database when you need more.",
+        points: ["Designed from scratch", "Fast on every screen", "Edit your own copy"],
         image: "/images/service-websites.webp",
         alt: "A web page as layered glass panels: a menu bar, a large headline and a row of cards, floating in depth",
         placeholder: true,
       },
       {
         key: "aiChat",
-        title: "AI chat and agents",
-        body: "An assistant inside your own site that helps your customers, answers questions, books appointments and drives your systems. Trained on your information.",
+        title: "An assistant that helps your customers",
+        body: "Do you answer the same questions every day? An assistant in your own site does it for you, books appointments and knows your information.",
         points: ["Trained on your content", "Books appointments", "Talks to your systems"],
         image: "/images/service-ai-chat.webp",
         alt: "Glass chat bubbles stacked above each other, one glowing blue, with a glass sphere beside them as the assistant",
@@ -65,8 +65,8 @@ export const en: Content = {
       },
       {
         key: "webshop",
-        title: "Online shops",
-        body: "Selling through a shop that feels like a brand instead of a template. Payments, stock and shipping work the way you expect.",
+        title: "A shop that sells",
+        body: "Want to sell online without it looking like a stock store? A shop that feels like your brand, with payment, stock and shipping working the way you are used to.",
         points: ["Designed for your brand", "Cards and local payments", "Stock kept in sync"],
         image: "/images/service-webshop.webp",
         alt: "Three glass product cards holding bottles, the middle one lit, with a glass shopping bag in front",
@@ -74,8 +74,8 @@ export const en: Content = {
       },
       {
         key: "integrations",
-        title: "Integrations and automation",
-        body: "Your systems joined up: calendar, mail, stock, invoices, CRM. Set up properly once, then it runs without you.",
+        title: "Less manual work, more time",
+        body: "Do you retype things from one program into another? I connect calendar, mail, stock, invoices and CRM so it carries on by itself.",
         points: ["Systems connected", "Work that runs itself", "Reporting you can trust"],
         image: "/images/service-integrations.webp",
         alt: "Five glass app tiles for calendar, mail, stock, charts and settings, wired to a central disc by glowing cables",
@@ -83,8 +83,8 @@ export const en: Content = {
       },
       {
         key: "branding",
-        title: "Branding and motion",
-        body: "Logo, colour, typography and moving image. A brand that sounds the same everywhere, with guidelines your team can actually use.",
+        title: "A brand that sticks",
+        body: "Does your brand look slightly different everywhere? Logo, colour, typography and moving image, with guidelines your team can move forward with.",
         points: ["Logo and identity", "Brand guidelines", "Animation and video"],
         image: "/images/service-branding-motion.webp",
         alt: "A glass medallion carrying a mark, surrounded by colour swatches and specimen plates, with a ribbon of liquid glass around it",
@@ -92,8 +92,8 @@ export const en: Content = {
       },
       {
         key: "aiContent",
-        title: "AI content",
-        body: "Imagery, video and animation for campaigns and social. Generated where it can be, finished by hand where it counts.",
+        title: "Imagery and video without a shoot",
+        body: "Need fresh visuals for campaigns and social all the time? I make them with AI where that works, and finish them by hand where it counts.",
         points: ["Stills and video", "Campaign sets", "Consistent with your brand"],
         image: "/images/service-ai-content.webp",
         alt: "Floating glass picture frames with a play button, one of them forming out of a cloud of blue particles",
@@ -103,7 +103,7 @@ export const en: Content = {
   },
   demo: {
     title: "Your site stays yours. After launch as well.",
-    lead: "Every site we build comes with an assistant that knows it. You say what you want changed, you see it happen, and you put it live yourself. No complicated content system, no waiting on an agency, no invoice for changing an opening time. Try it here.",
+    lead: "Every site I build comes with an assistant that knows it. You say what you want changed, you see it happen, and you put it live yourself. No complicated content system, no waiting on an agency, no invoice for changing an opening time. Try it here.",
     note: "This is a demo of the idea, not of your own site. On a real project it is wired to your content, your domain and your styling, and you decide what may and may not be changed.",
     tryTitle: "Try it yourself",
     tryHint: "Click an instruction, or type your own. You see it happen in the preview.",
@@ -158,12 +158,12 @@ export const en: Content = {
   },
   work: {
     title: "Work",
-    lead: "One client who is live, and two concepts that show how far it goes.",
-    body: "Live Wedding Paintings is real work for a real client. Halm and Routewerk are designs we made ourselves, and they are labelled that way.",
+    lead: "My first client project, from design to launch.",
+    body: "More projects are coming soon.",
     conceptLabel: "Concept project",
     clientLabel: "Client project",
     ctaTitle: "Your project here?",
-    ctaText: "Tell us what you want to build and your work will sit here soon.",
+    ctaText: "Tell me what you want to build and your work will sit here soon.",
     ctaButton: "Start a project",
     items: [
       {
@@ -171,28 +171,10 @@ export const en: Content = {
         title: "Live Wedding Paintings",
         discipline: "Brand, website and bookings",
         blurb:
-          "The site of Sara van Heukelom, who paints weddings live. Made by us from the first design to the booking form.",
+          "The site of Sara van Heukelom, who paints weddings live. Made by me from the first design to the booking form.",
         image: "/images/project-liveweddingpaintings.webp",
         alt: "Laptop and phone showing the Live Wedding Paintings website: paintings in gold frames on a warm, light background",
         real: true,
-      },
-      {
-        key: "halm",
-        title: "Halm",
-        discipline: "Online shop",
-        blurb:
-          "A dark online shop for a skincare brand, built to present products as objects.",
-        image: "/images/project-halm.webp",
-        alt: "Laptop and phone showing a dark skincare online shop",
-      },
-      {
-        key: "routewerk",
-        title: "Routewerk",
-        discipline: "AI system",
-        blurb:
-          "A dashboard that tracks shipments, flags delays and hands out work by itself, with an assistant built in.",
-        image: "/images/project-routewerk.webp",
-        alt: "Laptop showing a dark dashboard with a map, shipments, automation and an AI assistant",
       },
     ],
   },
@@ -202,7 +184,7 @@ export const en: Content = {
     steps: [
       {
         title: "Listening",
-        body: "We start with your business, your customers and what is going wrong now. That turns into a plan you can follow, without jargon.",
+        body: "I start with your business, your customers and what is going wrong now. That turns into a plan you can follow, without jargon.",
       },
       {
         title: "Designing",
@@ -210,16 +192,16 @@ export const en: Content = {
       },
       {
         title: "Building",
-        body: "We build it in code, not in a page builder. You follow along on a test address and can look over our shoulder every week.",
+        body: "I build it in code, not in a page builder. You follow along on a test address and can look over my shoulder every week.",
       },
       {
         title: "Going live",
-        body: "We handle the domain, the hosting and the speed. Then we show you how to make changes yourself, simply by asking for them.",
+        body: "I handle the domain, the hosting and the speed. Then I show you how to make changes yourself, simply by asking for them.",
       },
     ],
   },
   contact: {
-    title: "Tell us what you want to build",
+    title: "Tell me what you want to build",
     lead: "Answer a few questions and you see a price indication at the end, straight away. The more you fill in, the sharper it is. Only marked fields are required, and you can always go back.",
     progress: "Step {current} of {total}",
     optional: "optional",
@@ -227,7 +209,7 @@ export const en: Content = {
     invalidEmail: "Please check your email address",
     invalidUrl: "Please check the link",
     pickOne: "Pick at least one option",
-    tooShort: "Tell us a little more, at least {min} characters",
+    tooShort: "Tell me a little more, at least {min} characters",
     consentRequired: "Please agree to be able to send this",
     next: "Continue",
     back: "Back",
@@ -235,20 +217,21 @@ export const en: Content = {
     sending: "Sending",
     edit: "Edit",
     reviewTitle: "Everything at a glance",
-    reviewIntro: "Check your request. If it all looks right, it goes to Noah.",
+    reviewIntro: "Check your request. If it all looks right, it goes to me.",
     empty: "Not filled in",
-    noDetails: "We have no follow-up questions for what you picked. Feel free to continue.",
+    noDetails: "I have no follow-up questions for what you picked. Feel free to continue.",
     selectPlaceholder: "Choose an option",
     filesHint: "Up to 3 files, 4 MB in total. PDF, image or Word.",
     filesAdd: "Add files",
     filesRemove: "Remove",
     filesTooBig: "These files are larger than 4 MB together",
     filesTooMany: "You can attach up to 3 files",
-    filesType: "We do not accept this file type",
+    filesType: "I do not accept this file type",
     successTitle: "Your request is in",
     successBody:
-      "Noah reads it personally and replies within two working days. Do check your spam folder.",
+      "I read it personally and reply within two working days. Do check your spam folder.",
     againLabel: "Send another request",
+    privacyLink: "Read my privacy statement",
     errorTitle: "Sending did not work",
     errorBody:
       "Please try again, or email noah.janssen@sharply.nl directly.",
@@ -260,7 +243,7 @@ export const en: Content = {
       care: "Looking after it afterwards, {plan} plan: {price} a month.",
       plans: { basis: "Basis", groei: "Growth", volledig: "Complete" },
       open: "You also picked something a form cannot price, so that is not in here yet.",
-      note: "This is a direction, not a quote. Half an hour on a call and we know what it really is, and then you get a fixed price. If it does not fit your budget, say so: there is nearly always a smaller first step.",
+      note: "This is a direction, not a quote. Half an hour on a call and I know what it really is, and then you get a fixed price. If it does not fit your budget, say so: there is nearly always a smaller first step.",
     },
     steps: [
       {
@@ -273,15 +256,15 @@ export const en: Content = {
             kind: "chips",
             multi: true,
             required: true,
-            label: "What can we help with",
+            label: "What can I help with",
             options: [
-              { id: "website", label: "Website or web app" },
-              { id: "webshop", label: "Online shop" },
-              { id: "ai-chat", label: "AI chat or agent" },
-              { id: "automation", label: "Integrations and automation" },
-              { id: "branding", label: "Branding" },
+              { id: "website", label: "A new website or web app" },
+              { id: "webshop", label: "An online shop" },
+              { id: "ai-chat", label: "An AI assistant for my customers" },
+              { id: "automation", label: "Automate manual work" },
+              { id: "branding", label: "A new brand or identity" },
               { id: "motion", label: "Motion and video" },
-              { id: "ai-content", label: "AI content" },
+              { id: "ai-content", label: "Imagery and content with AI" },
               { id: "other", label: "Something else" },
             ],
           },
@@ -290,7 +273,7 @@ export const en: Content = {
       {
         id: "about",
         title: "About you",
-        hint: "So we understand who we are building for.",
+        hint: "So I understand who I am building for.",
         fields: [
           {
             id: "about.company",
@@ -402,7 +385,7 @@ export const en: Content = {
             id: "goals.success",
             kind: "area",
             rows: 2,
-            label: "How will we know it worked",
+            label: "How will I know it worked",
             placeholder:
               "For example twice as many enquiries, or ten hours a week less manual work.",
           },
@@ -417,7 +400,7 @@ export const en: Content = {
       {
         id: "style",
         title: "Style and material",
-        hint: "Show us what you like and what you already have.",
+        hint: "Show me what you like and what you already have.",
         fields: [
           {
             id: "style.mood",
@@ -441,7 +424,7 @@ export const en: Content = {
             kind: "area",
             rows: 3,
             label: "Sites and brands you like",
-            placeholder: "Paste links and tell us what you like about them.",
+            placeholder: "Paste links and tell me what you like about them.",
           },
           {
             id: "style.dislikes",
@@ -469,7 +452,7 @@ export const en: Content = {
             id: "style.files",
             kind: "files",
             label: "Attachments",
-            hint: "A brief, logo or example helps us reply faster.",
+            hint: "A brief, logo or example helps me reply faster.",
           },
         ],
       },
@@ -535,7 +518,7 @@ export const en: Content = {
       {
         id: "contact",
         title: "Contact",
-        hint: "So Noah can reply.",
+        hint: "So I can reply.",
         fields: [
           {
             id: "contact.name",
@@ -564,7 +547,7 @@ export const en: Content = {
             id: "contact.source",
             kind: "select",
             half: true,
-            label: "How did you find us",
+            label: "How did you find me",
             options: [
               { id: "search", label: "Search engine" },
               { id: "social", label: "Social media" },
@@ -576,7 +559,7 @@ export const en: Content = {
           {
             id: "contact.preferred",
             kind: "chips",
-            label: "How would you like to hear from us",
+            label: "How would you like to hear from me",
             options: [
               { id: "mail", label: "By email" },
               { id: "phone", label: "By phone" },
@@ -903,7 +886,7 @@ export const en: Content = {
             id: "other.what",
             kind: "area",
             rows: 3,
-            label: "Tell us what you have in mind",
+            label: "Tell me what you have in mind",
             placeholder: "Describe it as concretely as you can.",
           },
         ],
@@ -961,12 +944,101 @@ export const en: Content = {
     ctaTitle: "Not sure what you need?",
     ctaText: "Fill in the form and you see an indication straight away, based on your own answers.",
     ctaButton: "Get an indication",
-    ctaMail: "Rather talk first? Email us",
+    ctaMail: "Rather talk first? Email me",
+  },
+  faq: {
+    title: "Questions you may have",
+    items: [
+      {
+        question: "What does a website cost?",
+        answer: "The packages are above and start at €3,500, excluding VAT. After half an hour on a call you get a fixed price. If €3,500 is more than you want to spend, I am not the right choice: a template site gets you online faster and cheaper.",
+      },
+      {
+        question: "How long does it take?",
+        answer: "A Start site is usually online within four to six weeks, a Studio site within six to ten. After the first conversation you get a schedule that is true, not one that sounds good.",
+      },
+      {
+        question: "Who owns the website and the code?",
+        answer: "You do. You get the source files and your own hosting and domain account, so you are never stuck with me.",
+      },
+      {
+        question: "What if I do not like the design?",
+        answer: "You see the design before I write a line of code, and you approve it first. That way I never build on a design you did not want.",
+      },
+      {
+        question: "I am not technical. Can I change it myself?",
+        answer: "Yes, that is what the assistant is for. You say what you want changed, such as a text, a photo or an opening time, you see it happen, and you put it live yourself. There is no content system to learn.",
+      },
+      {
+        question: "Who writes the copy and supplies the imagery?",
+        answer: "You supply the facts and the images you have, and I turn them into sharp copy. Where imagery is missing, I make it with AI or finish it by hand.",
+      },
+      {
+        question: "How and when do I pay?",
+        answer: "A part at the start, the rest at delivery. The exact split is in your quote, so you know where you stand up front.",
+      },
+    ],
+  },
+  privacy: {
+    title: "Privacy statement",
+    updated: "Last updated: 1 October 2026",
+    sections: [
+      {
+        title: "Who I am",
+        body: [
+          "Sharply is a sole proprietorship of Noah Janssen, Scheidingsweg 2, 6045 CR Roermond, the Netherlands, Chamber of Commerce number 76336840. I am responsible for how your data is handled.",
+          "Questions? Email noah.janssen@sharply.nl.",
+        ],
+      },
+      {
+        title: "What data I handle",
+        body: [
+          "Only what you fill in yourself in the request form: your name, email address, phone number (if you enter one), company name, your answers to the questions and the files you attach (up to three, 4 MB in total).",
+          "If you email me directly, I keep that email.",
+        ],
+      },
+      {
+        title: "What I use it for",
+        body: [
+          "To answer your request and prepare a quote. Not for advertising or newsletters, unless you ask for them yourself.",
+          "The basis is that you get in touch yourself and I take steps at your request before we enter into an agreement.",
+        ],
+      },
+      {
+        title: "Cookies and tracking",
+        body: [
+          "This site uses no tracking or analytics cookies and therefore shows no cookie banner.",
+          "There is one functional cookie, sharply-lang, which remembers your language choice for a year. Your browser also remembers during your visit that you have seen the loading screen. Neither contains personal data.",
+        ],
+      },
+      {
+        title: "Who I share it with",
+        body: [
+          "With Resend, which sends the emails from the form, and with Vercel, where the site runs. They process data on my behalf and may do so outside the European Economic Area.",
+          "I never sell your data and do not pass it on to anyone else.",
+        ],
+      },
+      {
+        title: "How long I keep it",
+        body: [
+          "Requests that do not lead to a project I delete within twelve months of receiving them.",
+          "Data I need for the administration of a project I keep for seven years, the period the law requires.",
+        ],
+      },
+      {
+        title: "Your rights",
+        body: [
+          "You may see your data, have it corrected or deleted, object to the handling of it and take it with you. Email me and I will reply within four weeks.",
+          "If you disagree, you can lodge a complaint with the Dutch Data Protection Authority (Autoriteit Persoonsgegevens).",
+        ],
+      },
+    ],
   },
   footer: {
+    privacy: "Privacy",
     contactTitle: "Get started",
     email: "noah.janssen@sharply.nl",
-    legalNote: "Sharply, a design studio in Roermond, the Netherlands.",
+    legalNote: "Sharply is the studio of Noah Janssen, in Roermond, the Netherlands.",
     // From the Dutch trade register (sole proprietorship, head office). VAT number still to add.
     placeholders: ["Chamber of Commerce 76336840", "Scheidingsweg 2", "6045 CR Roermond"],
     socialTitle: "Follow",

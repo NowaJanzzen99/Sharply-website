@@ -41,6 +41,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.6,
     }));
 
-    return [home, ...services, ...work];
+    const privacy = {
+      url: `${base}/${lang}/privacy`,
+      lastModified: now,
+      changeFrequency: "yearly" as const,
+      priority: 0.2,
+    };
+
+    return [home, ...services, ...work, privacy];
   });
 }

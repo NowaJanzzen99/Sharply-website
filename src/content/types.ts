@@ -103,6 +103,8 @@ export type WorkDetail = {
 
 /** The shared furniture of a detail page: labels, links, the closing call. */
 export type DetailCopy = {
+  /** Heading over the services shown at the foot of a project page that has no sibling. */
+  moreServices: string;
   /** Link to a live client site. */
   visit: string;
   /** Heading over the gallery on a real case. */
@@ -210,6 +212,8 @@ export type Content = {
     lead: string;
     body: string[];
     imageAlt: string;
+    /** Under the portrait: who is in the picture. */
+    caption: string;
   };
   services: {
     title: string;
@@ -301,6 +305,8 @@ export type Content = {
     successTitle: string;
     successBody: string;
     againLabel: string;
+    /** Link to the privacy statement, shown on the last step. */
+    privacyLink: string;
     errorTitle: string;
     errorBody: string;
     steps: FormStep[];
@@ -348,7 +354,19 @@ export type Content = {
     /** A lower-commitment way in, for people who would rather write first. */
     ctaMail: string;
   };
+  /** The questions that make people hesitate, answered where they hesitate. */
+  faq: {
+    title: string;
+    items: { question: string; answer: string }[];
+  };
+  /** The privacy statement, a page of its own. */
+  privacy: {
+    title: string;
+    updated: string;
+    sections: { title: string; body: string[] }[];
+  };
   footer: {
+    privacy: string;
     contactTitle: string;
     email: string;
     legalNote: string;

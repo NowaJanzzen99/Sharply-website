@@ -7,6 +7,7 @@ import { TalkDemo } from "@/components/TalkDemo";
 import { Work } from "@/components/Work";
 import { Process } from "@/components/Process";
 import { Pricing } from "@/components/Pricing";
+import { DetailQuestions } from "@/components/detail/DetailQuestions";
 import { ContactForm } from "@/components/ContactForm";
 import { getContent, isLang } from "@/content";
 
@@ -21,6 +22,21 @@ export default async function HomePage({
 
   return (
     <>
+      {/* The same questions as data, so a search engine can show them. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: content.faq.items.map((item) => ({
+              "@type": "Question",
+              name: item.question,
+              acceptedAnswer: { "@type": "Answer", text: item.answer },
+            })),
+          }),
+        }}
+      />
       <Intro />
       <main id="main">
         <Hero content={content} />
@@ -30,6 +46,7 @@ export default async function HomePage({
         <Work content={content} lang={lang} />
         <Process content={content} />
         <Pricing content={content} lang={lang} />
+        <DetailQuestions id="vragen" title={content.faq.title} items={content.faq.items} />
         <ContactForm content={content} lang={lang} />
       </main>
     </>

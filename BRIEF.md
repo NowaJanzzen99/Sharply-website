@@ -216,6 +216,17 @@ Onderzoek gedaan op de Nederlandse markt (bronnen onderaan deze sectie), en de u
 
 **Bronnen**: SearchLab, ZA Creatives, Appfront (websites); Codeloods, Knab, ZZP Centrum (uurtarieven); Opklopper, DigiSwift (webshops); SearchLab, Aanloop AI, OpenKlauw (AI); SearchLab, DesignDash (huisstijl); Zazou Totaal, Webtify, Sorora Studio, DigiDan (onderhoud en abonnementen); Branded Agency, Amply (boutique-studio's); Inkbot Design, Shopify Partners, Simon-Kucher (positionering en prijspsychologie); Quantilope, Conjointly (Van Westendorp).
 
+## 10g. Herstart: één klant, "ik"-stem, FAQ en privacy (1 oktober 2026)
+
+- **Stem**: de hele site is nu "ik" (Noah), met portret in de Over-mij-sectie (`public/images/noah.webp`). De "wij"/"maker zelf"-tegenstrijdigheid is weg. "Wij/onze" komt alleen nog voor als vraag aan de klant.
+- **Werk**: alleen Live Wedding Paintings (echt). Halm en Routewerk (AI-mockups, niet bezoekbaar) zijn verwijderd, inclusief afbeeldingen. De detailpagina valt terug op diensten als gerelateerde kaarten. Kopregel: "Er komen binnenkort meer projecten bij."
+- **Hero**: "Een website van bureauniveau." + concrete "ik"-tekst. Tweede knop gaat naar de prijzen.
+- **Diensten**: per klantprobleem in plaats van jargon.
+- **Filter op te goedkope klanten**: zichtbare prijzen vanaf 3.500, FAQ-antwoord "ben ik niet de juiste keuze" onder dat bedrag, manifest-regel over ondernemers die willen investeren.
+- **FAQ** (`faq` in nl/en.ts, onder Prijzen, `#vragen`, met FAQPage JSON-LD) en **privacyverklaring** (`/[lang]/privacy`, in footer, formulier-laatste stap en sitemap).
+- **Door Noah te bevestigen** (ik heb dit zelf ingevuld): doorlooptijd 4-6 weken (Start) en 6-10 (Studio); code en hosting zijn van de klant; betaling deels bij start, rest bij oplevering (verdeling in de offerte); "beperkt aantal opdrachten tegelijk"; bewaartermijn 12 maanden voor aanvragen zonder opdracht en 7 jaar administratie; Resend en Vercel als verwerkers (verwerkersovereenkomsten nakijken); cookie `sharply-lang` en sessionStorage-vlag voor het laadscherm.
+- **Nog nodig van Noah**: echte quote van Sara, echte LWP-resultaten, Resend-key in Vercel, en de 2-3 eigen conceptsites (zie het gesprek: interieurstudio, specialty coffee/wijn-webshop, dienstverlener met afspraken en AI-assistent). Voeg ze toe als `work.items` met `concept: true` zodra ze live zijn.
+
 ## 11. Open punten
 
 - De bedragen op de site en in `src/lib/estimate.ts` zijn een onderbouwd voorstel (zie 10f), nog niet getoetst bij echte prospects. Noah controleert ze aan de hand van zijn uren.

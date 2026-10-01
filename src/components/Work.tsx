@@ -90,7 +90,7 @@ function ProjectCard({
 }
 
 export function Work({ content, lang }: { content: Content; lang: Lang }) {
-  const [first, second, third] = content.work.items;
+  const [first, ...rest] = content.work.items;
   const label = content.work.conceptLabel;
   const clientLabel = content.work.clientLabel;
 
@@ -118,23 +118,6 @@ export function Work({ content, lang }: { content: Content; lang: Lang }) {
             clientLabel={clientLabel}
             lang={lang}
             variant="left"
-            className="md:col-span-7"
-          />
-          <ProjectCard
-            item={second}
-            label={label}
-            clientLabel={clientLabel}
-            lang={lang}
-            variant="circle"
-            lag={0.12}
-            className="md:col-span-5 md:mt-28"
-          />
-          <ProjectCard
-            item={third}
-            label={label}
-            clientLabel={clientLabel}
-            lang={lang}
-            variant="diagonal"
             wide
             className="md:col-span-8"
           />
@@ -160,6 +143,20 @@ export function Work({ content, lang }: { content: Content; lang: Lang }) {
               </a>
             </div>
           </Reveal>
+
+          {/* Further projects, two to a row, as they are added. */}
+          {rest.map((item, index) => (
+            <ProjectCard
+              key={item.key}
+              item={item}
+              label={label}
+              clientLabel={clientLabel}
+              lang={lang}
+              variant={index % 2 ? "diagonal" : "circle"}
+              lag={index % 2 ? 0.12 : 0}
+              className="md:col-span-6"
+            />
+          ))}
         </div>
       </div>
     </section>

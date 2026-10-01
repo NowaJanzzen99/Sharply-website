@@ -3,29 +3,30 @@ import type { Details } from "./types";
 /*
   De detailpagina's, Nederlands.
 
-  Toon: dezelfde "wij" als de rest van de site, korte zinnen, geen vaktaal waar
+  Toon: dezelfde "ik" als de rest van de site, korte zinnen, geen vaktaal waar
   gewone taal het ook doet. Geen beloftes over resultaat, geen cijfers, geen
   klantnamen: die zijn er nog niet, en verzonnen bewijs is erger dan geen bewijs.
-  Wat hier staat gaat over wat wij maken en hoe, niet over wat het oplevert.
+  Wat hier staat gaat over wat ik maak en hoe, niet over wat het oplevert.
 
   Alles hieronder is invulbaar door Noah zodra het aanbod definitief is.
 */
 export const detailsNl: Details = {
   copy: {
+    moreServices: "Wat ik nog meer maak",
     visit: "Bekijk de site",
     gallery: "Van dichtbij",
-    made: "Wat we maakten",
+    made: "Wat ik maakte",
     backToServices: "Alle diensten",
     backToWork: "Al het werk",
     deliverables: "Wat je krijgt",
-    questions: "Vragen die we vaker horen",
+    questions: "Vragen die ik vaker hoor",
     scope: "Wat het concept omvat",
     otherServices: "Andere diensten",
     otherWork: "Ander werk",
     readMore: "Lees verder",
     ctaTitle: "Zin om te beginnen?",
     ctaBody:
-      "Vertel in het formulier wat je wilt bouwen. Hoe meer je invult, hoe scherper ons eerste antwoord.",
+      "Vertel in het formulier wat je wilt bouwen. Hoe meer je invult, hoe scherper mijn eerste antwoord.",
     ctaButton: "Start een project",
     notFound: {
       title: "Deze pagina bestaat niet",
@@ -52,18 +53,18 @@ export const detailsNl: Details = {
         "Zelf teksten en beelden beheren",
         "Optioneel inlog, database en dashboard",
         "Hosting ingericht, domein gekoppeld, SSL geregeld",
-        "Overdracht waarin we laten zien hoe alles werkt",
+        "Overdracht waarin ik laat zien hoe alles werkt",
       ],
       questions: [
         {
           question: "Hoe lang duurt het?",
           answer:
-            "Een stevige merksite is meestal een kwestie van weken, een platform met inlog en database langer. Na het eerste gesprek geven we een planning die klopt in plaats van een die mooi klinkt.",
+            "Een stevige merksite is meestal een kwestie van weken, een platform met inlog en database langer. Na het eerste gesprek geef ik een planning die klopt in plaats van een die mooi klinkt.",
         },
         {
           question: "Kan ik mijn huidige site behouden?",
           answer:
-            "Teksten, beelden en je domein nemen we mee. De techniek eronder vervangen we, want daar zit meestal precies het probleem dat je wilt oplossen.",
+            "Teksten, beelden en je domein neem ik mee. De techniek eronder vervang ik, want daar zit meestal precies het probleem dat je wilt oplossen.",
         },
         {
           question: "Wat als ik later iets wil toevoegen?",
@@ -96,12 +97,12 @@ export const detailsNl: Details = {
         {
           question: "Gaat hij dingen verzinnen?",
           answer:
-            "Daar zit het meeste werk. Hij antwoordt uit jouw bronnen en zegt het als iets er niet in staat. Voor het live gaat testen we hem op de vragen waarvan je niet wilt dat hij ernaast zit.",
+            "Daar zit het meeste werk. Hij antwoordt uit jouw bronnen en zegt het als iets er niet in staat. Voordat hij live gaat test ik hem op de vragen waarvan je niet wilt dat hij ernaast zit.",
         },
         {
           question: "Wat kost het per maand?",
           answer:
-            "Er zitten gebruikskosten aan, afhankelijk van hoeveel gesprekken je hebt. We rekenen dat vooraf door met jouw verwachte aantallen, zodat er geen verrassing komt.",
+            "Er zitten gebruikskosten aan, afhankelijk van hoeveel gesprekken je hebt. Ik reken dat vooraf door met jouw verwachte aantallen, zodat er geen verrassing komt.",
         },
         {
           question: "Kan hij Nederlands en Engels?",
@@ -134,17 +135,17 @@ export const detailsNl: Details = {
         {
           question: "Kan ik overstappen vanaf Shopify of WooCommerce?",
           answer:
-            "Ja. Producten, klanten en bestellingen nemen we mee. We zetten de nieuwe winkel klaar naast de oude en zetten hem pas om als alles klopt.",
+            "Ja. Producten, klanten en bestellingen neem ik mee. Ik zet de nieuwe winkel klaar naast de oude en zet hem pas om als alles klopt.",
         },
         {
           question: "Hoeveel producten kan hij aan?",
           answer:
-            "Van tien handgemaakte stuks tot duizenden varianten. Bij grote aantallen richten we zoeken en filteren anders in, dat bespreken we vooraf.",
+            "Van tien handgemaakte stuks tot duizenden varianten. Bij grote aantallen richt ik zoeken en filteren anders in, dat bespreek ik vooraf.",
         },
         {
           question: "Wie regelt de betaalaansluiting?",
           answer:
-            "Wij zetten het technisch klaar. Het contract met de betaalpartij staat op jouw naam, want het is jouw geld dat erdoorheen gaat.",
+            "Ik zet het technisch klaar. Het contract met de betaalpartij staat op jouw naam, want het is jouw geld dat erdoorheen gaat.",
         },
       ],
     },
@@ -155,7 +156,7 @@ export const detailsNl: Details = {
       intro:
         "De meeste tijd lekt weg tussen twee programma's. Dat werk doet een computer beter dan jij.",
       sections: [
-        { title: "Eerst kijken waar het vastloopt", body: "We beginnen bij je week, niet bij de techniek. Dat wijst de eerste koppelingen aan." },
+        { title: "Eerst kijken waar het vastloopt", body: "Ik begin bij je week, niet bij de techniek. Dat wijst de eerste koppelingen aan." },
         { title: "Eén keer goed, daarna stil", body: "Factuur in de boekhouding, afspraak in de agenda, zonder dat iemand iets overtypt." },
         { title: "Rapportage die klopt", body: "Alles uit één bron, dus cijfers waar je op kunt beslissen." },
         { title: "Als het misgaat, weet je het", body: "Mislukt er iets, dan krijg je bericht en zie je precies wat er gebeurde." },
@@ -166,23 +167,23 @@ export const detailsNl: Details = {
         "Automatisering van het werk dat zich herhaalt",
         "Meldingen als er iets misgaat",
         "Rapportage uit één bron",
-        "Documentatie, zodat het niet van ons afhangt",
+        "Documentatie, zodat het niet van mij afhangt",
       ],
       questions: [
         {
           question: "Werkt dit met het pakket dat wij al gebruiken?",
           answer:
-            "Bijna altijd. Wij koppelen aan alles met een open verbinding, en dat hebben de meeste pakketten. Bij twijfel zoeken we het vooraf uit, niet achteraf.",
+            "Bijna altijd. Ik koppel aan alles met een open verbinding, en dat hebben de meeste pakketten. Bij twijfel zoek ik het vooraf uit, niet achteraf.",
         },
         {
           question: "Moeten we van pakket wisselen?",
           answer:
-            "Liever niet. Overstappen kost je team meer dan het oplost. We werken met wat er staat, tenzij iets echt niet te koppelen is.",
+            "Liever niet. Overstappen kost je team meer dan het oplost. Ik werk met wat er staat, tenzij iets echt niet te koppelen is.",
         },
         {
           question: "Wat als ons proces later verandert?",
           answer:
-            "Dan passen we het aan. Daarom leggen we vast hoe het in elkaar zit, zodat een wijziging een middag is en geen nieuw project.",
+            "Dan pas ik het aan. Daarom leg ik vast hoe het in elkaar zit, zodat een wijziging een middag is en geen nieuw project.",
         },
       ],
     },
@@ -191,7 +192,7 @@ export const detailsNl: Details = {
       slug: "branding-en-motion",
       tagline: "Een merk dat op elk kanaal hetzelfde klinkt.",
       intro:
-        "Een logo is het kleinste deel van een merk. Wij maken de hele set, met richtlijnen die je team zelf gebruikt.",
+        "Een logo is het kleinste deel van een merk. Ik maak de hele set, met richtlijnen die je team zelf gebruikt.",
       sections: [
         { title: "Eerst het verhaal, dan de vorm", body: "Wat je doet en voor wie komt eerst, anders wordt een huisstijl een smaakgesprek." },
         { title: "Gemaakt om te gebruiken", body: "Van gevelbord tot mailhandtekening tot een verhaal van negen seconden." },
@@ -210,7 +211,7 @@ export const detailsNl: Details = {
         {
           question: "Moet mijn huidige logo weg?",
           answer:
-            "Niet per se. Soms is het logo prima en klopt de rest niet. We zeggen eerlijk wat we zouden houden.",
+            "Niet per se. Soms is het logo prima en klopt de rest niet. Ik zeg eerlijk wat ik zou houden.",
         },
         {
           question: "Krijgen we de bronbestanden?",
@@ -232,9 +233,9 @@ export const detailsNl: Details = {
         "Beeld dat vroeger een fotoshoot en een week wachten kostte. Het genereren is het snelle deel, niet het moeilijke.",
       sections: [
         { title: "Consistent met je merk", body: "Vaste opzetten en kleurbewerking, zodat twintig beelden op elkaar en op jou lijken." },
-        { title: "Met de hand bijgewerkt", body: "Handen, tekst en details gaan altijd mis. Daar zit onze tijd in." },
+        { title: "Met de hand bijgewerkt", body: "Handen, tekst en details gaan altijd mis. Daar zit mijn tijd in." },
         { title: "Campagnesets, geen losse stukken", body: "Elk formaat dat je nodig hebt, klaar om te plaatsen." },
-        { title: "Eerlijk over wat het is", body: "We zeggen het als een echte foto de betere keuze is." },
+        { title: "Eerlijk over wat het is", body: "Ik zeg het als een echte foto de betere keuze is." },
       ],
       deliverables: [
         "Beeldreeks in jouw merkstijl",
@@ -248,17 +249,17 @@ export const detailsNl: Details = {
         {
           question: "Mag ik dit commercieel gebruiken?",
           answer:
-            "Wij werken met tools waarvan de voorwaarden commercieel gebruik toestaan, en leggen per set vast wat je ermee mag. Bij twijfel kiezen we de veilige route.",
+            "Ik werk met tools waarvan de voorwaarden commercieel gebruik toestaan, en leg per set vast wat je ermee mag. Bij twijfel kies ik de veilige route.",
         },
         {
           question: "Ziet iemand dat het gegenereerd is?",
           answer:
-            "Bij slecht werk meteen. Daarom zit het meeste van onze tijd in de nabewerking. En waar het merk eerlijkheid vraagt, zeggen we erbij dat het gemaakt is.",
+            "Bij slecht werk meteen. Daarom zit het meeste van mijn tijd in de nabewerking. En waar het merk eerlijkheid vraagt, zeg ik erbij dat het gemaakt is.",
         },
         {
-          question: "Kunnen jullie onze eigen producten gebruiken?",
+          question: "Kun je onze eigen producten gebruiken?",
           answer:
-            "Ja. We kunnen jouw eigen foto's als basis nemen, zodat het product klopt en de omgeving eromheen gemaakt wordt.",
+            "Ja. Ik kan jouw eigen foto's als basis nemen, zodat het product klopt en de omgeving eromheen gemaakt wordt.",
         },
       ],
     },
@@ -269,11 +270,11 @@ export const detailsNl: Details = {
       slug: "live-wedding-paintings",
       tagline: "Een site die voelt als een galerie, en die bruiloften boekt.",
       intro:
-        "Sara van Heukelom schildert live op bruiloften. Wij maakten haar site, van het eerste ontwerp tot hij live stond.",
+        "Sara van Heukelom schildert live op bruiloften. Ik maakte haar site, van het eerste ontwerp tot hij live stond.",
       url: "https://liveweddingpaintings.nl",
       facts: [
         { label: "Klant", value: "Sara van Heukelom" },
-        { label: "Wat we deden", value: "Alles, van ontwerp tot livegang" },
+        { label: "Wat ik deed", value: "Alles, van ontwerp tot livegang" },
         { label: "Talen", value: "Nederlands en Engels" },
       ],
       sections: [
@@ -298,44 +299,6 @@ export const detailsNl: Details = {
       ],
     },
 
-    halm: {
-      slug: "halm",
-      tagline: "Een donkere webshop voor huidverzorging, gebouwd om producten als objecten te tonen.",
-      intro:
-        "Huidverzorging wordt bijna altijd licht en pastel getoond. Dit concept doet het omgekeerde.",
-      sections: [
-        { title: "Het idee", body: "Vier producten die belangrijk moeten voelen, zonder te schreeuwen." },
-        { title: "Wat we ontwierpen", body: "Een donkere winkel waarin de flessen oplichten, met ingrediënten als leesbare laag." },
-        { title: "Hoe het gebouwd zou worden", body: "Een volwaardige webshop, met ruimte voor herhaalbestellingen." },
-      ],
-      scope: [
-        "Winkelontwerp, donker, om het product heen",
-        "Productpagina met ingrediënten en routine",
-        "Afrekenen in zo min mogelijk stappen",
-        "Opzet voor herhaalbestellingen",
-        "Voorraad en verzending gekoppeld",
-      ],
-      note: "Dit is een conceptproject dat wij zelf maakten om onze werkwijze te laten zien. Halm is een bedacht merk, geen klant, en er zijn geen resultaten aan verbonden.",
-    },
 
-    routewerk: {
-      slug: "routewerk",
-      tagline: "Een dashboard dat zendingen volgt, vertragingen signaleert en werk vanzelf verdeelt.",
-      intro:
-        "Wat wij bedoelen met een AI-systeem: de slimme delen zitten waar nu iemand handmatig klikt.",
-      sections: [
-        { title: "Het idee", body: "Een planning die in twee hoofden zit, en vastloopt zodra er één op vakantie is." },
-        { title: "Wat we ontwierpen", body: "Eén overzicht dat vertraging ziet voordat de klant belt, en werk voorstelt dat een mens goedkeurt." },
-        { title: "Hoe het gebouwd zou worden", body: "Een webapp met rollen en koppelingen, en meldingen als er iets misgaat." },
-      ],
-      scope: [
-        "Dashboard met live overzicht",
-        "Signalering van vertraging en uitzonderingen",
-        "Voorgestelde werkverdeling, goedgekeurd door een mens",
-        "Assistent die vragen over de data beantwoordt",
-        "Inlog, rollen en koppelingen naar bestaande systemen",
-      ],
-      note: "Dit is een conceptproject dat wij zelf maakten om onze werkwijze te laten zien. Routewerk is een bedacht merk, geen klant, en er zijn geen resultaten aan verbonden.",
-    },
   },
 };
