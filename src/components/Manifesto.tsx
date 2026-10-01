@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
-import { Reveal, RevealImage, RevealLines } from "./Reveal";
+import { Reveal, RevealLines } from "./Reveal";
+import { Portrait } from "./Portrait";
 import type { Content } from "@/content";
 
 /*
@@ -43,24 +43,11 @@ export function Manifesto({ content }: { content: Content }) {
             </div>
           </div>
 
-          <div data-scene="photo" data-scene-variant="right" className="md:col-span-5 md:pt-4">
-            <RevealImage
-              variant="up"
-              className="relative overflow-hidden rounded-[var(--radius-lg)] border border-hairline"
-            >
-              <div className="relative aspect-[4/5]">
-                <Image
-                  src="/images/noah.webp"
-                  alt={content.manifesto.imageAlt}
-                  fill
-                  sizes="(min-width: 768px) 38vw, 100vw"
-                  data-scene-img
-                  className="object-cover object-top"
-                />
-              </div>
-            </RevealImage>
-            <p className="mt-4 text-[14px] text-text-faint">{content.manifesto.caption}</p>
-          </div>
+          <Portrait
+            alt={content.manifesto.imageAlt}
+            name={content.manifesto.caption.split(",")[0]}
+            line={content.manifesto.caption.split(",")[1]?.trim() ?? ""}
+          />
         </div>
       </div>
     </section>

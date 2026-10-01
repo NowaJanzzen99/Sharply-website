@@ -186,6 +186,20 @@
     animation: line-rise 900ms var(--ease-out) both;
   }
 
+  /* The bubbles around the portrait: a slow float, transform only. */
+  @keyframes bubble-drift {
+    0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+    50% { transform: translate3d(-6px, -14px, 0) rotate(4deg); }
+  }
+
+  .portrait-bubble {
+    animation: bubble-drift 9s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .portrait-bubble { animation: none; }
+  }
+
   @keyframes line-rise {
     from {
       opacity: 0;
