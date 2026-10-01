@@ -214,6 +214,22 @@ export type Content = {
     imageAlt: string;
     /** Under the portrait: who is in the picture. */
     caption: string;
+    /** Copy inside the UI cards that fly in around the portrait. Illustrative, never a claim. */
+    stage: {
+      role: string;
+      chatTitle: string;
+      chatQuestion: string;
+      chatAnswer: string;
+      chatInput: string;
+      priceTitle: string;
+      priceRange: string;
+      priceNote: string;
+      checkoutTitle: string;
+      checkoutTotal: string;
+      checkoutAmount: string;
+      checkoutPay: string;
+      live: string;
+    };
   };
   services: {
     title: string;

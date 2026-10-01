@@ -1,53 +1,40 @@
-"use client";
-
 import { Reveal, RevealLines } from "./Reveal";
-import { Portrait } from "./Portrait";
+import { StudioStage } from "./StudioStage";
 import type { Content } from "@/content";
 
 /*
   The section that says who is behind the work. A face is the first thing a
-  small business looks for before it hands over money, so the portrait sits
-  beside the first thing said about the offer rather than at the bottom of the
-  page in a section nobody reaches.
+  small business looks for before it hands over money, so it comes straight
+  after the hero, and it is staged rather than dropped in: the portrait holds
+  the screen while the things Noah builds fly in around him (StudioStage).
 
-  An earlier version lit the lead sentence word by word as you scrolled. It read
-  as a rendering fault rather than as craft, so the lead now arrives on the same
-  line mask every other heading uses.
+  Heading first, so the scene has a caption before it starts; the longer text
+  after, once the cards have landed.
 */
 
 export function Manifesto({ content }: { content: Content }) {
   return (
-    <section id="studio" className="relative scroll-mt-24 py-28 md:py-40">
+    <section id="studio" className="relative scroll-mt-24 pt-28 md:pt-40">
       <div className="container-page">
-        <div className="grid gap-14 md:grid-cols-12 md:gap-10">
-          <div className="md:col-span-7 md:pr-8">
-            <h2 className="font-display text-[clamp(2rem,5.5vw,3.5rem)] font-semibold text-text">
-              <RevealLines lines={[content.manifesto.title]} onView />
-            </h2>
+        <div className="max-w-[22ch]">
+          <h2 className="font-display text-[clamp(2rem,5.5vw,3.5rem)] font-semibold text-text">
+            <RevealLines lines={[content.manifesto.title]} onView />
+          </h2>
+        </div>
+        <p className="mt-6 max-w-[34ch] font-display text-[clamp(1.25rem,2.6vw,1.75rem)] font-medium leading-[1.3] tracking-[-0.02em] text-text-muted">
+          <RevealLines lines={content.manifesto.lead.split(/(?<=\.)\s+/)} onView />
+        </p>
+      </div>
 
-            <p className="mt-8 font-display text-[clamp(1.35rem,3.2vw,2.1rem)] font-medium leading-[1.25] tracking-[-0.025em] text-text">
-              <RevealLines
-                lines={content.manifesto.lead.split(/(?<=\.)\s+/)}
-                onView
-              />
-            </p>
+      <StudioStage content={content} />
 
-            <div className="mt-8 flex flex-col gap-5 md:max-w-[58ch]">
-              {content.manifesto.body.map((paragraph, index) => (
-                <Reveal key={paragraph} delay={index * 0.06}>
-                  <p className="text-[17px] leading-[1.6] text-text-muted">
-                    {paragraph}
-                  </p>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-
-          <Portrait
-            alt={content.manifesto.imageAlt}
-            name={content.manifesto.caption.split(",")[0]}
-            line={content.manifesto.caption.split(",")[1]?.trim() ?? ""}
-          />
+      <div className="container-page pb-28 md:pb-40">
+        <div className="grid gap-6 md:grid-cols-3 md:gap-10">
+          {content.manifesto.body.map((paragraph, index) => (
+            <Reveal key={paragraph} delay={index * 0.06}>
+              <p className="text-[17px] leading-[1.6] text-text-muted">{paragraph}</p>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>
