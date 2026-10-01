@@ -345,6 +345,8 @@ export type Content = {
     ctaTitle: string;
     ctaText: string;
     ctaButton: string;
+    /** A lower-commitment way in, for people who would rather write first. */
+    ctaMail: string;
   };
   footer: {
     contactTitle: string;

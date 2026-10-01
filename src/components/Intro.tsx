@@ -44,9 +44,9 @@ let played = false;
 const LETTERS = "sharply".split("");
 
 /** Never shorter than this, so it reads as a moment and not a flicker. */
-const MIN_MS = 1500;
+const MIN_MS = 1000;
 /** Never longer than this, however slow the connection. */
-const MAX_MS = 4200;
+const MAX_MS = 2400;
 
 export function Intro() {
   const [phase, setPhase] = useState<"loading" | "bursting" | "gone">(() =>

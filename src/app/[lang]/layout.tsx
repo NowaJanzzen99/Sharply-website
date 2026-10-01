@@ -31,6 +31,11 @@ export async function generateMetadata({
   const content = getContent(lang);
 
   return {
+    // Without a base, the canonical and hreflang links below stay relative,
+    // which search engines ignore: both were flagged invalid by Lighthouse.
+    metadataBase: new URL(
+      process.env.NEXT_PUBLIC_SITE_URL ?? "https://sharply-website.vercel.app",
+    ),
     title: content.meta.title,
     description: content.meta.description,
     alternates: {

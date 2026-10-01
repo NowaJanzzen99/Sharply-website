@@ -209,6 +209,15 @@ export function Pricing({ content, lang }: { content: Content; lang: Lang }) {
             />
           </a>
         </div>
+
+        <p className="mt-6 text-[15px] text-text-muted">
+          <a
+            href={`mailto:${content.footer.email}`}
+            className="underline decoration-hairline-strong underline-offset-[6px] transition-colors duration-200 ease-out hover:text-text hover:decoration-accent"
+          >
+            {copy.ctaMail}
+          </a>
+        </p>
       </div>
     </section>
   );

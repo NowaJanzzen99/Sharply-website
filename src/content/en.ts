@@ -220,7 +220,7 @@ export const en: Content = {
   },
   contact: {
     title: "Tell us what you want to build",
-    lead: "The more you fill in, the sharper our first reply. Only marked fields are required, and you can always go back.",
+    lead: "Answer a few questions and you see a price indication at the end, straight away. The more you fill in, the sharper it is. Only marked fields are required, and you can always go back.",
     progress: "Step {current} of {total}",
     optional: "optional",
     required: "This field is still empty",
@@ -961,6 +961,7 @@ export const en: Content = {
     ctaTitle: "Not sure what you need?",
     ctaText: "Fill in the form and you see an indication straight away, based on your own answers.",
     ctaButton: "Get an indication",
+    ctaMail: "Rather talk first? Email us",
   },
   footer: {
     contactTitle: "Get started",

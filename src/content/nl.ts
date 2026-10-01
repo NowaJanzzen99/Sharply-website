@@ -220,7 +220,7 @@ export const nl: Content = {
   },
   contact: {
     title: "Vertel wat je wilt bouwen",
-    lead: "Hoe meer je invult, hoe scherper ons eerste antwoord. Alleen wat gemarkeerd is moet, en je kunt altijd terug.",
+    lead: "Beantwoord een paar vragen en je ziet aan het eind meteen een prijsindicatie. Hoe meer je invult, hoe scherper die is. Alleen wat gemarkeerd is moet, en je kunt altijd terug.",
     progress: "Stap {current} van {total}",
     optional: "optioneel",
     required: "Dit veld is nog leeg",
@@ -961,6 +961,7 @@ export const nl: Content = {
     ctaTitle: "Weet je nog niet wat jij nodig hebt?",
     ctaText: "Vul het formulier in en je ziet meteen een indicatie, op basis van je eigen antwoorden.",
     ctaButton: "Krijg een indicatie",
+    ctaMail: "Liever eerst even praten? Mail ons",
   },
   footer: {
     contactTitle: "Aan de slag",
