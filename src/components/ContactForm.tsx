@@ -6,7 +6,8 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowLeft, ArrowRight, Check, CheckCircle, PencilSimple } from "@phosphor-icons/react";
 import { Reveal, RevealLines, splitHeading } from "./Reveal";
-import { PriceEstimate } from "./contact/PriceEstimate";
+import { formatEuro } from "@/lib/estimate";
+import { PackageBuilder, estimateFor } from "./contact/PriceEstimate";
 import { FieldControl } from "./contact/FieldControl";
 import {
   buildSections,
@@ -30,6 +31,8 @@ export function ContactForm({ content, lang }: { content: Content; lang: Lang })
   const [step, setStep] = useState(0);
   const [direction, setDirection] = useState(1);
   const [values, setValues] = useState<Values>({});
+  // The answers as they were when the review opened: what "put back" returns to.
+  const [baseline, setBaseline] = useState<Values>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [files, setFiles] = useState<File[]>([]);
   const [fileError, setFileError] = useState<string>();
@@ -37,6 +40,7 @@ export function ContactForm({ content, lang }: { content: Content; lang: Lang })
   const [status, setStatus] = useState<Status>("idle");
 
   const current = copy.steps[step];
+  const running = estimateFor(copy, values);
   const sections = buildSections(copy, values);
   const filesLabel = copy.steps
     .flatMap((formStep) => formStep.fields)
@@ -124,7 +128,35 @@ export function ContactForm({ content, lang }: { content: Content; lang: Lang })
       scrollToFirstError();
       return;
     }
+    if (step + 1 === last) setBaseline(values);
     goTo(Math.min(step + 1, last), 1);
+  }
+
+  /**
+   * What the visitor ended up with, for the email: the range, and what they
+   * took out to get there, which says what they decided they could do without.
+   */
+  function packageSection() {
+    const result = estimateFor(copy, values);
+    if (!result) return [];
+    const money = (n: number) => formatEuro(n, lang);
+    const rows = [
+      { label: copy.price.packageTitle, value: `${money(result.low)} ${copy.price.to} ${money(result.high)}` },
+    ];
+    const start = estimateFor(copy, baseline);
+    const removed = (start?.lines ?? [])
+      .filter((line) => !result.lines.some((current) => current.id === line.id))
+      .map((line) => line.label);
+    if (removed.length > 0) {
+      rows.push({ label: copy.price.removedTitle, value: removed.join(", ").slice(0, 3900) });
+    }
+    if (result.monthly) {
+      rows.push({
+        label: copy.price.monthlyLabel,
+        value: `${copy.price.plans[result.monthly.plan]}, ${money(result.monthly.price)} ${copy.price.perMonthShort}`,
+      });
+    }
+    return [{ title: copy.price.title, rows }];
   }
 
   async function submit(event: React.FormEvent) {
@@ -151,7 +183,10 @@ export function ContactForm({ content, lang }: { content: Content; lang: Lang })
       company: String(values["about.company"] ?? ""),
       consent: true,
       website: honeypot,
-      sections: sections.map(({ title, rows }) => ({ title, rows })),
+      sections: [
+        ...sections.map(({ title, rows }) => ({ title, rows })),
+        ...packageSection(),
+      ],
     };
 
     const body = new FormData();
@@ -312,6 +347,15 @@ export function ContactForm({ content, lang }: { content: Content; lang: Lang })
                     </h3>
                     <p className="mt-1.5 text-[15px] text-text-faint">{current.hint}</p>
 
+                    {current.id !== "review" && running ? (
+                      <p className="mt-3 inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-hairline px-3.5 py-1.5 text-[13px] text-text-muted">
+                        <span className="text-text-faint">{copy.price.running}</span>
+                        <span className="font-medium text-text">
+                          {formatEuro(running.low, lang)} {copy.price.to} {formatEuro(running.high, lang)}
+                        </span>
+                      </p>
+                    ) : null}
+
                     <div className="mt-8">
                       <AnimatePresence mode="wait" initial={false}>
                         <motion.div
@@ -326,7 +370,14 @@ export function ContactForm({ content, lang }: { content: Content; lang: Lang })
                             <div className="flex flex-col gap-7">
                               {/* The question everybody has, answered before
                                   they have to ask it. */}
-                              <PriceEstimate copy={copy} values={values} lang={lang} />
+                              <PackageBuilder
+                                copy={copy}
+                                values={values}
+                                baseline={baseline}
+                                lang={lang}
+                                email={content.footer.email}
+                                onChange={setValues}
+                              />
 
                               <p className="text-[15px] leading-[1.6] text-text-muted">
                                 {copy.reviewIntro}

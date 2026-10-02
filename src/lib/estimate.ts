@@ -28,7 +28,6 @@ import type { Values } from "@/components/contact/form-model";
 type Band = [low: number, high: number];
 
 const add = (a: Band, b: Band): Band => [a[0] + b[0], a[1] + b[1]];
-const scale = (a: Band, f: number): Band => [a[0] * f, a[1] * f];
 
 /** What a service costs before any of its own answers are taken into account. */
 const BASE: Record<string, Band> = {
@@ -45,6 +44,9 @@ const BASE: Record<string, Band> = {
 /** What each answer inside a service adds. Anything not named here adds nothing. */
 const EXTRA: Record<string, Record<string, Band>> = {
   "website.pages": {
+    // A single page is the smallest custom build: it is priced as a cut from
+    // the base website, not as an extra. See the "one page" handling below.
+    "1": [-1700, -2300],
     "1-5": [0, 0],
     "6-15": [1200, 1800],
     "16-40": [3200, 5000],
@@ -130,30 +132,87 @@ function planFor(needs: string[], values: Values): Plan {
   return "basis";
 }
 
+/**
+ * One thing in the package, with what it adds. Every line can be taken out,
+ * which is the point: someone with less to spend should be able to see which
+ * of their own choices costs what, and drop them one by one.
+ */
+export type Line = {
+  id: string;
+  /** The service this belongs to (a key of BASE), so lines can be grouped. */
+  group: string;
+  kind: "need" | "extra" | "rush";
+  /** Set for lines that come from a form field, so they can be put back. */
+  field?: string;
+  choice?: string;
+  label: string;
+  low: number;
+  high: number;
+  /** The visitor's answers with this line taken out. */
+  without: Values;
+};
+
 export type Estimate = {
   low: number;
   high: number;
   /** Set when the visitor asked us to keep looking after it. */
-  monthly?: { plan: Plan; price: number };
-  /** The choices that moved the number, in the order they were asked. */
-  drivers: string[];
+  monthly?: { plan: Plan; price: number; without: Values };
+  /** Everything that adds up to low and high, in the order it was asked. */
+  lines: Line[];
   /** True when something was picked that cannot be priced from a form. */
   open: boolean;
+  /** A website cut down to a single page. */
+  onePage: boolean;
 };
 
 const list = (value: string | string[] | undefined): string[] =>
   Array.isArray(value) ? value : value ? [value] : [];
 
-/** Labels for the drivers, looked up from the form's own options. */
-type Labeller = (fieldId: string, optionId: string) => string | undefined;
+/** Labels looked up from the form's own options; without an option, the field's label. */
+type Labeller = (fieldId: string, optionId?: string) => string | undefined;
 
-export function estimate(values: Values, label: Labeller): Estimate | null {
+/** What a line's field is called when it is an extra of the same kind: "Extra taal: Engels". */
+export type PerItemNames = Record<string, string>;
+
+const serviceOf = (fieldId: string) => fieldId.split(".")[0];
+
+/** The answers for one service, so taking the service out takes its details with it. */
+function withoutNeed(values: Values, need: string): Values {
+  const next: Values = {};
+  Object.entries(values).forEach(([key, value]) => {
+    if (key === "needs.needs") next[key] = list(value).filter((item) => item !== need);
+    else if (!key.startsWith(`${need}.`)) next[key] = value;
+  });
+  return next;
+}
+
+/** A choice taken out: dropped from a list, or set back to the choice that costs nothing. */
+function withoutChoice(values: Values, fieldId: string, choice: string): Values {
+  const current = values[fieldId];
+  const next = { ...values };
+  if (Array.isArray(current)) {
+    next[fieldId] = current.filter((item) => item !== choice);
+    return next;
+  }
+  const table = EXTRA[fieldId] ?? {};
+  const free = Object.keys(table).find((key) => table[key][0] === 0 && table[key][1] === 0);
+  if (free) next[fieldId] = free;
+  else delete next[fieldId];
+  return next;
+}
+
+export function estimate(
+  values: Values,
+  label: Labeller,
+  perItem: PerItemNames = {},
+  rushLabel = "",
+): Estimate | null {
   const needs = list(values["needs.needs"]);
   if (needs.length === 0) return null;
 
-  let band: Band = [0, 0];
-  const drivers: string[] = [];
+  const lines: Line[] = [];
   let open = false;
+  const onePage = needs.includes("website") && values["website.pages"] === "1";
 
   needs.forEach((need) => {
     const base = BASE[need];
@@ -162,48 +221,190 @@ export function estimate(values: Values, label: Labeller): Estimate | null {
       open = true;
       return;
     }
-    band = add(band, base);
+    const cut = need === "website" && onePage ? EXTRA["website.pages"]["1"] : ([0, 0] as Band);
+    const band = add(base, cut);
+    lines.push({
+      id: `need:${need}`,
+      group: need,
+      kind: "need",
+      label: label("needs.needs", need) ?? need,
+      low: band[0],
+      high: band[1],
+      without: withoutNeed(values, need),
+    });
   });
 
   Object.entries(EXTRA).forEach(([fieldId, table]) => {
+    const group = serviceOf(fieldId);
+    if (!needs.includes(group)) return;
     list(values[fieldId]).forEach((choice) => {
       const amount = table[choice];
-      if (!amount || (amount[0] === 0 && amount[1] === 0)) return;
-      band = add(band, amount);
-      const name = label(fieldId, choice);
-      if (name) drivers.push(name);
+      // Free choices add nothing, and the one-page cut is already in the base.
+      if (!amount || amount[0] <= 0 || amount[1] <= 0) return;
+      lines.push({
+        id: `${fieldId}:${choice}`,
+        group,
+        kind: "extra",
+        field: fieldId,
+        choice,
+        label: label(fieldId, choice) ?? choice,
+        low: amount[0],
+        high: amount[1],
+        without: withoutChoice(values, fieldId, choice),
+      });
     });
   });
 
   Object.entries(PER_ITEM).forEach(([fieldId, rule]) => {
-    const extra = Math.max(0, list(values[fieldId]).length - rule.free);
-    if (extra === 0) return;
-    band = add(band, scale(rule.each, extra));
-    const names = list(values[fieldId])
+    const group = serviceOf(fieldId);
+    if (!needs.includes(group)) return;
+    list(values[fieldId])
       .slice(rule.free)
-      .map((choice) => label(fieldId, choice))
-      .filter(Boolean);
-    if (names.length) drivers.push(names.join(", "));
+      .forEach((choice) => {
+        const name = label(fieldId, choice) ?? choice;
+        lines.push({
+          id: `${fieldId}:${choice}`,
+          group,
+          kind: "extra",
+          field: fieldId,
+          choice,
+          label: perItem[fieldId] ? `${perItem[fieldId]}: ${name}` : name,
+          low: rule.each[0],
+          high: rule.each[1],
+          without: withoutChoice(values, fieldId, choice),
+        });
+      });
   });
 
-  if (band[1] === 0) return null;
+  if (lines.length === 0) return null;
 
-  const rushed = values["plan.timeline"] === "asap";
-  if (rushed) band = scale(band, RUSH);
+  let low = lines.reduce((sum, line) => sum + line.low, 0);
+  let high = lines.reduce((sum, line) => sum + line.high, 0);
+
+  if (values["plan.timeline"] === "asap") {
+    const extraLow = low * (RUSH - 1);
+    const extraHigh = high * (RUSH - 1);
+    lines.push({
+      id: "rush",
+      group: "all",
+      kind: "rush",
+      field: "plan.timeline",
+      choice: "asap",
+      label: rushLabel,
+      low: extraLow,
+      high: extraHigh,
+      without: { ...values, "plan.timeline": "quarter" },
+    });
+    low += extraLow;
+    high += extraHigh;
+  }
 
   // To the nearest fifty, so it reads as an indication and not as a quote.
   const round = (n: number) => Math.round(n / 50) * 50;
+  const rounded = lines.map((line) => ({ ...line, low: round(line.low), high: round(line.high) }));
 
   const wantsCare = values["plan.maintenance"] === "studio" || values["website.editing"] === "talk";
   const plan = planFor(needs, values);
+  const withoutCare: Values = { ...values, "plan.maintenance": "self" };
+  if (values["website.editing"] === "talk") withoutCare["website.editing"] = "self";
 
   return {
-    low: round(band[0]),
-    high: round(band[1]),
-    monthly: wantsCare ? { plan, price: PLAN_PRICE[plan] } : undefined,
-    drivers: drivers.slice(0, 6),
+    low: round(low),
+    high: round(high),
+    monthly: wantsCare ? { plan, price: PLAN_PRICE[plan], without: withoutCare } : undefined,
+    lines: rounded,
     open,
+    onePage,
   };
+}
+
+/**
+ * The upper end of each budget the form offers. A visitor's budget is a band,
+ * and the package fits when even its high estimate is inside the top of it.
+ */
+export const BUDGET_MAX: Record<string, number> = {
+  "lt-2500": 2500,
+  "2500-5k": 5000,
+  "5-10k": 10000,
+  "10-25k": 25000,
+  "gt-25k": Number.POSITIVE_INFINITY,
+};
+
+/**
+ * Takes things out, biggest first, until the package fits the budget: the
+ * extras, then the website down to a single page, then whole services, always
+ * leaving one. It never touches what the visitor chose to keep by hand: the
+ * caller shows the result and lets them put anything back.
+ */
+export function fitToBudget(
+  values: Values,
+  label: Labeller,
+  max: number,
+  perItem: PerItemNames = {},
+  rushLabel = "",
+): Values {
+  let current = values;
+  for (let step = 0; step < 40; step += 1) {
+    const result = estimate(current, label, perItem, rushLabel);
+    if (!result || result.high <= max) break;
+
+    /**
+     * Within a tier, the smallest thing that is enough on its own, so a
+     * package that is a little over loses a little. If nothing is enough on
+     * its own, the biggest, and the next round carries on.
+     */
+    const choose = (options: { value: Values; saves: number }[]) => {
+      const enough = options.filter((option) => result.high - option.saves <= max);
+      const pool = enough.length > 0 ? enough : options;
+      return pool.sort((a, b) => (enough.length > 0 ? a.saves - b.saves : b.saves - a.saves))[0];
+    };
+
+    const extras = result.lines
+      .filter((line) => line.kind !== "need")
+      .map((line) => ({ value: line.without, saves: line.high }));
+    if (extras.length > 0) {
+      current = choose(extras).value;
+      continue;
+    }
+
+    if (list(current["needs.needs"]).includes("website") && current["website.pages"] !== "1") {
+      current = { ...current, "website.pages": "1" };
+      continue;
+    }
+
+    const services = result.lines.filter((line) => line.kind === "need");
+    if (services.length > 1) {
+      current = choose(services.map((line) => ({ value: line.without, saves: line.high }))).value;
+      continue;
+    }
+    break;
+  }
+  return current;
+}
+
+/** Puts a line back, using the answers the visitor started the review with. */
+export function restoreLine(baseline: Values, current: Values, line: Line): Values {
+  if (line.kind === "need") {
+    const need = line.id.replace("need:", "");
+    const next: Values = { ...current };
+    Object.entries(baseline).forEach(([key, value]) => {
+      if (key.startsWith(`${need}.`)) next[key] = value;
+    });
+    next["needs.needs"] = list(baseline["needs.needs"]).filter(
+      (item) => item === need || list(current["needs.needs"]).includes(item),
+    );
+    return next;
+  }
+  if (!line.field) return current;
+  const was = baseline[line.field];
+  const next: Values = { ...current };
+  if (Array.isArray(was)) {
+    const now = list(current[line.field]);
+    next[line.field] = was.filter((item) => item === line.choice || now.includes(item));
+  } else if (was !== undefined) {
+    next[line.field] = was;
+  }
+  return next;
 }
 
 export function formatEuro(amount: number, lang: string): string {

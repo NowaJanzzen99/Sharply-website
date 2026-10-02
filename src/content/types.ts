@@ -341,7 +341,32 @@ export type Content = {
       to: string;
       /** Said right under the amount: businesses read a price as excluding VAT unless told. */
       vat: string;
-      driversTitle: string;
+      packageTitle: string;
+      packageHint: string;
+      budgetLabel: string;
+      budgetPick: string;
+      budgetFits: string;
+      budgetMaybe: string;
+      /** {amount} is how far the low end of the package is over the budget. */
+      budgetOver: string;
+      fit: string;
+      onePage: string;
+      onePageBack: string;
+      remove: string;
+      /** {item} is the line being taken out. */
+      removeLabel: string;
+      restore: string;
+      restoreAll: string;
+      removedTitle: string;
+      emptyPackage: string;
+      /** {amount} is the price of the smallest version. */
+      floor: string;
+      floorMail: string;
+      monthlyLabel: string;
+      running: string;
+      perMonthShort: string;
+      rush: string;
+      perItem: Record<string, string>;
       /** {plan} and {price} are filled in: "Basis", "€99". */
       care: string;
       plans: { basis: string; groei: string; volledig: string };
