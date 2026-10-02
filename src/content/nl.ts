@@ -63,8 +63,8 @@ export const nl: Content = {
       {
         key: "websites",
         title: "Een website die aanvragen oplevert",
-        body: "Een ontwerp dat vertrouwen wekt en een site die razendsnel laadt. Volledig op maat, met inlog en database als je bedrijf daarom vraagt.",
-        points: ["Ontwerp op maat", "Razendsnel op elk scherm", "Teksten zelf aanpassen"],
+        body: "Een ontwerp dat vertrouwen wekt en een site die razendsnel laadt. En als je meer nodig hebt: een complete webapp met accounts, een database en opgeslagen gegevens, zoals Renofloww.",
+        points: ["Ontwerp op maat", "Accounts en database", "Razendsnel op elk scherm"],
         image: "/images/service-websites.webp",
         alt: "Een webpagina als gelaagde glazen panelen: een menubalk, een grote kop en een rij kaarten, zwevend in diepte",
         placeholder: true,
@@ -121,7 +121,9 @@ export const nl: Content = {
     lead: "Bij elke site die ik bouw hoort een assistent die jouw site door en door kent. Je zegt wat je wilt veranderen, je ziet het direct gebeuren en je zet het zelf live. Een nieuwe openingstijd of een andere kop is in een minuut geregeld. Probeer het hier.",
     note: "Dit is een demo van het principe. Bij een echt project werkt de assistent met jouw content, jouw domein en jouw huisstijl, en bepaal jij wat hij mag aanpassen.",
     tryTitle: "Probeer het zelf",
-    tryHint: "Kies een opdracht of typ je eigen opdracht. De preview past zich direct aan.",
+    badge: "Interactieve demo",
+    previewLabel: "Hier verandert de site terwijl je klikt",
+    tryHint: "Klik op een opdracht en kijk hoe de voorbeeldsite ernaast verandert. Of typ zelf wat je anders wilt.",
     inputLabel: "Of typ je eigen opdracht",
     inputPlaceholder: "Bijvoorbeeld: maak de kop groter",
     send: "Uitvoeren",
@@ -173,7 +175,7 @@ export const nl: Content = {
   },
   work: {
     title: "Werk",
-    lead: "Twee projecten die online staan: een webapp met abonnement en een merksite.",
+    lead: "Twee projecten die online staan: een merksite die boekingen binnenhaalt en een complete webapp met accounts en database.",
     body: "Meer projecten volgen.",
     conceptLabel: "Conceptproject",
     clientLabel: "Klantproject",
@@ -194,9 +196,9 @@ export const nl: Content = {
       {
         key: "renofloww",
         title: "Renofloww",
-        discipline: "Merk, website en webapp",
+        discipline: "Webapp met accounts en database",
         blurb:
-          "Een webapp die budget, planning, offertes en aannemers van een verbouwing op één plek zet, met een assistent die het project kent.",
+          "Een complete webapp met echte accounts en een eigen database: gebruikers loggen in en hun budget, planning, offertes en foto's worden per project opgeslagen. Met een assistent die die gegevens leest.",
         image: "/images/project-renofloww.webp",
         alt: "Laptop en telefoon met Renofloww: de kop 'Je verbouwing, eindelijk in één overzicht' boven een weekplanning van een badkamer",
         real: true,

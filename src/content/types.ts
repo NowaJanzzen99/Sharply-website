@@ -243,6 +243,10 @@ export type Content = {
     lead: string;
     note: string;
     tryTitle: string;
+    /** Marks the panel as something to use, not to read. */
+    badge: string;
+    /** Over the preview: what to watch while clicking. */
+    previewLabel: string;
     tryHint: string;
     inputLabel: string;
     inputPlaceholder: string;

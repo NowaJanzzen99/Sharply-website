@@ -2,7 +2,18 @@
 
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { ArrowRight, CheckCircle, Globe } from "@phosphor-icons/react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Check,
+  CheckCircle,
+  Globe,
+  RocketLaunch,
+  ShoppingBag,
+  Sun,
+  TextAa,
+  type Icon,
+} from "@phosphor-icons/react";
 import { Reveal, RevealLines, splitHeading } from "./Reveal";
 import Image from "next/image";
 import type { Content, DemoCommand } from "@/content";
@@ -16,6 +27,14 @@ type PreviewState = {
 type Entry = { id: number; ask: string; reply: string };
 
 const INITIAL: PreviewState = { bigHeadline: false, light: false, shop: false };
+
+/** One picture per instruction, so each button reads as an action at a glance. */
+const ICONS: Record<DemoCommand["id"], Icon> = {
+  headline: TextAa,
+  light: Sun,
+  shop: ShoppingBag,
+  publish: RocketLaunch,
+};
 
 /** Loose keyword match so typed instructions land on the same four scripted actions. */
 const MATCHERS: Record<DemoCommand["id"], RegExp> = {
@@ -37,6 +56,10 @@ export function TalkDemo({ content }: { content: Content }) {
   const touched = useRef(false);
   const runRef = useRef<((command: DemoCommand) => void) | null>(null);
   const reduce = useReducedMotion();
+  // Until someone clicks, the first instruction pulses: an invitation, not a hint to read.
+  const [tried, setTried] = useState(false);
+  // Bumped on every change, so the preview frame flashes where the change happened.
+  const [flash, setFlash] = useState(0);
 
   useEffect(() => {
     const pending = timers.current;
@@ -145,6 +168,7 @@ export function TalkDemo({ content }: { content: Content }) {
       }));
     }
     log(command.label, command.reply);
+    setFlash((value) => value + 1);
   }
 
   useEffect(() => {
@@ -211,27 +235,83 @@ export function TalkDemo({ content }: { content: Content }) {
           {/* Controls */}
           <Reveal className="order-2 lg:order-1 lg:col-span-5">
             <div ref={panel} data-scene="panel" data-scene-variant="left" className="glass rounded-[var(--radius-lg)] p-5 md:p-6">
-              <p className="font-display text-[19px] font-medium text-text">
+              <p className="flex items-center gap-2 text-[13px] font-medium text-accent-bright">
+                <span className="relative flex h-2 w-2" aria-hidden="true">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-bright opacity-60 motion-reduce:hidden" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-accent-bright" />
+                </span>
+                {content.demo.badge}
+              </p>
+              <p className="mt-3 font-display text-[22px] font-medium text-text">
                 {content.demo.tryTitle}
               </p>
-              <p className="mt-1.5 mb-4 text-[14px] leading-[1.5] text-text-muted">
+              <p className="mt-1.5 mb-5 text-[15px] leading-[1.5] text-text-muted">
                 {content.demo.tryHint}
               </p>
-              <div className="flex flex-wrap gap-2">
-                {content.demo.commands.map((command) => (
-                  <button
-                    key={command.id}
-                    type="button"
-                    onClick={() => {
-                      touched.current = true;
-                      run(command);
-                      revealPreview();
-                    }}
-                    className="rounded-[var(--radius-pill)] border border-hairline-strong bg-canvas-raised px-3.5 py-2 text-left text-[14px] text-text transition-[transform,border-color,background-color] duration-150 ease-[var(--ease-out)] hover:border-accent hover:bg-canvas-raised active:scale-[0.97]"
-                  >
-                    {command.label}
-                  </button>
-                ))}
+
+              {/*
+                Real buttons, not tags: a raised face with a lit top edge and a
+                shadow under it, an icon tile, and an arrow that says "do this".
+                Pressed, they light up and carry a check, so the four double as a
+                read-out of what the preview currently has switched on.
+              */}
+              <div className="grid gap-2.5 sm:grid-cols-2">
+                {content.demo.commands.map((command, index) => {
+                  const CommandIcon = ICONS[command.id];
+                  const on =
+                    command.id === "headline"
+                      ? state.bigHeadline
+                      : command.id === "light"
+                        ? state.light
+                        : command.id === "shop"
+                          ? state.shop
+                          : stage === "live";
+                  return (
+                    <button
+                      key={command.id}
+                      type="button"
+                      aria-pressed={on}
+                      onClick={() => {
+                        touched.current = true;
+                        setTried(true);
+                        run(command);
+                        revealPreview();
+                      }}
+                      className={`group/cmd relative flex min-h-[52px] w-full cursor-pointer items-center gap-3 rounded-[var(--radius-md)] border px-3 py-2.5 text-left text-[15px] font-medium text-text shadow-[inset_0_1px_0_oklch(0.98_0.01_264/0.14),0_8px_18px_oklch(0.05_0.02_264/0.55)] transition-[transform,border-color,background-color,box-shadow] duration-150 ease-[var(--ease-out)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:translate-y-px active:scale-[0.98] active:shadow-[inset_0_1px_0_oklch(0.98_0.01_264/0.08),0_2px_6px_oklch(0.05_0.02_264/0.5)] hover-fine:hover:-translate-y-px hover-fine:hover:border-accent ${
+                        on
+                          ? "border-accent bg-[linear-gradient(180deg,oklch(0.36_0.11_259),oklch(0.27_0.09_261))]"
+                          : "border-hairline-strong bg-[linear-gradient(180deg,oklch(0.26_0.035_264),oklch(0.2_0.03_264))]"
+                      }`}
+                    >
+                      {!tried && index === 0 ? (
+                        <span
+                          aria-hidden="true"
+                          className="pointer-events-none absolute -inset-[3px] animate-pulse rounded-[calc(var(--radius-md)+3px)] ring-2 ring-accent motion-reduce:hidden"
+                        />
+                      ) : null}
+                      <span
+                        aria-hidden="true"
+                        className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-[8px] ${
+                          on ? "bg-accent text-accent-ink" : "bg-accent/15 text-accent-bright"
+                        }`}
+                      >
+                        <CommandIcon size={17} weight="bold" />
+                      </span>
+                      <span className="flex-1 leading-[1.25]">{command.label}</span>
+                      <span aria-hidden="true" className="shrink-0 text-text-muted">
+                        {on ? (
+                          <Check size={16} weight="bold" className="text-accent-bright" />
+                        ) : (
+                          <ArrowRight
+                            size={16}
+                            weight="bold"
+                            className="transition-transform duration-200 ease-[var(--ease-out)] group-hover/cmd:translate-x-0.5"
+                          />
+                        )}
+                      </span>
+                    </button>
+                  );
+                })}
               </div>
 
               <form onSubmit={submit} className="mt-5">
@@ -247,6 +327,7 @@ export function TalkDemo({ content }: { content: Content }) {
                     value={typed}
                     onChange={(event) => {
                       touched.current = true;
+                      setTried(true);
                       setTyped(event.target.value);
                     }}
                     placeholder={content.demo.inputPlaceholder}
@@ -306,8 +387,22 @@ export function TalkDemo({ content }: { content: Content }) {
 
           {/* Live preview */}
           <Reveal className="order-1 lg:order-2 lg:col-span-7" delay={0.1}>
+            <p className="mb-3 flex items-center gap-2 text-[14px] text-text-muted">
+              <ArrowLeft size={15} weight="bold" aria-hidden="true" className="hidden text-accent-bright lg:block" />
+              {content.demo.previewLabel}
+            </p>
             <div ref={preview} data-scene="panel" data-scene-variant="right" data-scene-lag={0.1} className="glass scroll-mt-24 rounded-[var(--radius-lg)] p-2.5">
               <div className="relative overflow-hidden rounded-[calc(var(--radius-lg)-6px)] border border-hairline bg-canvas-deep">
+              {flash > 0 ? (
+                <motion.span
+                  key={flash}
+                  aria-hidden="true"
+                  initial={{ opacity: 1 }}
+                  animate={{ opacity: 0 }}
+                  transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
+                  className="pointer-events-none absolute inset-0 z-10 rounded-[inherit] border-2 border-accent-bright"
+                />
+              ) : null}
               <div className="flex items-center gap-2 border-b border-hairline bg-[oklch(0.16_0.028_264/0.6)] px-4 py-3">
                 <Globe size={15} className="shrink-0 text-text-faint" />
                 <span className="truncate font-mono text-[12px] text-text-faint">

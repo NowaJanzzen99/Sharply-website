@@ -63,8 +63,8 @@ export const en: Content = {
       {
         key: "websites",
         title: "A website that brings in enquiries",
-        body: "A design that builds trust and a site that loads in a flash. Fully bespoke, with login and a database when your business calls for it.",
-        points: ["Bespoke design", "Lightning fast on every screen", "Edit your own copy"],
+        body: "A design that builds trust and a site that loads in a flash. And when you need more: a complete web app with accounts, a database and stored data, like Renofloww.",
+        points: ["Bespoke design", "Accounts and database", "Lightning fast on every screen"],
         image: "/images/service-websites.webp",
         alt: "A web page as layered glass panels: a menu bar, a large headline and a row of cards, floating in depth",
         placeholder: true,
@@ -121,7 +121,9 @@ export const en: Content = {
     lead: "Every site I build comes with an assistant that knows it inside out. You say what you want changed, you see it happen, and you put it live yourself. A new opening time or a different headline takes a minute. Try it here.",
     note: "This is a demo of the principle. On a real project the assistant works with your content, your domain and your styling, and you decide what it may change.",
     tryTitle: "Try it yourself",
-    tryHint: "Pick an instruction or type your own. The preview responds instantly.",
+    badge: "Interactive demo",
+    previewLabel: "The site changes here as you click",
+    tryHint: "Click an instruction and watch the example site next to it change. Or type what you want different.",
     inputLabel: "Or type your own instruction",
     inputPlaceholder: "For example: make the headline bigger",
     send: "Run",
@@ -173,7 +175,7 @@ export const en: Content = {
   },
   work: {
     title: "Work",
-    lead: "Two projects that are online: a subscription web app and a brand site.",
+    lead: "Two projects that are online: a brand site that brings in bookings and a complete web app with accounts and a database.",
     body: "More projects to follow.",
     conceptLabel: "Concept project",
     clientLabel: "Client project",
@@ -194,9 +196,9 @@ export const en: Content = {
       {
         key: "renofloww",
         title: "Renofloww",
-        discipline: "Brand, website and web app",
+        discipline: "Web app with accounts and database",
         blurb:
-          "A web app that puts the budget, planning, quotes and contractors of a renovation in one place, with an assistant that knows the project.",
+          "A complete web app with real accounts and its own database: users sign in and their budget, planning, quotes and photos are stored per project. With an assistant that reads that data.",
         image: "/images/project-renofloww.webp",
         alt: "Laptop and phone showing Renofloww: the headline 'Je verbouwing, eindelijk in één overzicht' above a week-by-week bathroom schedule",
         real: true,
