@@ -65,8 +65,8 @@ export const nl: Content = {
         title: "Een website die aanvragen oplevert",
         body: "Een ontwerp dat vertrouwen wekt en een site die razendsnel laadt. En als je meer nodig hebt: een complete webapp met accounts, een database en opgeslagen gegevens, zoals Renofloww.",
         points: ["Ontwerp op maat", "Accounts en database", "Razendsnel op elk scherm"],
-        image: "/images/service-websites.webp",
-        alt: "Een webpagina als gelaagde glazen panelen: een menubalk, een grote kop en een rij kaarten, zwevend in diepte",
+        image: "/images/service-websites-2.webp",
+        alt: "Laptop en telefoon met de homepage van deze site: de kop 'Websites die klanten winnen' naast een glazen bol",
         placeholder: true,
       },
       {
@@ -74,8 +74,8 @@ export const nl: Content = {
         title: "Een assistent voor je klanten",
         body: "Een slimme assistent in je eigen site die vragen beantwoordt, afspraken inplant en jouw informatie kent. Dag en nacht beschikbaar.",
         points: ["Kent jouw content", "Plant afspraken in", "Werkt samen met je systemen"],
-        image: "/images/service-ai-chat.webp",
-        alt: "Glazen chatbubbels boven elkaar, waarvan er een blauw oplicht, met een glazen bol ernaast als assistent",
+        image: "/images/service-ai-chat-2.webp",
+        alt: "Twee telefoons met Renofloww: links het overzicht van kosten en offertes, rechts de assistent die een vraag over het budget beantwoordt",
         placeholder: true,
       },
       {
@@ -83,8 +83,8 @@ export const nl: Content = {
         title: "Een webshop die verkoopt",
         body: "Een winkel die aanvoelt als je merk. Betalen, voorraad en verzending werken zoals je gewend bent, de beleving is helemaal van jou.",
         points: ["Ontwerp rond jouw producten", "iDEAL en creditcard", "Voorraad gekoppeld"],
-        image: "/images/service-webshop.webp",
-        alt: "Drie glazen productkaarten met flessen erin, de middelste opgelicht, met een glazen winkeltas ervoor",
+        image: "/images/service-webshop-2.webp",
+        alt: "Laptop met een productpagina van een keramiekwinkel, een telefoon met het productoverzicht en een verzenddoos met een kom erin",
         placeholder: true,
       },
       {
@@ -92,8 +92,8 @@ export const nl: Content = {
         title: "Systemen die samenwerken",
         body: "Agenda, mail, voorraad, facturen en CRM, verbonden tot één vloeiende werkstroom. Wat zich herhaalt, gaat vanzelf.",
         points: ["Alles in verbinding", "Werk dat vanzelf loopt", "Rapportage om op te sturen"],
-        image: "/images/service-integrations.webp",
-        alt: "Vijf glazen app-tegels met agenda, mail, voorraad, grafiek en instellingen, verbonden met een centrale schijf door oplichtende kabels",
+        image: "/images/service-integrations-2.webp",
+        alt: "Een dashboard met agenda, facturenlijst en grafiek, met blauwe lijnen ertussen, en een telefoon met een melding dat het gelukt is",
         placeholder: true,
       },
       {
@@ -101,8 +101,8 @@ export const nl: Content = {
         title: "Een merk met uitstraling",
         body: "Logo, kleur, typografie en beweging, samengebracht in richtlijnen waar je hele team mee werkt.",
         points: ["Logo en huisstijl", "Merkrichtlijnen", "Animatie en video"],
-        image: "/images/service-branding-motion.webp",
-        alt: "Een glazen medaillon met een beeldmerk, omringd door kleurstalen en specimenplaten, met een lint van vloeibaar glas eromheen",
+        image: "/images/service-branding-motion-2.webp",
+        alt: "Huisstijl op een tafel: een tas, briefpapier, visitekaartjes en een koffiebeker met hetzelfde beeldmerk, naast een kleurkaart en een lettertypekaart",
         placeholder: true,
       },
       {
@@ -110,8 +110,8 @@ export const nl: Content = {
         title: "Beeld en video op afroep",
         body: "Campagnebeeld en video in jouw merkstijl: razendsnel gemaakt met AI en met de hand afgewerkt waar het telt.",
         points: ["Beeld en video", "Campagnesets", "Consistent met je merk"],
-        image: "/images/service-ai-content.webp",
-        alt: "Zwevende glazen beeldkaders met een afspeelknop, waarvan er een opbouwt uit een wolk van blauwe deeltjes",
+        image: "/images/service-ai-content-2.webp",
+        alt: "Een scherm met negen foto's van dezelfde mok en kom in een eenduidige stijl, en een tablet met een verticale story en een videotijdlijn",
         placeholder: true,
       },
     ],
@@ -953,6 +953,13 @@ export const nl: Content = {
     websitesTitle: "Websites, eenmalig",
     tiers: [
       {
+        name: "Spark",
+        price: 1800,
+        from: true,
+        body: "Eén sterke pagina die laat zien wat je doet en hoe mensen je bereiken. De snelste manier om professioneel online te staan.",
+        points: ["Eén pagina", "Ontwerp op maat", "Contactformulier", "Livegang en eigen domein"],
+      },
+      {
         name: "Start",
         price: 3500,
         body: "Een verfijnde merksite die helemaal van jou is.",
@@ -986,7 +993,6 @@ export const nl: Content = {
     recommended: "Aanbevolen",
     otherTitle: "Andere diensten",
     other: [
-      { name: "Eén pagina (onepager)", price: "vanaf €1.800" },
       { name: "Huisstijl", price: "€2.500 tot €6.000" },
       { name: "Webshop", price: "vanaf €9.000" },
       { name: "AI-assistent in een bestaande site", price: "vanaf €3.500" },
@@ -1004,7 +1010,7 @@ export const nl: Content = {
     items: [
       {
         question: "Wat kost een website?",
-        answer: "Mijn projecten starten bij €3.500, exclusief btw. Na een kennismaking van een half uur ontvang je een vaste prijs, zonder verrassingen achteraf. Ik werk het liefst met ondernemers die online willen investeren en denk graag mee over een eerste stap die past.",
+        answer: "Een Spark-pagina begint bij €1.800 en een volledige merksite bij €3.500, exclusief btw. Na een kennismaking van een half uur ontvang je een vaste prijs, zonder verrassingen achteraf. In het formulier stel je zelf je pakket samen en zie je direct wat elk onderdeel kost.",
       },
       {
         question: "Hoe lang duurt het?",

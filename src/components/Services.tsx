@@ -187,9 +187,11 @@ export function Services({ content, lang }: { content: Content; lang: Lang }) {
         // The picture slides against its frame: a slower layer, for depth. The
         // scale is what makes room, and the clamp keeps the edge inside it.
         if (entry.img) {
-          const x = clamp(-d * entry.vx * 0.6 * amp, -80, 80);
-          const y = clamp(-d * entry.vy * 0.3 * amp, -22, 22);
-          const scale = entry.breathe ? 1.1 + Math.min(1.5, Math.abs(d)) * 0.08 : 1.2;
+          // Real photographs, not abstract glass: just enough scale to cover the
+          // slide, so the laptop and phone are not cropped off the edges.
+          const x = clamp(-d * entry.vx * 0.6 * amp, -30, 30);
+          const y = clamp(-d * entry.vy * 0.3 * amp, -10, 10);
+          const scale = entry.breathe ? 1.06 + Math.min(1.5, Math.abs(d)) * 0.04 : 1.08;
           entry.img.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0) scale(${scale.toFixed(3)})`;
         }
 

@@ -12,18 +12,18 @@ import type { Focus } from "./DetailScrolly";
 const WHOLE: Focus = { x: 50, y: 50, zoom: 1 };
 
 export const FOCUS: Record<string, Focus[]> = {
-  // A page layout: the header, the cards, the lines of text.
-  websites: [WHOLE, { x: 32, y: 12, zoom: 1.7 }, { x: 52, y: 60, zoom: 1.55 }, { x: 42, y: 86, zoom: 1.65 }],
-  // A chat: the lit bubble, the assistant, the input.
-  aiChat: [WHOLE, { x: 46, y: 46, zoom: 1.6 }, { x: 16, y: 52, zoom: 1.9 }, { x: 52, y: 82, zoom: 1.6 }],
-  // A shop: the lifted product, the bag, the product beside it.
-  webshop: [WHOLE, { x: 50, y: 42, zoom: 1.55 }, { x: 70, y: 74, zoom: 1.7 }, { x: 20, y: 46, zoom: 1.6 }],
-  // Wired systems: the hub, a tile, another tile.
-  integrations: [WHOLE, { x: 50, y: 48, zoom: 1.7 }, { x: 20, y: 72, zoom: 1.8 }, { x: 86, y: 38, zoom: 1.7 }],
-  // An identity kit: the mark, the swatches, the plates.
-  branding: [WHOLE, { x: 50, y: 46, zoom: 1.7 }, { x: 24, y: 30, zoom: 1.8 }, { x: 78, y: 40, zoom: 1.6 }],
-  // Frames being made: the play frame, the particles, the grid.
-  aiContent: [WHOLE, { x: 42, y: 56, zoom: 1.7 }, { x: 80, y: 46, zoom: 1.8 }, { x: 30, y: 22, zoom: 1.6 }],
+  // Laptop and phone showing a site: the headline, the hero object, the phone.
+  websites: [WHOLE, { x: 31, y: 38, zoom: 1.8 }, { x: 62, y: 42, zoom: 1.7 }, { x: 88, y: 56, zoom: 2.3 }],
+  // Two phones, one with the overview and one with the assistant answering.
+  aiChat: [WHOLE, { x: 36, y: 49, zoom: 1.8 }, { x: 62, y: 44, zoom: 2 }, { x: 64, y: 66, zoom: 2 }],
+  // A shop: the product photo, the buy button, the product grid on the phone.
+  webshop: [WHOLE, { x: 39, y: 40, zoom: 1.9 }, { x: 59, y: 42, zoom: 2.2 }, { x: 85, y: 50, zoom: 2.4 }],
+  // A dashboard: the calendar, the invoices, the chart.
+  integrations: [WHOLE, { x: 28, y: 40, zoom: 2 }, { x: 50, y: 40, zoom: 2 }, { x: 71, y: 42, zoom: 2 }],
+  // An identity set: the mark on the bag, the colours, the typeface.
+  branding: [WHOLE, { x: 14, y: 47, zoom: 1.8 }, { x: 47, y: 77, zoom: 2.1 }, { x: 77, y: 81, zoom: 2.3 }],
+  // A campaign: the grid of photos, the story format, the video timeline.
+  aiContent: [WHOLE, { x: 36, y: 40, zoom: 1.7 }, { x: 85, y: 60, zoom: 2.1 }, { x: 86, y: 73, zoom: 2.6 }],
 };
 
 /*

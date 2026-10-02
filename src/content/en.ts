@@ -65,8 +65,8 @@ export const en: Content = {
         title: "A website that brings in enquiries",
         body: "A design that builds trust and a site that loads in a flash. And when you need more: a complete web app with accounts, a database and stored data, like Renofloww.",
         points: ["Bespoke design", "Accounts and database", "Lightning fast on every screen"],
-        image: "/images/service-websites.webp",
-        alt: "A web page as layered glass panels: a menu bar, a large headline and a row of cards, floating in depth",
+        image: "/images/service-websites-2.webp",
+        alt: "A laptop and phone showing this site's homepage: the headline 'Websites die klanten winnen' beside a glass bubble",
         placeholder: true,
       },
       {
@@ -74,8 +74,8 @@ export const en: Content = {
         title: "An assistant for your customers",
         body: "A smart assistant inside your own site that answers questions, books appointments and knows your information. Available day and night.",
         points: ["Knows your content", "Books appointments", "Works with your systems"],
-        image: "/images/service-ai-chat.webp",
-        alt: "Glass chat bubbles stacked above each other, one glowing blue, with a glass sphere beside them as the assistant",
+        image: "/images/service-ai-chat-2.webp",
+        alt: "Two phones showing Renofloww: on the left the overview of costs and quotes, on the right the assistant answering a question about the budget",
         placeholder: true,
       },
       {
@@ -83,8 +83,8 @@ export const en: Content = {
         title: "A shop that sells",
         body: "A store that feels like your brand. Payment, stock and shipping work the way you are used to, and the experience is entirely yours.",
         points: ["Designed around your products", "Cards and local payments", "Stock kept in sync"],
-        image: "/images/service-webshop.webp",
-        alt: "Three glass product cards holding bottles, the middle one lit, with a glass shopping bag in front",
+        image: "/images/service-webshop-2.webp",
+        alt: "A laptop with a product page of a ceramics shop, a phone with the product overview and a shipping box with a bowl in it",
         placeholder: true,
       },
       {
@@ -92,8 +92,8 @@ export const en: Content = {
         title: "Systems that work together",
         body: "Calendar, mail, stock, invoices and CRM, joined into one smooth workflow. Whatever repeats simply runs itself.",
         points: ["Everything connected", "Work that runs itself", "Reporting to steer by"],
-        image: "/images/service-integrations.webp",
-        alt: "Five glass app tiles for calendar, mail, stock, charts and settings, wired to a central disc by glowing cables",
+        image: "/images/service-integrations-2.webp",
+        alt: "A dashboard with a calendar, an invoice list and a chart joined by blue lines, and a phone with a success notification",
         placeholder: true,
       },
       {
@@ -101,8 +101,8 @@ export const en: Content = {
         title: "A brand with presence",
         body: "Logo, colour, typography and motion, brought together in guidelines your whole team works with.",
         points: ["Logo and identity", "Brand guidelines", "Animation and video"],
-        image: "/images/service-branding-motion.webp",
-        alt: "A glass medallion carrying a mark, surrounded by colour swatches and specimen plates, with a ribbon of liquid glass around it",
+        image: "/images/service-branding-motion-2.webp",
+        alt: "A brand identity on a table: a tote bag, letterhead, business cards and a coffee cup with the same mark, beside a colour card and a type card",
         placeholder: true,
       },
       {
@@ -110,8 +110,8 @@ export const en: Content = {
         title: "Imagery and video on demand",
         body: "Campaign imagery and video in your brand style: created in a flash with AI and finished by hand where it counts.",
         points: ["Stills and video", "Campaign sets", "Consistent with your brand"],
-        image: "/images/service-ai-content.webp",
-        alt: "Floating glass picture frames with a play button, one of them forming out of a cloud of blue particles",
+        image: "/images/service-ai-content-2.webp",
+        alt: "A screen with nine photos of the same mug and bowl in one consistent style, and a tablet with a vertical story and a video timeline",
         placeholder: true,
       },
     ],
@@ -953,6 +953,13 @@ export const en: Content = {
     websitesTitle: "Websites, one time",
     tiers: [
       {
+        name: "Spark",
+        price: 1800,
+        from: true,
+        body: "One strong page that shows what you do and how people reach you. The fastest way to be online professionally.",
+        points: ["One page", "Custom design", "Contact form", "Launch on your own domain"],
+      },
+      {
         name: "Start",
         price: 3500,
         body: "A refined brand site that is entirely yours.",
@@ -986,7 +993,6 @@ export const en: Content = {
     recommended: "Recommended",
     otherTitle: "Other services",
     other: [
-      { name: "One page (onepager)", price: "from €1,800" },
       { name: "Brand identity", price: "€2,500 to €6,000" },
       { name: "Webshop", price: "from €9,000" },
       { name: "AI assistant in an existing site", price: "from €3,500" },
@@ -1004,7 +1010,7 @@ export const en: Content = {
     items: [
       {
         question: "What does a website cost?",
-        answer: "My projects start at €3,500, excluding VAT. After a half-hour introduction you receive a fixed price, with no surprises afterwards. I work best with business owners who want to invest online, and I am happy to think along about a first step that fits.",
+        answer: "A Spark page starts at €1,800 and a full brand site at €3,500, excluding VAT. After a half-hour introduction you receive a fixed price, with no surprises afterwards. In the form you build your own package and see straight away what each part costs.",
       },
       {
         question: "How long does it take?",
