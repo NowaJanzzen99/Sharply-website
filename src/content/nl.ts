@@ -173,7 +173,7 @@ export const nl: Content = {
   },
   work: {
     title: "Werk",
-    lead: "Live Wedding Paintings: van eerste schets tot livegang.",
+    lead: "Twee projecten die online staan: een webapp met abonnement en een merksite.",
     body: "Meer projecten volgen.",
     conceptLabel: "Conceptproject",
     clientLabel: "Klantproject",
@@ -181,6 +181,17 @@ export const nl: Content = {
     ctaText: "Vertel me wat je voor ogen hebt, dan maak ik er iets bijzonders van.",
     ctaButton: "Start een project",
     items: [
+      {
+        key: "renofloww",
+        title: "Renofloww",
+        discipline: "Merk, website en webapp",
+        blurb:
+          "Een webapp die budget, planning, offertes en aannemers van een verbouwing op één plek zet, met een assistent die het project kent.",
+        image: "/images/project-renofloww.webp",
+        alt: "Laptop en telefoon met Renofloww: de kop 'Je verbouwing, eindelijk in één overzicht' boven een weekplanning van een badkamer",
+        real: true,
+        label: "Live product",
+      },
       {
         key: "liveweddingpaintings",
         title: "Live Wedding Paintings",

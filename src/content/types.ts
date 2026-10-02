@@ -93,6 +93,8 @@ export type WorkDetail = {
   note?: string;
   /** Real work only: the live address. */
   url?: string;
+  /** The address to show instead of `url`, when the final domain is not live yet. */
+  urlLabel?: string;
   /** Real work only: a screenshot of the whole page, scrolled inside a device. */
   page?: GalleryImage;
   /** Real work only: more pictures, shown in a gallery that moves with scroll. */
@@ -284,6 +286,8 @@ export type Content = {
       alt: string;
       /** True for real client work. Everything else is labelled as a concept. */
       real?: boolean;
+      /** Overrides both labels, for work that is neither a concept nor a client job. */
+      label?: string;
     }[];
   };
   process: {

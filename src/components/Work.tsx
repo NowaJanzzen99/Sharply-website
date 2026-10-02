@@ -78,7 +78,7 @@ function ProjectCard({
               item.real ? "border-accent/60 text-accent-bright" : "border-hairline text-text-faint"
             }`}
           >
-            {item.real ? clientLabel : label}
+            {item.label ?? (item.real ? clientLabel : label)}
           </span>
         </div>
         <p className="mt-3 max-w-[50ch] text-[16px] leading-[1.6] text-text-muted">
@@ -144,7 +144,9 @@ export function Work({ content, lang }: { content: Content; lang: Lang }) {
             </div>
           </Reveal>
 
-          {/* Further projects, two to a row, as they are added. */}
+          {/* The second project is pushed to the right, so a row of two does
+              not leave a hole where a third card is not yet. From three on,
+              they sit two to a row. */}
           {rest.map((item, index) => (
             <ProjectCard
               key={item.key}
@@ -154,7 +156,7 @@ export function Work({ content, lang }: { content: Content; lang: Lang }) {
               lang={lang}
               variant={index % 2 ? "diagonal" : "circle"}
               lag={index % 2 ? 0.12 : 0}
-              className="md:col-span-6"
+              className={rest.length === 1 ? "md:col-span-7 md:col-start-6" : "md:col-span-6"}
             />
           ))}
         </div>

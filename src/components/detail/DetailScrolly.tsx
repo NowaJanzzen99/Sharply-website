@@ -31,7 +31,7 @@ export type Focus = { x: number; y: number; zoom: number };
 
 type Visual =
   | { kind: "image"; src: string; alt: string; focus: Focus[] }
-  | { kind: "page"; page: GalleryImage; url: string; stops: number[] };
+  | { kind: "page"; page: GalleryImage; url: string; urlLabel?: string; stops: number[] };
 
 const clamp = (v: number, lo = 0, hi = 1) => Math.min(hi, Math.max(lo, v));
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
@@ -207,7 +207,7 @@ export function DetailScrolly({
           <span className="h-2.5 w-2.5 rounded-full bg-[oklch(0.4_0.03_264)]" />
         </span>
         <span className="mx-auto truncate rounded-[var(--radius-pill)] bg-canvas-deep px-4 py-1 font-mono text-[12px] text-text-faint">
-          {visual.url.replace(/^https?:\/\//, "")}
+          {(visual.urlLabel ?? visual.url).replace(/^https?:\/\//, "")}
         </span>
       </div>
     ) : null;

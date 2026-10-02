@@ -35,4 +35,8 @@ export const FOCUS: Record<string, Focus[]> = {
 export const PAGE_STOPS: Record<string, number[]> = {
   // The paintings in the hero, the format picker, the booking form.
   liveweddingpaintings: [0, 0.566, 0.848],
+  // Measured on the live site at 1200 wide in a 16:11 window (page 6914 tall,
+  // so 6089 of travel): the hero timeline, the four feature cards, the
+  // assistant, the price list.
+  renofloww: [0, 0.3345, 0.4762, 0.7226],
 };

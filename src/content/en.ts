@@ -173,7 +173,7 @@ export const en: Content = {
   },
   work: {
     title: "Work",
-    lead: "Live Wedding Paintings: from first sketch to launch.",
+    lead: "Two projects that are online: a subscription web app and a brand site.",
     body: "More projects to follow.",
     conceptLabel: "Concept project",
     clientLabel: "Client project",
@@ -181,6 +181,17 @@ export const en: Content = {
     ctaText: "Tell me what you have in mind and I will turn it into something special.",
     ctaButton: "Start a project",
     items: [
+      {
+        key: "renofloww",
+        title: "Renofloww",
+        discipline: "Brand, website and web app",
+        blurb:
+          "A web app that puts the budget, planning, quotes and contractors of a renovation in one place, with an assistant that knows the project.",
+        image: "/images/project-renofloww.webp",
+        alt: "Laptop and phone showing Renofloww: the headline 'Je verbouwing, eindelijk in één overzicht' above a week-by-week bathroom schedule",
+        real: true,
+        label: "Live product",
+      },
       {
         key: "liveweddingpaintings",
         title: "Live Wedding Paintings",

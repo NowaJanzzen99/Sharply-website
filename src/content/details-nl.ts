@@ -266,6 +266,42 @@ export const detailsNl: Details = {
   },
 
   work: {
+    renofloww: {
+      slug: "renofloww",
+      tagline: "Een verbouwing met tientallen losse eindjes, teruggebracht tot één overzicht.",
+      intro:
+        "Budget, planning, offertes, aannemers, taken en foto's van een verbouwing, per ruimte bij elkaar. Met een assistent die het project kent.",
+      url: "https://renofloww.vercel.app/",
+      urlLabel: "renofloww.nl",
+      facts: [
+        { label: "Soort", value: "Webapp met abonnement" },
+        { label: "Wat ik deed", value: "Van ontwerp tot livegang" },
+        { label: "Gebouwd met", value: "Next.js, Supabase en AI" },
+      ],
+      sections: [
+        { title: "De week waar je in zit", body: "Het startscherm toont de lopende week: welke klus draait, wat er al af is en hoeveel van het budget er op is." },
+        { title: "Vier dingen, één app", body: "Budget per ruimte, planning per ruimte, offertes naast elkaar en taken met een datum. Precies wat je elke week nodig hebt." },
+        { title: "Een assistent die het project kent", body: "De assistent leest mee met budget, taken, offertes en aannemers, en antwoordt met de bedragen uit het eigen project." },
+        { title: "Abonnement en proefperiode", body: "Accounts, betalingen en veertien dagen proberen zitten in dezelfde app, met een gratis laag waarin je data blijft staan." },
+      ],
+      scope: [
+        "Ontwerp en huisstijl",
+        "Website die het product uitlegt",
+        "Webapp met accounts en projecten",
+        "Budget, planning, offertes en taken per ruimte",
+        "Assistent die de projectgegevens leest",
+        "Abonnement, proefperiode en gratis laag",
+        "Werkt op de telefoon, te installeren als app",
+      ],
+      page: { src: "/images/reno-page.webp", alt: "De volledige homepage van Renofloww, van boven naar beneden", width: 1200, height: 6914 },
+      gallery: [
+        { src: "/images/reno-phones.webp", alt: "Twee telefoons met Renofloww: de assistent in gesprek en het overzicht van kosten, offertes en planning", width: 1800, height: 1344 },
+        { src: "/images/reno-functies.webp", alt: "De functiekaarten van Renofloww: het budget met nog te besteden bedrag en de planning per ruimte", width: 1440, height: 900 },
+        { src: "/images/reno-ai.webp", alt: "De assistent van Renofloww beantwoordt vragen over uitgaven en offertes van het eigen project", width: 1440, height: 900 },
+        { src: "/images/reno-prijzen.webp", alt: "De prijzenpagina van Renofloww met het Pro-abonnement naast de gratis versie", width: 1440, height: 900 },
+      ],
+    },
+
     liveweddingpaintings: {
       slug: "live-wedding-paintings",
       tagline: "Een site die voelt als een galerie, en die bruiloften boekt.",

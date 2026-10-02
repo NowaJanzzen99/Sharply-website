@@ -265,6 +265,42 @@ export const detailsEn: Details = {
   },
 
   work: {
+    renofloww: {
+      slug: "renofloww",
+      tagline: "A renovation with dozens of loose ends, brought back to a single overview.",
+      intro:
+        "Budget, planning, quotes, contractors, tasks and photos of a renovation, together per room. With an assistant that knows the project.",
+      url: "https://renofloww.vercel.app/",
+      urlLabel: "renofloww.nl",
+      facts: [
+        { label: "Type", value: "Subscription web app" },
+        { label: "What I did", value: "From design to launch" },
+        { label: "Built with", value: "Next.js, Supabase and AI" },
+      ],
+      sections: [
+        { title: "The week you are in", body: "The opening screen shows the current week: which job is running, what is already done and how much of the budget has gone." },
+        { title: "Four things, one app", body: "Budget per room, planning per room, quotes side by side and tasks with a date. Exactly what you need every week." },
+        { title: "An assistant that knows the project", body: "The assistant reads the budget, tasks, quotes and contractors, and answers with the figures from your own project." },
+        { title: "Subscription and trial", body: "Accounts, payments and a fourteen day trial live in the same app, with a free tier that keeps your data in place." },
+      ],
+      scope: [
+        "Design and visual identity",
+        "Website that explains the product",
+        "Web app with accounts and projects",
+        "Budget, planning, quotes and tasks per room",
+        "Assistant that reads the project data",
+        "Subscription, trial and free tier",
+        "Works on a phone, installable as an app",
+      ],
+      page: { src: "/images/reno-page.webp", alt: "The full Renofloww homepage, top to bottom", width: 1200, height: 6914 },
+      gallery: [
+        { src: "/images/reno-phones.webp", alt: "Two phones showing Renofloww: the assistant in conversation and the overview of costs, quotes and planning", width: 1800, height: 1344 },
+        { src: "/images/reno-functies.webp", alt: "Renofloww feature cards: the budget with the amount left to spend and the planning per room", width: 1440, height: 900 },
+        { src: "/images/reno-ai.webp", alt: "The Renofloww assistant answering questions about spending and quotes from the project itself", width: 1440, height: 900 },
+        { src: "/images/reno-prijzen.webp", alt: "The Renofloww pricing page with the Pro subscription beside the free version", width: 1440, height: 900 },
+      ],
+    },
+
     liveweddingpaintings: {
       slug: "live-wedding-paintings",
       tagline: "A site that feels like a gallery, and books weddings.",

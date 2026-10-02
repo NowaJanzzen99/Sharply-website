@@ -138,7 +138,7 @@ function resolve(params: Params): Resolved | null {
     alt: project.alt,
     detail: details.work[key],
     discipline: project.discipline,
-    badge: project.real ? content.work.clientLabel : content.work.conceptLabel,
+    badge: project.label ?? (project.real ? content.work.clientLabel : content.work.conceptLabel),
   };
 }
 
@@ -358,6 +358,7 @@ export default async function DetailPage({ params }: { params: Promise<Params> }
                   kind: "page",
                   page: resolved.detail.page,
                   url: resolved.detail.url,
+                  urlLabel: resolved.detail.urlLabel,
                   stops: PAGE_STOPS[resolved.key] ?? detail.sections.map((_, i, all) => i / Math.max(1, all.length - 1)),
                 }
               : {
