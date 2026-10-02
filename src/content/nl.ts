@@ -293,7 +293,7 @@ export const nl: Content = {
               { id: "branding", label: "Een nieuw merk of huisstijl" },
               { id: "motion", label: "Motion en video" },
               { id: "ai-content", label: "Beeld en content met AI" },
-              { id: "other", label: "Iets anders" },
+              { id: "other", label: "Anders" },
             ],
           },
         ],
@@ -908,7 +908,7 @@ export const nl: Content = {
       },
       {
         need: "other",
-        title: "Iets anders",
+        title: "Anders",
         fields: [
           {
             id: "other.what",

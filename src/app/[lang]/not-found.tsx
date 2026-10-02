@@ -12,7 +12,7 @@ export default function NotFound() {
   const { notFound } = getDetails("nl").copy;
 
   return (
-    <main id="main" className="relative flex min-h-[80vh] items-center py-32">
+    <main id="main" className="relative flex min-h-[100svh] items-center py-32">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[420px] bg-[radial-gradient(70%_100%_at_50%_0%,oklch(0.42_0.14_259/0.3)_0%,transparent_70%)]"

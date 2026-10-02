@@ -207,9 +207,13 @@ export function estimate(values: Values, label: Labeller): Estimate | null {
 }
 
 export function formatEuro(amount: number, lang: string): string {
+  // Dutch puts a non-breaking space after the euro sign (" 3.500"); the rest
+  // of the site writes it tight, so this does too.
   return new Intl.NumberFormat(lang === "en" ? "en-GB" : "nl-NL", {
     style: "currency",
     currency: "EUR",
     maximumFractionDigits: 0,
-  }).format(amount);
+  })
+    .format(amount)
+    .replace(/\u00a0/g, "");
 }

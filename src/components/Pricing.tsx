@@ -75,7 +75,7 @@ export function Pricing({ content, lang }: { content: Content; lang: Lang }) {
                   <div className="md:col-span-3">
                     <p className="font-display text-[clamp(1.75rem,3.4vw,2.6rem)] font-semibold leading-none tracking-[-0.035em] text-text">
                       {tier.from ? (
-                        <span className="mr-2 text-[0.42em] font-medium tracking-normal text-text-faint">
+                        <span className="mr-2 text-[max(13px,0.42em)] font-medium tracking-normal text-text-faint">
                           {copy.from}
                         </span>
                       ) : null}
@@ -147,7 +147,7 @@ export function Pricing({ content, lang }: { content: Content; lang: Lang }) {
                 </p>
                 <p className="mt-3 font-display text-[clamp(1.6rem,2.8vw,2.2rem)] font-semibold leading-none tracking-[-0.03em] text-text">
                   {formatEuro(plan.price, lang)}
-                  <span className="ml-2 text-[0.4em] font-medium tracking-normal text-text-faint">
+                  <span className="ml-2 text-[max(13px,0.4em)] font-medium tracking-normal text-text-faint">
                     {copy.perMonth}
                   </span>
                 </p>

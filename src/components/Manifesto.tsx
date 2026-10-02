@@ -16,11 +16,9 @@ export function Manifesto({ content }: { content: Content }) {
   return (
     <section id="studio" className="relative scroll-mt-24 pt-28 md:pt-40">
       <div className="container-page">
-        <div className="max-w-[22ch]">
-          <h2 className="font-display text-[clamp(2rem,5.5vw,3.5rem)] font-semibold text-text">
-            <RevealLines lines={[content.manifesto.title]} onView />
-          </h2>
-        </div>
+        <h2 className="max-w-[18ch] font-display text-[clamp(2rem,5.5vw,3.5rem)] font-semibold text-text">
+          <RevealLines lines={[content.manifesto.title]} onView />
+        </h2>
         <p className="mt-6 max-w-[34ch] font-display text-[clamp(1.25rem,2.6vw,1.75rem)] font-medium leading-[1.3] tracking-[-0.02em] text-text-muted">
           <RevealLines lines={content.manifesto.lead.split(/(?<=\.)\s+/)} onView />
         </p>
