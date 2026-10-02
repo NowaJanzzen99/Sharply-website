@@ -182,6 +182,16 @@ export const en: Content = {
     ctaButton: "Start a project",
     items: [
       {
+        key: "liveweddingpaintings",
+        title: "Live Wedding Paintings",
+        discipline: "Brand, website and bookings",
+        blurb:
+          "The website of Sara van Heukelom, who paints weddings live. Brand, design, engineering and booking form all come from me.",
+        image: "/images/project-liveweddingpaintings.webp",
+        alt: "Laptop and phone showing the Live Wedding Paintings website: paintings in gold frames on a warm, light background",
+        real: true,
+      },
+      {
         key: "renofloww",
         title: "Renofloww",
         discipline: "Brand, website and web app",
@@ -191,16 +201,6 @@ export const en: Content = {
         alt: "Laptop and phone showing Renofloww: the headline 'Je verbouwing, eindelijk in één overzicht' above a week-by-week bathroom schedule",
         real: true,
         label: "Live product",
-      },
-      {
-        key: "liveweddingpaintings",
-        title: "Live Wedding Paintings",
-        discipline: "Brand, website and bookings",
-        blurb:
-          "The website of Sara van Heukelom, who paints weddings live. Brand, design, engineering and booking form all come from me.",
-        image: "/images/project-liveweddingpaintings.webp",
-        alt: "Laptop and phone showing the Live Wedding Paintings website: paintings in gold frames on a warm, light background",
-        real: true,
       },
     ],
   },

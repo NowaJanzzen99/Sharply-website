@@ -122,7 +122,24 @@ export function Work({ content, lang }: { content: Content; lang: Lang }) {
             className="md:col-span-8"
           />
 
-          <Reveal className="md:col-span-4 md:self-end" delay={0.1}>
+          {/* One project under the other, the same width. From three on,
+              they sit two to a row. */}
+          {rest.map((item, index) => (
+            <ProjectCard
+              key={item.key}
+              item={item}
+              label={label}
+              clientLabel={clientLabel}
+              lang={lang}
+              variant={index % 2 ? "diagonal" : "circle"}
+              lag={index % 2 ? 0.12 : 0}
+              className={rest.length === 1 ? "md:col-span-8" : "md:col-span-6"}
+            />
+          ))}
+
+          {/* Beside the first project on desktop, after both on a phone, so
+              no panel ever sits between the two projects. */}
+          <Reveal className="md:col-span-4 md:col-start-9 md:row-start-1 md:self-end" delay={0.1}>
             <div data-scene="panel" data-scene-variant="up" data-scene-lag={0.1} className="glass rounded-[var(--radius-lg)] p-7">
               <h3 className="font-display text-[24px] font-medium text-text">
                 {content.work.ctaTitle}
@@ -144,21 +161,6 @@ export function Work({ content, lang }: { content: Content; lang: Lang }) {
             </div>
           </Reveal>
 
-          {/* The second project is pushed to the right, so a row of two does
-              not leave a hole where a third card is not yet. From three on,
-              they sit two to a row. */}
-          {rest.map((item, index) => (
-            <ProjectCard
-              key={item.key}
-              item={item}
-              label={label}
-              clientLabel={clientLabel}
-              lang={lang}
-              variant={index % 2 ? "diagonal" : "circle"}
-              lag={index % 2 ? 0.12 : 0}
-              className={rest.length === 1 ? "md:col-span-7 md:col-start-6" : "md:col-span-6"}
-            />
-          ))}
         </div>
       </div>
     </section>

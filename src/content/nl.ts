@@ -182,6 +182,16 @@ export const nl: Content = {
     ctaButton: "Start een project",
     items: [
       {
+        key: "liveweddingpaintings",
+        title: "Live Wedding Paintings",
+        discipline: "Merk, website en boekingen",
+        blurb:
+          "De website van Sara van Heukelom, die live schildert op bruiloften. Merk, ontwerp, techniek en boekingsformulier komen van mij.",
+        image: "/images/project-liveweddingpaintings.webp",
+        alt: "Laptop en telefoon met de website van Live Wedding Paintings: schilderijen in gouden lijsten op een warme, lichte achtergrond",
+        real: true,
+      },
+      {
         key: "renofloww",
         title: "Renofloww",
         discipline: "Merk, website en webapp",
@@ -191,16 +201,6 @@ export const nl: Content = {
         alt: "Laptop en telefoon met Renofloww: de kop 'Je verbouwing, eindelijk in één overzicht' boven een weekplanning van een badkamer",
         real: true,
         label: "Live product",
-      },
-      {
-        key: "liveweddingpaintings",
-        title: "Live Wedding Paintings",
-        discipline: "Merk, website en boekingen",
-        blurb:
-          "De website van Sara van Heukelom, die live schildert op bruiloften. Merk, ontwerp, techniek en boekingsformulier komen van mij.",
-        image: "/images/project-liveweddingpaintings.webp",
-        alt: "Laptop en telefoon met de website van Live Wedding Paintings: schilderijen in gouden lijsten op een warme, lichte achtergrond",
-        real: true,
       },
     ],
   },
