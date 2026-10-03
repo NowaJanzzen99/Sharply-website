@@ -302,6 +302,40 @@ export const detailsEn: Details = {
       ],
     },
 
+    daalwerk: {
+      slug: "daalwerk",
+      tagline: "A house you watch change as you scroll, from shell to floor plan.",
+      intro:
+        "A studio site for interior and architecture in Limburg, with a maquette that moves with your scroll and an assistant that gives a first direction for material and colour. The name, logo and content are mine.",
+      url: "https://daalwerk.vercel.app/nl",
+      facts: [
+        { label: "Type", value: "Own project, fictional studio" },
+        { label: "What I did", value: "Brand, design and build" },
+        { label: "Languages", value: "Dutch and English" },
+      ],
+      sections: [
+        { title: "A house you watch change", body: "The site opens with a maquette of a courtyard farm. Scroll, and the roof comes off, the rooms appear and the house gets furnished." },
+        { title: "Room by room", body: "Entrance, living room, kitchen: each room gets its own moment with the materials beside it, from bluestone and oak to linen and green stained wood." },
+        { title: "From floor plan to result", body: "The furniture sits to scale in the floor plan. Then the picture moves on to the same living room, a year later, in real light." },
+        { title: "Describe your space", body: "A visitor picks a room, a kind of house, the light and the feeling, and gets a first direction for colour and material. A request for a conversation follows." },
+      ],
+      scope: [
+        "Name, logo and visual identity",
+        "Scrolling maquette as the opening of the site",
+        "Project pages, services and a materials library",
+        "Assistant for a first direction in material and colour",
+        "Request for a first conversation",
+        "Dutch and English",
+      ],
+      page: { src: "/images/daal-page.webp", alt: "The opening of Daalwerk: a maquette furnished step by step, followed by the result, the materials and the assistant", width: 1200, height: 7425 },
+      gallery: [
+        { src: "/images/daal-woonkamer.webp", alt: "The living room in the Daalwerk maquette, with a sofa, round table and green wardrobe", width: 1440, height: 900 },
+        { src: "/images/daal-zowerdhet.webp", alt: "The same living room as a photograph, a year later: loam plaster, linen and oak in afternoon light", width: 1440, height: 900 },
+        { src: "/images/daal-materialen.webp", alt: "The Daalwerk materials library: marl, bluestone, loam plaster, lime paint and oak", width: 1440, height: 900 },
+        { src: "/images/daal-assistent.webp", alt: "The Daalwerk assistant giving a direction for a living room in a farmhouse: loam plaster and smoked oak", width: 1440, height: 900 },
+      ],
+    },
+
     liveweddingpaintings: {
       slug: "live-wedding-paintings",
       tagline: "A site that feels like a gallery, and books weddings.",

@@ -303,6 +303,40 @@ export const detailsNl: Details = {
       ],
     },
 
+    daalwerk: {
+      slug: "daalwerk",
+      tagline: "Een huis dat je scrollend ziet veranderen, van schil tot plattegrond.",
+      intro:
+        "Een studiosite voor interieur en architectuur in Limburg, met een maquette die meebeweegt met je scroll en een assistent die een eerste richting voor materiaal en kleur geeft. Naam, logo en inhoud zijn van mij.",
+      url: "https://daalwerk.vercel.app/nl",
+      facts: [
+        { label: "Soort", value: "Eigen project, fictieve studio" },
+        { label: "Wat ik deed", value: "Merk, ontwerp en bouw" },
+        { label: "Talen", value: "Nederlands en Engels" },
+      ],
+      sections: [
+        { title: "Een huis dat je ziet veranderen", body: "De site opent met een maquette van een carréboerderij. Scroll, en het dak gaat eraf, de kamers worden zichtbaar en het huis wordt ingericht." },
+        { title: "Kamer voor kamer", body: "Entree, woonkamer, keuken: elke kamer krijgt een eigen moment met de materialen erbij, van hardsteen en eiken tot linnen en groen gebeitst hout." },
+        { title: "Van plattegrond tot resultaat", body: "Het meubilair staat op schaal in de plattegrond. Daarna schuift het beeld door naar dezelfde woonkamer, een jaar later, in echt licht." },
+        { title: "Beschrijf je ruimte", body: "Een bezoeker kiest een ruimte, een soort huis, het licht en het gevoel, en krijgt een eerste richting voor kleur en materiaal. Daarna volgt een aanvraag voor een gesprek." },
+      ],
+      scope: [
+        "Naam, logo en huisstijl",
+        "Scrollende maquette als opening van de site",
+        "Projectpagina's, diensten en materiaalbibliotheek",
+        "Assistent voor een eerste richting in materiaal en kleur",
+        "Aanvraag voor een eerste gesprek",
+        "Nederlands en Engels",
+      ],
+      page: { src: "/images/daal-page.webp", alt: "De opening van Daalwerk: een maquette die stap voor stap wordt ingericht, gevolgd door het resultaat, de materialen en de assistent", width: 1200, height: 7425 },
+      gallery: [
+        { src: "/images/daal-woonkamer.webp", alt: "De woonkamer in de maquette van Daalwerk, met bank, ronde tafel en groene kast", width: 1440, height: 900 },
+        { src: "/images/daal-zowerdhet.webp", alt: "Dezelfde woonkamer als foto, een jaar later: leemstuc, linnen en eiken in het middaglicht", width: 1440, height: 900 },
+        { src: "/images/daal-materialen.webp", alt: "De materiaalbibliotheek van Daalwerk: mergel, hardsteen, leemstuc, kalkverf en eiken", width: 1440, height: 900 },
+        { src: "/images/daal-assistent.webp", alt: "De assistent van Daalwerk geeft een richting voor een woonkamer in een boerderij: leemstuc en gerookt eiken", width: 1440, height: 900 },
+      ],
+    },
+
     liveweddingpaintings: {
       slug: "live-wedding-paintings",
       tagline: "Een site die voelt als een galerie, en die bruiloften boekt.",

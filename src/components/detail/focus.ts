@@ -39,4 +39,10 @@ export const PAGE_STOPS: Record<string, number[]> = {
   // so 6089 of travel): the hero timeline, the four feature cards, the
   // assistant, the price list.
   renofloww: [0, 0.3345, 0.4762, 0.7226],
+  // Daalwerk is a scene, not a long page, so the picture is a strip of nine
+  // screens of it, one per 16:11 window, in the order you meet them: hero,
+  // shell, entrance, living room, kitchen, floor plan, the result, projects,
+  // the assistant. The chapters stop on the hero, the living room, the result
+  // and the assistant.
+  daalwerk: [0, 0.375, 0.75, 1],
 };

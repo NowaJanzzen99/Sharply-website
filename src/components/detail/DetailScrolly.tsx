@@ -108,9 +108,10 @@ export function DetailScrolly({
         // The page scrolls inside its window: `stops` are fractions of the
         // page, one per chapter, pointing at the part each chapter is about.
         const frac = at(visual.stops, position);
-        const box = target.parentElement?.getBoundingClientRect();
-        const pageHeight = target.getBoundingClientRect().height;
-        const room = Math.max(0, pageHeight - (box?.height ?? 0));
+        // Layout sizes, not bounding rects: the frame is turned in perspective,
+        // and a rect measured through that turn comes out a few percent too
+        // big, which sends the last stops past the end of the picture.
+        const room = Math.max(0, target.offsetHeight - (target.parentElement?.clientHeight ?? 0));
         target.style.transform = `translate3d(0, ${(-frac * room).toFixed(1)}px, 0)`;
       }
     };

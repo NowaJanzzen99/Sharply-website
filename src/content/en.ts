@@ -175,7 +175,7 @@ export const en: Content = {
   },
   work: {
     title: "Work",
-    lead: "Two projects that are online: a brand site that brings in bookings and a complete web app with accounts and a database.",
+    lead: "Three projects that are online: a brand site that brings in bookings, a web app with accounts and a database, and a studio site with a scrolling maquette.",
     body: "More projects to follow.",
     conceptLabel: "Concept project",
     clientLabel: "Client project",
@@ -203,6 +203,17 @@ export const en: Content = {
         alt: "Laptop and phone showing Renofloww: the headline 'Je verbouwing, eindelijk in één overzicht' above a week-by-week bathroom schedule",
         real: true,
         label: "Live product",
+      },
+      {
+        key: "daalwerk",
+        title: "Daalwerk",
+        discipline: "Brand, website and assistant",
+        blurb:
+          "The site of an interior and architecture studio in Limburg. A house you watch change as you scroll, from shell to floor plan, and an assistant that gives a first direction for material and colour.",
+        image: "/images/project-daalwerk.webp",
+        alt: "Laptop and phone showing Daalwerk: an isometric maquette of a living room with a sofa, round table and green wardrobe",
+        real: true,
+        label: "Own project",
       },
     ],
   },

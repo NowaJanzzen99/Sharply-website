@@ -70,6 +70,11 @@ try {
   await send("Page.addScriptToEvaluateOnNewDocument", {
     source: "try{sessionStorage.setItem('sharply:intro-seen','1')}catch(e){}",
   });
+  // Headless Chrome inherits the Mac's "reduce motion" setting, which turns
+  // scroll scenes into their static fallback. Pass NOMOTION=0 to see the real thing.
+  if (process.env.MOTION === "1") {
+    await send("Emulation.setEmulatedMedia", { features: [{ name: "prefers-reduced-motion", value: "no-preference" }] });
+  }
   await send("Page.navigate", { url });
   await sleep(5000);
   let n = 0;

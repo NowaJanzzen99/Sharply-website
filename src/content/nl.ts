@@ -175,7 +175,7 @@ export const nl: Content = {
   },
   work: {
     title: "Werk",
-    lead: "Twee projecten die online staan: een merksite die boekingen binnenhaalt en een complete webapp met accounts en database.",
+    lead: "Drie projecten die online staan: een merksite die boekingen binnenhaalt, een webapp met accounts en database, en een studiosite met een scrollende maquette.",
     body: "Meer projecten volgen.",
     conceptLabel: "Conceptproject",
     clientLabel: "Klantproject",
@@ -203,6 +203,17 @@ export const nl: Content = {
         alt: "Laptop en telefoon met Renofloww: de kop 'Je verbouwing, eindelijk in één overzicht' boven een weekplanning van een badkamer",
         real: true,
         label: "Live product",
+      },
+      {
+        key: "daalwerk",
+        title: "Daalwerk",
+        discipline: "Merk, website en assistent",
+        blurb:
+          "De site van een interieur- en architectenstudio in Limburg. Een huis dat je scrollend ziet veranderen, van schil tot plattegrond, en een assistent die een eerste richting voor materiaal en kleur geeft.",
+        image: "/images/project-daalwerk.webp",
+        alt: "Laptop en telefoon met Daalwerk: een isometrische maquette van een woonkamer met bank, ronde tafel en groene kast",
+        real: true,
+        label: "Eigen project",
       },
     ],
   },
