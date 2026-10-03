@@ -37,6 +37,17 @@ function ProjectCard({
       data-scene-lag={lag}
       className={`group relative ${className}`}
     >
+      {/* The whole card is a target. This is a second, silent link laid over it:
+          the one inside the heading cannot stretch, because the heading moves
+          with the scrub, and a moving parent is what an absolute child is
+          measured against. Hidden from screen readers and the tab order so
+          the heading link stays the only one they meet. */}
+      <Link
+        href={workHref(lang, item.key)}
+        aria-hidden="true"
+        tabIndex={-1}
+        className="absolute inset-0 z-10 cursor-pointer rounded-[var(--radius-lg)]"
+      />
       <RevealImage
         variant={variant}
         className="relative overflow-hidden rounded-[var(--radius-lg)] border border-hairline"
@@ -57,12 +68,7 @@ function ProjectCard({
         <div className="mt-5 flex items-start justify-between gap-6">
           <div>
             <h3 className="font-display text-[22px] font-medium text-text md:text-[26px]">
-              {/* Stretched over the card, so the whole thing is a target and
-                  the link is still named after the project. */}
-              <Link
-                href={workHref(lang, item.key)}
-                className="inline-flex items-start gap-2 after:absolute after:inset-0 after:content-['']"
-              >
+              <Link href={workHref(lang, item.key)} className="inline-flex items-start gap-2">
                 {item.title}
                 <ArrowUpRight
                   size={18}

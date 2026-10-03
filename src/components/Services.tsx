@@ -61,6 +61,17 @@ function Card({ service, lang }: { service: Service; lang: Lang }) {
       data-vy={signature.vy}
       className="group relative w-[min(62vw,920px)] shrink-0 origin-left will-change-transform"
     >
+      {/* The whole card is a target. This is a second, silent link laid over it:
+          the one inside the heading cannot stretch, because the heading moves
+          with the scrub, and a moving parent is what an absolute child is
+          measured against. Hidden from screen readers and the tab order so
+          the heading link stays the only one they meet. */}
+      <Link
+        href={serviceHref(lang, service.key)}
+        aria-hidden="true"
+        tabIndex={-1}
+        className="absolute inset-0 z-10 cursor-pointer rounded-[var(--radius-lg)]"
+      />
       <div className="frame overflow-hidden rounded-[var(--radius-lg)] p-2">
         <div className="relative h-[min(46vh,520px)] min-h-[260px] overflow-hidden rounded-[calc(var(--radius-lg)-6px)]">
           <Image
@@ -85,11 +96,9 @@ function Card({ service, lang }: { service: Service; lang: Lang }) {
           data-card-el
           className="col-span-5 font-display text-[clamp(1.75rem,2.8vw,2.5rem)] font-medium text-text"
         >
-          {/* The link stretches over the whole card, so the card is clickable
-              but a screen reader still reads one link named after the service. */}
           <Link
             href={serviceHref(lang, service.key)}
-            className="inline-flex items-start gap-2.5 after:absolute after:inset-0 after:content-['']"
+            className="inline-flex items-start gap-2.5"
           >
             {service.title}
             <ArrowUpRight
