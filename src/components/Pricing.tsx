@@ -20,8 +20,9 @@ import type { Content, Lang } from "@/content";
   The figures are round. Prices ending in 99 read as a discount; on custom work
   a round figure reads as confidence.
 
-  The monthly plans are the second ladder, smaller, because they answer the
-  question that comes after: what happens once it is live.
+  Three tiers, not four: anything bigger than Studio is one line underneath,
+  and the monthly care is one price with the bigger plans as a sentence. Every
+  extra option on a price list is another reason to put off the decision.
 */
 export function Pricing({ content, lang }: { content: Content; lang: Lang }) {
   const copy = content.pricing;
@@ -110,53 +111,34 @@ export function Pricing({ content, lang }: { content: Content; lang: Lang }) {
           </ol>
         </div>
 
-        {/* After launch */}
-        <div className="mt-20 md:mt-28">
-          <div className="max-w-[58ch]">
-            <h3 className="font-display text-[clamp(1.5rem,3vw,2.2rem)] font-medium text-text">
+        {/* Bigger than the top tier: one line, not a fourth package. */}
+        <div className="mt-6 flex flex-col gap-1 border-b border-hairline px-6 pb-8 md:flex-row md:items-baseline md:gap-6 md:px-8">
+          <p className="shrink-0 font-display text-[18px] font-medium text-text">{copy.beyondTitle}</p>
+          <p className="text-[16px] leading-[1.55] text-text-muted">{copy.beyondText}</p>
+        </div>
+
+        {/* After launch: one price, the bigger plans as a line under it. */}
+        <div className="mt-20 grid gap-8 md:mt-28 md:grid-cols-12 md:gap-x-10">
+          <div className="md:col-span-4">
+            <h3 className="font-display text-[clamp(1.4rem,2.6vw,1.9rem)] font-medium text-text">
               <RevealLines lines={[copy.careTitle]} onView />
             </h3>
+          </div>
+          <div className="md:col-span-8">
             <Reveal delay={0.06}>
-              <p className="mt-4 text-[17px] leading-[1.6] text-text-muted">{copy.careLead}</p>
+              <p className="font-display text-[clamp(1.6rem,2.8vw,2.2rem)] font-semibold leading-none tracking-[-0.03em] text-text">
+                <span className="mr-2 text-[max(13px,0.42em)] font-medium tracking-normal text-text-faint">
+                  {copy.from}
+                </span>
+                {formatEuro(copy.plans[0].price, lang)}
+                <span className="ml-2 text-[max(13px,0.4em)] font-medium tracking-normal text-text-faint">
+                  {copy.perMonth}
+                </span>
+              </p>
+              <p className="mt-4 max-w-[58ch] text-[16px] leading-[1.6] text-text-muted">{copy.careLead}</p>
+              <p className="mt-2 max-w-[58ch] text-[14px] leading-[1.6] text-text-faint">{copy.careMore}</p>
             </Reveal>
           </div>
-
-          <ul className="mt-10 grid border-t border-hairline md:grid-cols-3">
-            {copy.plans.map((plan, index) => (
-              <li
-                key={plan.name}
-                data-scene="panel"
-                data-scene-variant={index === 0 ? "left" : index === 1 ? "up" : "right"}
-                className={`relative border-b border-hairline px-1 py-7 md:border-b-0 md:px-8 md:py-9 ${
-                  index > 0 ? "md:border-l" : "md:pl-0"
-                }`}
-              >
-                {plan.recommended ? (
-                  <span
-                    aria-hidden="true"
-                    className="absolute inset-x-0 -top-px block h-[2px] bg-accent md:inset-x-8"
-                  />
-                ) : null}
-                <p className="flex items-baseline gap-3">
-                  <span className="font-display text-[20px] font-medium text-text">
-                    {plan.name}
-                  </span>
-                  {plan.recommended ? (
-                    <span className="text-[12px] text-accent-bright">{copy.recommended}</span>
-                  ) : null}
-                </p>
-                <p className="mt-3 font-display text-[clamp(1.6rem,2.8vw,2.2rem)] font-semibold leading-none tracking-[-0.03em] text-text">
-                  {formatEuro(plan.price, lang)}
-                  <span className="ml-2 text-[max(13px,0.4em)] font-medium tracking-normal text-text-faint">
-                    {copy.perMonth}
-                  </span>
-                </p>
-                <p className="mt-4 max-w-[34ch] text-[15px] leading-[1.55] text-text-muted">
-                  {plan.body}
-                </p>
-              </li>
-            ))}
-          </ul>
         </div>
 
         {/* Everything else */}

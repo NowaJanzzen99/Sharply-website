@@ -5,6 +5,7 @@ import { Manifesto } from "@/components/Manifesto";
 import { Services } from "@/components/Services";
 import { TalkDemo } from "@/components/TalkDemo";
 import { Work } from "@/components/Work";
+import { Testimonial } from "@/components/Testimonial";
 import { Process } from "@/components/Process";
 import { Pricing } from "@/components/Pricing";
 import { DetailQuestions } from "@/components/detail/DetailQuestions";
@@ -39,11 +40,13 @@ export default async function HomePage({
       />
       <Intro />
       <main id="main">
-        <Hero content={content} />
+        <Hero content={content} lang={lang} />
+        {/* The work first: proof before the story about who made it. */}
+        <Work content={content} lang={lang} />
+        {content.testimonial ? <Testimonial testimonial={content.testimonial} /> : null}
         <Manifesto content={content} />
         <Services content={content} lang={lang} />
         <TalkDemo content={content} />
-        <Work content={content} lang={lang} />
         <Process content={content} />
         <Pricing content={content} lang={lang} />
         <DetailQuestions id="vragen" title={content.faq.title} items={content.faq.items} />

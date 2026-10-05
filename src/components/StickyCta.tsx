@@ -17,6 +17,9 @@ import type { Lang } from "@/content";
   past. And once the form itself is on screen there is nothing left to point
   at, so it sinks away again. Everywhere else it stays.
 
+  Phones only. On a wide screen the navigation bar is always in view and
+  carries the same button, and two of them on one screen read as pushy.
+
   It moves on transform and opacity only, and sits above the device's own
   home indicator on phones (env(safe-area-inset-bottom)).
 */
@@ -55,7 +58,7 @@ export function StickyCta({ lang, label }: { lang: Lang; label: string }) {
 
   return (
     <div
-      className="pointer-events-none fixed inset-x-0 flex justify-center px-4"
+      className="pointer-events-none fixed inset-x-0 flex justify-center px-4 md:hidden"
       style={{
         bottom: "max(18px, env(safe-area-inset-bottom))",
         zIndex: "var(--z-sticky)",

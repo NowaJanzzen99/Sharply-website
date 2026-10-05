@@ -337,6 +337,41 @@ export const detailsNl: Details = {
       ],
     },
 
+    flowdezk: {
+      slug: "flowdezk",
+      tagline: "Eén vertaalproject, van offerte tot factuur, dat je volgt terwijl je scrolt.",
+      intro:
+        "Een nieuwe site voor FlowDezk, software waarmee vertaalbureaus hun projecten van offerte tot factuur beheren. De oorspronkelijke site maakte ik eerder; deze heb ik van de grond af opnieuw ontworpen en gebouwd.",
+      url: "https://flowdezk.vercel.app/",
+      facts: [
+        { label: "Soort", value: "Herontwerp van een productsite" },
+        { label: "Wat ik deed", value: "Ontwerp, bouw en formulier" },
+        { label: "Talen", value: "Engels en Nederlands" },
+      ],
+      sections: [
+        { title: "Een kop in elke taal", body: "De kop vertaalt zich voor je ogen, van Engels naar Duits, Japans en verder. Wie op de site komt, weet in een seconde voor welke branche dit is." },
+        { title: "Eén project, zes stappen", body: "Een echt voorbeeldproject reist mee terwijl je scrolt: dashboard, offerte, vertalers inplannen, levering, vendorportaal en rapportage. De schermen zijn in code gebouwd, niet als plaatje." },
+        { title: "Een prijs die je zelf uitrekent", body: "Schuif met gebruikers en opslag en de maandprijs rekent mee op de echte tarieven. Zo is de prijs uit te leggen aan de boekhouder." },
+        { title: "Een aanvraag op maat", body: "Het formulier vraagt wat een vertaalbureau bezighoudt: volume, talenparen, het systeem dat ze nu gebruiken en waar het knelt. Aan het eind staat een samenvatting en een prijsindicatie." },
+      ],
+      scope: [
+        "Nieuw ontwerp en beeldtaal",
+        "Kop die zich vertaalt in meerdere schriften",
+        "Gepinde scrollreis door zes productschermen, in code gebouwd",
+        "Integratiepagina voor Phrase, Trados en XTM",
+        "Prijscalculator op de echte tarieven",
+        "Aanvraagformulier in vijf stappen met prijsindicatie",
+        "Engels en Nederlands",
+      ],
+      page: { src: "/images/flow-page.webp", alt: "De homepage van FlowDezk van boven naar beneden: de kop, het dashboard, de offerte, de planning, de levering, het vendorportaal, de rapportage, de prijs en het formulier", width: 1200, height: 8250 },
+      gallery: [
+        { src: "/images/flow-dashboard.webp", alt: "Het projectdashboard van FlowDezk met statusbalken per project", width: 1440, height: 900 },
+        { src: "/images/flow-resourcing.webp", alt: "Vertalers per taal ingepland op een weekrooster", width: 1440, height: 900 },
+        { src: "/images/flow-vendor.webp", alt: "Het vendorportaal: een vertaler met beschikbaarheid en een tariefvoorstel", width: 1440, height: 900 },
+        { src: "/images/flow-reporting.webp", alt: "Rapportage met omzet per maand en marge per klantsector", width: 1440, height: 900 },
+      ],
+    },
+
     liveweddingpaintings: {
       slug: "live-wedding-paintings",
       tagline: "Een site die voelt als een galerie, en die bruiloften boekt.",

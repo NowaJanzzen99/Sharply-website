@@ -134,7 +134,10 @@ function Card({ service, lang }: { service: Service; lang: Lang }) {
 }
 
 export function Services({ content, lang }: { content: Content; lang: Lang }) {
-  const items = content.services.items;
+  // Three services large; the rest as one line underneath. Six side by side
+  // made it hard to tell what this studio is best at.
+  const items = content.services.items.filter((item) => content.services.core.includes(item.key));
+  const extras = content.services.items.filter((item) => !content.services.core.includes(item.key));
   const count = items.length;
   const container = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLDivElement>(null);
@@ -345,7 +348,7 @@ export function Services({ content, lang }: { content: Content; lang: Lang }) {
 
       {/* Mobile stack */}
       <div className="container-page md:hidden">
-        <div className="mt-14 flex flex-col gap-14 pb-28">
+        <div className="mt-14 flex flex-col gap-14 pb-14">
           {items.map((service, position) => (
             <article key={service.key} data-scene="photo" className="group relative">
               <ViewTransition name={`case-${service.key}`} share="case-morph" default="none">
@@ -392,6 +395,22 @@ export function Services({ content, lang }: { content: Content; lang: Lang }) {
             </article>
           ))}
         </div>
+      </div>
+      {/* Also possible: the rest, as links, not as a reel. */}
+      <div className="container-page pb-28 md:pb-36">
+        <p className="flex flex-wrap items-baseline gap-x-5 gap-y-2 border-t border-hairline pt-7 text-[15px]">
+          <span className="text-text-faint">{content.services.more}</span>
+          {extras.map((item) => (
+            <Link
+              key={item.key}
+              href={serviceHref(lang, item.key)}
+              className="inline-flex items-center gap-1 text-text-muted underline decoration-hairline-strong underline-offset-[6px] transition-colors duration-200 ease-out hover:text-text hover:decoration-accent"
+            >
+              {item.title}
+              <ArrowUpRight size={13} weight="bold" aria-hidden="true" />
+            </Link>
+          ))}
+        </p>
       </div>
     </section>
   );

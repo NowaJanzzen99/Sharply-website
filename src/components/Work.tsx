@@ -64,7 +64,9 @@ function ProjectCard({
               fill
               sizes={wide ? "(min-width: 768px) 66vw, 100vw" : "(min-width: 768px) 55vw, 100vw"}
               data-scene-img
-              className="object-cover"
+              // Zoomed from the top left corner: these are screenshots, and the
+              // headline of each site sits there.
+              className="origin-top-left object-cover object-left-top"
             />
           </div>
         </ViewTransition>
@@ -134,8 +136,7 @@ export function Work({ content, lang }: { content: Content; lang: Lang }) {
             className="md:col-span-8"
           />
 
-          {/* One project under the other, the same width. From three on,
-              they sit two to a row. */}
+          {/* The rest in one row of three when there are three, else two to a row. */}
           {rest.map((item, index) => (
             <ProjectCard
               key={item.key}
@@ -145,7 +146,7 @@ export function Work({ content, lang }: { content: Content; lang: Lang }) {
               lang={lang}
               variant={index % 2 ? "diagonal" : "circle"}
               lag={index % 2 ? 0.12 : 0}
-              className={rest.length === 1 ? "md:col-span-8" : "md:col-span-6"}
+              className={rest.length === 1 ? "md:col-span-8" : rest.length === 3 ? "md:col-span-4" : "md:col-span-6"}
             />
           ))}
 

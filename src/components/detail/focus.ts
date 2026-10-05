@@ -45,4 +45,7 @@ export const PAGE_STOPS: Record<string, number[]> = {
   // the assistant. The chapters stop on the hero, the living room, the result
   // and the assistant.
   daalwerk: [0, 0.375, 0.75, 1],
+  // FlowDezk: ten screens in a strip, the chapters stop on the headline, the
+  // quote being built, the price calculator and the request form.
+  flowdezk: [0, 0.3333, 0.8889, 1],
 };

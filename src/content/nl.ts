@@ -2,18 +2,17 @@ import type { Content } from "./types";
 
 export const nl: Content = {
   meta: {
-    title: "Sharply | Websites die klanten winnen, door Noah Janssen",
+    title: "Sharply | Websites en webapps op maat, door Noah Janssen",
     description:
       "Websites, webshops en AI-systemen met de uitstraling van een topbureau, ontworpen en gebouwd door één maker. Na oplevering pas je alles aan door het te vragen.",
     localeTag: "nl_NL",
   },
   nav: {
     links: [
-      { href: "#studio", label: "Over mij" },
+      { href: "#werk", label: "Werk" },
       { href: "#diensten", label: "Diensten" },
-      { href: "#demo", label: "Demo" },
-      { href: "#werkwijze", label: "Werkwijze" },
       { href: "#prijzen", label: "Prijzen" },
+      { href: "#studio", label: "Over mij" },
     ],
     cta: "Start een project",
     stickyButton: "Start een project",
@@ -22,11 +21,13 @@ export const nl: Content = {
     langLabel: "Taal",
   },
   hero: {
-    lineOne: "Websites die",
-    lineTwo: "klanten winnen.",
-    body: "Ontwerp, code en AI-systemen uit één hand, voor ondernemers die willen groeien. Je werkt rechtstreeks met mij, en na oplevering pas je alles aan door het te vragen.",
+    lineOne: "Websites op maat",
+    lineTwo: "voor ondernemers.",
+    body: "Ik ontwerp en bouw websites en webapps die aanvragen opleveren, met een assistent waarmee je ze daarna zelf aanpast. Je werkt rechtstreeks met mij.",
     primary: "Start een project",
     secondary: "Bekijk de prijzen",
+    price: "Vanaf €1.800, exclusief btw",
+    proof: "Online",
     imageAlt:
       "Glazen bol met iridescente glans boven een blauwe horizon in een diepdonkere ruimte",
   },
@@ -58,7 +59,7 @@ export const nl: Content = {
   },
   services: {
     title: "Wat ik maak",
-    lead: "Van een sterk merk tot een systeem dat doorwerkt terwijl jij slaapt.",
+    lead: "Drie dingen, en die goed: een site die aanvragen oplevert, een assistent die je klanten helpt en systemen die het werk overnemen.",
     items: [
       {
         key: "websites",
@@ -115,6 +116,8 @@ export const nl: Content = {
         placeholder: true,
       },
     ],
+    core: ["websites", "aiChat", "integrations"],
+    more: "Ook mogelijk",
   },
   demo: {
     title: "Pas je site aan door het te vragen.",
@@ -175,7 +178,7 @@ export const nl: Content = {
   },
   work: {
     title: "Werk",
-    lead: "Drie projecten die online staan: een merksite die boekingen binnenhaalt, een webapp met accounts en database, en een studiosite met een scrollende maquette.",
+    lead: "Vier projecten die online staan, elk met een eigen gezicht: van een merksite die boekingen binnenhaalt tot software met accounts en een database.",
     body: "Meer projecten volgen.",
     conceptLabel: "Conceptproject",
     clientLabel: "Klantproject",
@@ -189,8 +192,8 @@ export const nl: Content = {
         discipline: "Merk, website en boekingen",
         blurb:
           "De website van Sara van Heukelom, die live schildert op bruiloften. Merk, ontwerp, techniek en boekingsformulier komen van mij.",
-        image: "/images/project-liveweddingpaintings.webp",
-        alt: "Laptop en telefoon met de website van Live Wedding Paintings: schilderijen in gouden lijsten op een warme, lichte achtergrond",
+        image: "/images/card-liveweddingpaintings.webp",
+        alt: "De homepage van Live Wedding Paintings: drie schilderijen in gouden lijsten naast de naam in een sierlijke letter",
         real: true,
       },
       {
@@ -199,8 +202,8 @@ export const nl: Content = {
         discipline: "Webapp met accounts en database",
         blurb:
           "Een complete webapp met echte accounts en een eigen database: gebruikers loggen in en hun budget, planning, offertes en foto's worden per project opgeslagen. Met een assistent die die gegevens leest.",
-        image: "/images/project-renofloww.webp",
-        alt: "Laptop en telefoon met Renofloww: de kop 'Je verbouwing, eindelijk in één overzicht' boven een weekplanning van een badkamer",
+        image: "/images/card-renofloww.webp",
+        alt: "De homepage van Renofloww: de kop 'Je verbouwing, eindelijk in één overzicht' boven een weekplanning van een badkamer",
         real: true,
         label: "Live product",
       },
@@ -210,10 +213,21 @@ export const nl: Content = {
         discipline: "Merk, website en assistent",
         blurb:
           "De site van een interieur- en architectenstudio in Limburg. Een huis dat je scrollend ziet veranderen, van schil tot plattegrond, en een assistent die een eerste richting voor materiaal en kleur geeft.",
-        image: "/images/project-daalwerk.webp",
-        alt: "Laptop en telefoon met Daalwerk: een isometrische maquette van een woonkamer met bank, ronde tafel en groene kast",
+        image: "/images/card-daalwerk.webp",
+        alt: "De homepage van Daalwerk: een maquette van een carréboerderij naast de kop 'Verder bouwen op wat er staat'",
         real: true,
         label: "Eigen project",
+      },
+      {
+        key: "flowdezk",
+        title: "FlowDezk",
+        discipline: "Herontwerp van een productsite",
+        blurb:
+          "Software voor vertaalbureaus. Eén project dat je scrollend volgt van offerte tot factuur, een prijscalculator en een aanvraagformulier dat vraagt wat een vertaalbureau echt bezighoudt.",
+        image: "/images/card-flowdezk.webp",
+        alt: "De homepage van FlowDezk met de kop in het Japans: alle projecten, van offerte tot factuur",
+        real: true,
+        label: "Herontwerp",
       },
     ],
   },
@@ -958,7 +972,7 @@ export const nl: Content = {
   },
   pricing: {
     title: "Wat het kost",
-    lead: "Heldere richtprijzen, zodat je weet waar je aan toe bent.",
+    lead: "Drie pakketten. Kies er een, of stel in het formulier je eigen pakket samen.",
     vatNote:
       "Alle bedragen zijn exclusief btw. Na een kennismaking ontvang je een vaste prijs, afgestemd op precies wat jij nodig hebt.",
     websitesTitle: "Websites, eenmalig",
@@ -980,20 +994,16 @@ export const nl: Content = {
         name: "Studio",
         price: 6500,
         recommended: true,
-        body: "De keuze van de meeste ondernemers: meer pagina's, meer beweging en twee talen.",
+        body: "Voor wie meer te vertellen heeft: meer pagina's, meer beweging en twee talen.",
         points: ["Tot 12 pagina's", "Twee talen", "Animaties op maat", "Boeking of formulieren"],
       },
-      {
-        name: "Signature",
-        price: 11500,
-        from: true,
-        body: "De volle breedte: net zo uitgebreid als deze site, met alles erbij.",
-        points: ["Eigen interacties en animaties", "Inlog en database", "Koppelingen met je systemen", "Een eigen assistent voor je klanten"],
-      },
     ],
-    careTitle: "Na livegang blijft alles van jou",
+    careTitle: "Na livegang",
     careLead:
-      "Bij elke site hoort een assistent waarmee je zelf wijzigingen doorvoert, plus hosting en updates. Je hebt één aanspreekpunt en geen beheersysteem om te leren.",
+      "Hosting, updates en de assistent waarmee je zelf wijzigingen doorvoert. Je hebt één aanspreekpunt en geen beheersysteem om te leren.",
+    careMore: "Meer wijzigingen of nieuwe onderdelen? Groei is €199 en Volledig €399 per maand.",
+    beyondTitle: "Groter dan Studio?",
+    beyondText: "Een webapp met accounts, een eigen platform of software zoals Renofloww: op offerte, vanaf €11.500.",
     plans: [
       { name: "Basis", price: 99, body: "Hosting, updates en de assistent voor kleine wijzigingen." },
       { name: "Groei", price: 199, recommended: true, body: "Meer wijzigingen, een ruimere assistent en kleine nieuwe stukken." },
@@ -1004,12 +1014,10 @@ export const nl: Content = {
     recommended: "Aanbevolen",
     otherTitle: "Andere diensten",
     other: [
-      { name: "Huisstijl", price: "€2.500 tot €6.000" },
-      { name: "Webshop", price: "vanaf €9.000" },
       { name: "AI-assistent in een bestaande site", price: "vanaf €3.500" },
       { name: "Koppelingen en automatisering", price: "vanaf €2.000" },
-      { name: "Motion en video", price: "vanaf €1.200" },
-      { name: "AI-content", price: "vanaf €900" },
+      { name: "Webshop", price: "vanaf €9.000" },
+      { name: "Huisstijl", price: "€2.500 tot €6.000" },
     ],
     ctaTitle: "Nog niet zeker wat je nodig hebt?",
     ctaText: "Vul het formulier in en zie direct een indicatie, gebaseerd op je eigen antwoorden.",

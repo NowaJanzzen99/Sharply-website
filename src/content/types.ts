@@ -208,6 +208,17 @@ export type Content = {
     primary: string;
     secondary: string;
     imageAlt: string;
+    /** Under the buttons: the price floor, said plainly. */
+    price: string;
+    /** Label in front of the row of live projects under the hero. */
+    proof: string;
+  };
+  /** One line from a real client. Leave out until there is one: never invented. */
+  testimonial?: {
+    quote: string;
+    name: string;
+    role: string;
+    href?: string;
   };
   manifesto: {
     title: string;
@@ -237,6 +248,9 @@ export type Content = {
     title: string;
     lead: string;
     items: Service[];
+    /** The services shown large; the rest are listed as also possible. */
+    core: ServiceKey[];
+    more: string;
   };
   demo: {
     title: string;
@@ -391,6 +405,11 @@ export type Content = {
     }[];
     careTitle: string;
     careLead: string;
+    /** One line under the plans: the rest is for bigger projects. */
+    careMore: string;
+    /** Under the tiers: what to do when it is bigger than the top tier. */
+    beyondTitle: string;
+    beyondText: string;
     plans: { name: string; price: number; body: string; recommended?: boolean }[];
     perMonth: string;
     from: string;

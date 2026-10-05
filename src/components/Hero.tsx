@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowDownRight } from "@phosphor-icons/react";
 import { RevealLines } from "./Reveal";
 import { MagneticButton } from "./MagneticButton";
 import { FloatingOrb } from "./hero/FloatingOrb";
-import type { Content } from "@/content";
+import { workHref, type Content, type Lang } from "@/content";
 
 /*
   One bubble, one image, from the first paint onwards. An earlier version faded
@@ -15,7 +16,7 @@ import type { Content } from "@/content";
   motion is built around it instead.
 */
 
-export function Hero({ content }: { content: Content }) {
+export function Hero({ content, lang }: { content: Content; lang: Lang }) {
   const [compact, setCompact] = useState(false);
 
   useEffect(() => {
@@ -95,6 +96,34 @@ export function Hero({ content }: { content: Content }) {
           >
             {content.hero.secondary}
           </MagneticButton>
+          <p className="text-[14px] text-text-muted sm:ml-3">{content.hero.price}</p>
+        </div>
+
+        {/* Proof in the first screen: the work that is online, one tap away. */}
+        <div
+          data-reveal-hero
+          style={{ animationDelay: "0.56s" }}
+          className="mt-12 flex flex-wrap items-center gap-x-2 gap-y-3"
+        >
+          <span className="mr-2 flex items-center gap-2 text-[13px] text-text-faint">
+            <span
+              aria-hidden="true"
+              className="h-1.5 w-1.5 rounded-full bg-[oklch(0.78_0.17_150)] shadow-[0_0_8px_oklch(0.78_0.17_150)]"
+            />
+            {content.hero.proof}
+          </span>
+          {content.work.items.map((item) => (
+            <Link
+              key={item.key}
+              href={workHref(lang, item.key)}
+              className="group/proof flex items-center gap-2.5 rounded-[var(--radius-pill)] border border-hairline bg-canvas-deep/60 py-1 pl-1 pr-3.5 text-[13px] text-text-muted transition-[border-color,color,transform] duration-200 ease-[var(--ease-out)] active:scale-[0.97] hover-fine:hover:border-hairline-strong hover-fine:hover:text-text"
+            >
+              <span className="relative h-6 w-9 overflow-hidden rounded-full">
+                <Image src={item.image} alt="" fill sizes="36px" className="object-cover object-left-top" />
+              </span>
+              {item.title}
+            </Link>
+          ))}
         </div>
       </div>
     </section>

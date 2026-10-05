@@ -336,6 +336,41 @@ export const detailsEn: Details = {
       ],
     },
 
+    flowdezk: {
+      slug: "flowdezk",
+      tagline: "One translation project, from quote to invoice, that you follow as you scroll.",
+      intro:
+        "A new site for FlowDezk, software that translation agencies use to run their projects from quote to invoice. I built the original site earlier; this one I designed and built again from the ground up.",
+      url: "https://flowdezk.vercel.app/",
+      facts: [
+        { label: "Type", value: "Redesign of a product site" },
+        { label: "What I did", value: "Design, build and form" },
+        { label: "Languages", value: "English and Dutch" },
+      ],
+      sections: [
+        { title: "A headline in every language", body: "The headline translates itself in front of you, from English to German, Japanese and on. Anyone landing on the site knows in a second which industry this is for." },
+        { title: "One project, six stops", body: "A real example project travels along as you scroll: dashboard, quote, booking translators, delivery, vendor portal and reporting. The screens are built in code, not pictures." },
+        { title: "A price you work out yourself", body: "Slide the users and storage and the monthly price follows on the real rates. A price you can explain to your accountant." },
+        { title: "A request made to measure", body: "The form asks what a translation agency deals with: volume, language pairs, the system they use now and where it hurts. At the end there is a summary and a price indication." },
+      ],
+      scope: [
+        "New design and visual language",
+        "Headline that translates itself across scripts",
+        "Pinned scroll journey through six product screens, built in code",
+        "Integrations page for Phrase, Trados and XTM",
+        "Price calculator on the real rates",
+        "Five-step request form with a price indication",
+        "English and Dutch",
+      ],
+      page: { src: "/images/flow-page.webp", alt: "The FlowDezk homepage top to bottom: the headline, dashboard, quote, planning, delivery, vendor portal, reporting, price and form", width: 1200, height: 8250 },
+      gallery: [
+        { src: "/images/flow-dashboard.webp", alt: "The FlowDezk project dashboard with status bars per project", width: 1440, height: 900 },
+        { src: "/images/flow-resourcing.webp", alt: "Translators booked per language on a weekly schedule", width: 1440, height: 900 },
+        { src: "/images/flow-vendor.webp", alt: "The vendor portal: a translator with availability and a rate proposal", width: 1440, height: 900 },
+        { src: "/images/flow-reporting.webp", alt: "Reporting with revenue per month and margin per client sector", width: 1440, height: 900 },
+      ],
+    },
+
     liveweddingpaintings: {
       slug: "live-wedding-paintings",
       tagline: "A site that feels like a gallery, and books weddings.",

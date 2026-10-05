@@ -2,18 +2,17 @@ import type { Content } from "./types";
 
 export const en: Content = {
   meta: {
-    title: "Sharply | Websites that win customers, by Noah Janssen",
+    title: "Sharply | Custom websites and web apps, by Noah Janssen",
     description:
       "Websites, shops and AI systems with the polish of a top studio, designed and built by one maker. After launch you change anything by simply asking.",
     localeTag: "en_GB",
   },
   nav: {
     links: [
-      { href: "#studio", label: "About me" },
+      { href: "#werk", label: "Work" },
       { href: "#diensten", label: "Services" },
-      { href: "#demo", label: "Demo" },
-      { href: "#werkwijze", label: "Process" },
       { href: "#prijzen", label: "Pricing" },
+      { href: "#studio", label: "About me" },
     ],
     cta: "Start a project",
     stickyButton: "Start a project",
@@ -22,11 +21,13 @@ export const en: Content = {
     langLabel: "Language",
   },
   hero: {
-    lineOne: "Websites that",
-    lineTwo: "win customers.",
-    body: "Design, code and AI systems from a single maker, for business owners who want to grow. You work directly with me, and after launch you change anything by simply asking.",
+    lineOne: "Custom websites",
+    lineTwo: "for businesses.",
+    body: "I design and build websites and web apps that bring in enquiries, with an assistant you use to change them yourself afterwards. You work directly with me.",
     primary: "Start a project",
     secondary: "See the prices",
+    price: "From €1,800, excluding VAT",
+    proof: "Online",
     imageAlt:
       "Glass orb with an iridescent sheen above a blue horizon in deep dark space",
   },
@@ -58,7 +59,7 @@ export const en: Content = {
   },
   services: {
     title: "What I make",
-    lead: "From a strong brand to a system that keeps working while you sleep.",
+    lead: "Three things, done well: a site that brings in enquiries, an assistant that helps your customers and systems that take over the work.",
     items: [
       {
         key: "websites",
@@ -115,6 +116,8 @@ export const en: Content = {
         placeholder: true,
       },
     ],
+    core: ["websites", "aiChat", "integrations"],
+    more: "Also possible",
   },
   demo: {
     title: "Change your site by asking.",
@@ -175,7 +178,7 @@ export const en: Content = {
   },
   work: {
     title: "Work",
-    lead: "Three projects that are online: a brand site that brings in bookings, a web app with accounts and a database, and a studio site with a scrolling maquette.",
+    lead: "Four projects that are online, each with its own face: from a brand site that brings in bookings to software with accounts and a database.",
     body: "More projects to follow.",
     conceptLabel: "Concept project",
     clientLabel: "Client project",
@@ -189,8 +192,8 @@ export const en: Content = {
         discipline: "Brand, website and bookings",
         blurb:
           "The website of Sara van Heukelom, who paints weddings live. Brand, design, engineering and booking form all come from me.",
-        image: "/images/project-liveweddingpaintings.webp",
-        alt: "Laptop and phone showing the Live Wedding Paintings website: paintings in gold frames on a warm, light background",
+        image: "/images/card-liveweddingpaintings.webp",
+        alt: "The Live Wedding Paintings homepage: three paintings in gold frames beside the name in a decorative script",
         real: true,
       },
       {
@@ -199,8 +202,8 @@ export const en: Content = {
         discipline: "Web app with accounts and database",
         blurb:
           "A complete web app with real accounts and its own database: users sign in and their budget, planning, quotes and photos are stored per project. With an assistant that reads that data.",
-        image: "/images/project-renofloww.webp",
-        alt: "Laptop and phone showing Renofloww: the headline 'Je verbouwing, eindelijk in één overzicht' above a week-by-week bathroom schedule",
+        image: "/images/card-renofloww.webp",
+        alt: "The Renofloww homepage: the headline 'Je verbouwing, eindelijk in één overzicht' above a week-by-week bathroom schedule",
         real: true,
         label: "Live product",
       },
@@ -210,10 +213,21 @@ export const en: Content = {
         discipline: "Brand, website and assistant",
         blurb:
           "The site of an interior and architecture studio in Limburg. A house you watch change as you scroll, from shell to floor plan, and an assistant that gives a first direction for material and colour.",
-        image: "/images/project-daalwerk.webp",
-        alt: "Laptop and phone showing Daalwerk: an isometric maquette of a living room with a sofa, round table and green wardrobe",
+        image: "/images/card-daalwerk.webp",
+        alt: "The Daalwerk homepage: a maquette of a courtyard farm beside the headline 'Verder bouwen op wat er staat'",
         real: true,
         label: "Own project",
+      },
+      {
+        key: "flowdezk",
+        title: "FlowDezk",
+        discipline: "Redesign of a product site",
+        blurb:
+          "Software for translation agencies. One project you follow by scrolling, from quote to invoice, a price calculator and a request form that asks what a translation agency actually deals with.",
+        image: "/images/card-flowdezk.webp",
+        alt: "The FlowDezk homepage with the headline in Japanese: every project, from quote to invoice",
+        real: true,
+        label: "Redesign",
       },
     ],
   },
@@ -958,7 +972,7 @@ export const en: Content = {
   },
   pricing: {
     title: "What it costs",
-    lead: "Clear guide prices, so you know where you stand.",
+    lead: "Three packages. Pick one, or build your own package in the form.",
     vatNote:
       "All amounts exclude VAT. After an introduction you receive a fixed price, tailored to exactly what you need.",
     websitesTitle: "Websites, one time",
@@ -980,20 +994,16 @@ export const en: Content = {
         name: "Studio",
         price: 6500,
         recommended: true,
-        body: "The choice of most business owners: more pages, more movement and two languages.",
+        body: "For when there is more to tell: more pages, more movement and two languages.",
         points: ["Up to 12 pages", "Two languages", "Custom animation", "Booking or forms"],
       },
-      {
-        name: "Signature",
-        price: 11500,
-        from: true,
-        body: "The full range: as extensive as this site itself, with everything included.",
-        points: ["Custom interaction and animation", "Login and database", "Connections to your systems", "An assistant of your own for your customers"],
-      },
     ],
-    careTitle: "After launch, everything stays yours",
+    careTitle: "After launch",
     careLead:
-      "Every site comes with an assistant you use to make changes yourself, plus hosting and updates. You have one point of contact and no content system to learn.",
+      "Hosting, updates and the assistant you use to make changes yourself. You have one point of contact and no content system to learn.",
+    careMore: "More changes or new sections? Growth is €199 and Complete €399 a month.",
+    beyondTitle: "Bigger than Studio?",
+    beyondText: "A web app with accounts, a platform of your own or software like Renofloww: quoted, from €11,500.",
     plans: [
       { name: "Basis", price: 99, body: "Hosting, updates and the assistant for small changes." },
       { name: "Growth", price: 199, recommended: true, body: "More changes, a roomier assistant and small new pieces." },
@@ -1004,12 +1014,10 @@ export const en: Content = {
     recommended: "Recommended",
     otherTitle: "Other services",
     other: [
-      { name: "Brand identity", price: "€2,500 to €6,000" },
-      { name: "Webshop", price: "from €9,000" },
       { name: "AI assistant in an existing site", price: "from €3,500" },
       { name: "Integrations and automation", price: "from €2,000" },
-      { name: "Motion and video", price: "from €1,200" },
-      { name: "AI content", price: "from €900" },
+      { name: "Webshop", price: "from €9,000" },
+      { name: "Brand identity", price: "€2,500 to €6,000" },
     ],
     ctaTitle: "Not sure yet what you need?",
     ctaText: "Fill in the form and see an indication straight away, based on your own answers.",
