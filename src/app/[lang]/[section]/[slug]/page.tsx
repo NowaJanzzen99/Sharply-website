@@ -196,6 +196,7 @@ export default async function DetailPage({ params }: { params: Promise<Params> }
   // project there is no sibling project, so the services fill the space.
   const serviceCards = (keys: typeof content.services.items) =>
     keys.map((item) => ({
+      key: item.key,
       href: serviceHref(lang, item.key),
       title: item.title,
       note: details.services[item.key].tagline,
@@ -207,6 +208,7 @@ export default async function DetailPage({ params }: { params: Promise<Params> }
       ? content.work.items
           .filter((item) => item.key !== resolved.key)
           .map((item) => ({
+            key: item.key,
             href: workHref(lang, item.key),
             title: item.title,
             note: item.discipline,
@@ -240,7 +242,7 @@ export default async function DetailPage({ params }: { params: Promise<Params> }
       <article>
         {/* Title block. No hero image behind the words: the picture gets its
             own moment below, at full width, where it can actually be seen. */}
-        <header className="relative overflow-hidden border-b border-hairline pb-16 pt-32 md:pb-24 md:pt-44">
+        <header className="relative overflow-hidden border-b border-hairline pb-14 pt-32 md:pb-14 md:pt-36">
           <div
             aria-hidden="true"
             className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[420px] bg-[radial-gradient(70%_100%_at_50%_0%,oklch(0.42_0.14_259/0.35)_0%,transparent_70%)]"
@@ -330,8 +332,8 @@ export default async function DetailPage({ params }: { params: Promise<Params> }
         </header>
 
         {/* The picture. It opens as you scroll the first screen. */}
-        <div className="mt-12 md:mt-16">
-          <DetailStage src={image} alt={alt} priority />
+        <div className="mt-10 md:mt-10">
+          <DetailStage src={image} alt={alt} priority name={`case-${resolved.key}`} />
         </div>
 
         {/* The one sentence that has to land. Set large, alone on the page. */}

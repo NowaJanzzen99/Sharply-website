@@ -289,12 +289,21 @@
   /*
     The loading screen (Intro.tsx). While loading, the bubble condenses out of a
     blur and floats; the name rises letter by letter behind a mask. On
-    data-phase="bursting" the bubble swells and is gone in a blink, rings and
-    droplets fly out, and the whole screen fades while the stage pushes
-    towards the viewer, so the site seems to come out of the burst.
+    data-phase="flying" the screen falls away and the bubble travels onto the
+    hero bubble, which stays hidden until it lands. The hero headline waits
+    (paused, not hidden) until the flight begins.
   */
   html[data-intro-seen="true"] [data-intro] {
     display: none;
+  }
+
+  html[data-intro-hold] [data-reveal-hero],
+  html[data-intro-hold] [data-line-mount] {
+    animation-play-state: paused;
+  }
+
+  html[data-intro-orb] [data-orb-main] [data-orb-image] {
+    opacity: 0 !important;
   }
 
   [data-intro] {
@@ -304,8 +313,8 @@
 
   .intro-orb {
     animation:
-      intro-condense 1200ms var(--ease-out) both,
-      intro-float 3.2s ease-in-out 1200ms infinite alternate;
+      intro-condense 1100ms var(--ease-out) both,
+      intro-float 3.2s ease-in-out 1100ms infinite alternate;
   }
 
   .intro-glow {
@@ -313,46 +322,51 @@
   }
 
   .intro-mark {
-    animation: intro-rise 700ms var(--ease-out) 180ms both;
+    animation: intro-rise 700ms var(--ease-out) 160ms both;
   }
 
   .intro-letter {
     animation: intro-letter 800ms var(--ease-out) both;
   }
 
-  .intro-ring,
-  .intro-drop {
-    opacity: 0;
-  }
-
-  [data-intro][data-phase="bursting"] {
-    animation: intro-leave 900ms var(--ease-out) 120ms forwards;
+  [data-intro][data-phase="flying"] .intro-bg {
+    animation: intro-leave 700ms var(--ease-out) forwards;
     pointer-events: none;
   }
 
-  [data-intro][data-phase="bursting"] .intro-stage {
-    animation: intro-push 1000ms var(--ease-out) forwards;
+  [data-intro][data-phase="flying"] .intro-still {
+    opacity: 0;
   }
 
-  [data-intro][data-phase="bursting"] .intro-orb {
-    animation: intro-pop 260ms var(--ease-out) forwards;
+  [data-intro][data-phase="flying"] .intro-name {
+    animation: intro-name-out 380ms var(--ease-out) forwards;
   }
 
-  [data-intro][data-phase="bursting"] .intro-ring {
-    animation: intro-ring 620ms var(--ease-out) forwards;
-  }
-
-  [data-intro][data-phase="bursting"] .intro-ring-late {
-    animation-delay: 70ms;
-  }
-
-  [data-intro][data-phase="bursting"] .intro-drop {
-    animation: intro-drop 760ms var(--ease-out) 40ms forwards;
-  }
-
-  [data-intro][data-phase="bursting"] .intro-meta {
+  [data-intro][data-phase="flying"] .intro-meta {
     opacity: 0;
     transition: opacity 200ms var(--ease-out);
+  }
+
+  .intro-flyer {
+    transition: opacity 320ms var(--ease-out);
+  }
+
+  /* The headline as seen through the bubble: frozen in its final state, bent. */
+  .lens-copy,
+  .lens-copy * {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+  }
+
+  .lens-copy {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: 0;
+    transform-origin: 0 0;
+    color: oklch(0.95 0.045 235);
+    filter: url(#sharply-lens);
   }
 
   @keyframes intro-failsafe {
@@ -365,7 +379,7 @@
   @keyframes intro-condense {
     from {
       opacity: 0;
-      filter: blur(18px) saturate(0.85) hue-rotate(-8deg);
+      filter: blur(18px);
       transform: scale(0.82);
     }
   }
@@ -404,43 +418,10 @@
     }
   }
 
-  @keyframes intro-pop {
-    30% {
-      opacity: 1;
-      transform: scale(1.08);
-    }
+  @keyframes intro-name-out {
     to {
       opacity: 0;
-      transform: scale(1.22);
-    }
-  }
-
-  @keyframes intro-ring {
-    from {
-      opacity: 0.9;
-      transform: scale(0.95);
-    }
-    to {
-      opacity: 0;
-      transform: scale(2.1);
-    }
-  }
-
-  @keyframes intro-drop {
-    from {
-      opacity: 1;
-      transform: translate(0, 0) scale(1);
-    }
-    to {
-      opacity: 0;
-      transform: translate(var(--tx), var(--ty)) scale(0.4);
-    }
-  }
-
-  @keyframes intro-push {
-    to {
-      transform: scale(1.12);
-      filter: blur(6px);
+      transform: translateY(14px);
     }
   }
 
@@ -607,5 +588,68 @@
     .container-page {
       padding-inline: 40px;
     }
+  }
+}
+
+/*
+  Page transitions (React's <ViewTransition>, the browser's View Transitions).
+
+  A card and the picture at the top of its page share a name, so between the
+  two pages the card grows into that frame and back. The rest of the page
+  does a short crossfade underneath it. The morph runs a touch longer than the
+  fade, so the picture is the last thing to settle and the eye follows it.
+*/
+::view-transition-group(.case-morph) {
+  animation-duration: 640ms;
+  animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+::view-transition-image-pair(.case-morph) {
+  animation-name: case-morph-soften;
+  animation-duration: 640ms;
+}
+
+::view-transition-old(.case-morph),
+::view-transition-new(.case-morph) {
+  /* Fill the frame while its shape changes, instead of stretching. */
+  height: 100%;
+  object-fit: cover;
+  overflow: hidden;
+}
+
+::view-transition-old(root) {
+  animation: 260ms cubic-bezier(0.23, 1, 0.32, 1) both page-out;
+}
+
+::view-transition-new(root) {
+  animation: 420ms cubic-bezier(0.23, 1, 0.32, 1) 80ms both page-in;
+}
+
+@keyframes case-morph-soften {
+  40% {
+    filter: blur(2px) brightness(1.08);
+  }
+}
+
+@keyframes page-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-image-pair(*) {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
   }
 }

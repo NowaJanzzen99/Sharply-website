@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { ViewTransition, useEffect, useRef } from "react";
 import Image from "next/image";
 
 /*
@@ -21,10 +21,13 @@ export function DetailStage({
   src,
   alt,
   priority = false,
+  name,
 }: {
   src: string;
   alt: string;
   priority?: boolean;
+  /** Shared with the card that links here, so the card grows into this frame. */
+  name?: string;
 }) {
   const host = useRef<HTMLDivElement>(null);
   const outer = useRef<HTMLDivElement>(null);
@@ -95,6 +98,7 @@ export function DetailStage({
 
   return (
     <div ref={host} className="container-page">
+      <ViewTransition name={name} share={name ? "case-morph" : undefined} default="none">
       <div
         ref={outer}
         style={{ "--reveal": "8%" } as React.CSSProperties}
@@ -120,6 +124,7 @@ export function DetailStage({
           </div>
         </div>
       </div>
+      </ViewTransition>
     </div>
   );
 }

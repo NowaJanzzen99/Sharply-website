@@ -14,6 +14,10 @@ import { RevealLines } from "../Reveal";
 
 export type RelatedItem = {
   href: string;
+  /** Content key. Deliberately not used as a transition name here: these
+      cards sit below the fold of the page they lead from, and a named element
+      the eye cannot see would only leave a ghost behind during the morph. */
+  key: string;
   title: string;
   note: string;
   image: string;

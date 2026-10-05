@@ -1,3 +1,4 @@
+import { ViewTransition } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
@@ -52,16 +53,21 @@ function ProjectCard({
         variant={variant}
         className="relative overflow-hidden rounded-[var(--radius-lg)] border border-hairline"
       >
-        <div className={`relative ${wide ? "aspect-[16/10]" : "aspect-[4/3]"}`}>
-          <Image
-            src={item.image}
-            alt={item.alt}
-            fill
-            sizes={wide ? "(min-width: 768px) 66vw, 100vw" : "(min-width: 768px) 55vw, 100vw"}
-            data-scene-img
-            className="object-cover"
-          />
-        </div>
+        {/* Shares a name with the picture at the top of the case page, so the
+            card grows into it on the way there and shrinks back on the way
+            out. */}
+        <ViewTransition name={`case-${item.key}`} share="case-morph" default="none">
+          <div className={`relative ${wide ? "aspect-[16/10]" : "aspect-[4/3]"}`}>
+            <Image
+              src={item.image}
+              alt={item.alt}
+              fill
+              sizes={wide ? "(min-width: 768px) 66vw, 100vw" : "(min-width: 768px) 55vw, 100vw"}
+              data-scene-img
+              className="object-cover"
+            />
+          </div>
+        </ViewTransition>
       </RevealImage>
 
       <Reveal delay={0.08}>

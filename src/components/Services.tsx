@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { ViewTransition, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "@phosphor-icons/react";
@@ -73,6 +73,7 @@ function Card({ service, lang }: { service: Service; lang: Lang }) {
         className="absolute inset-0 z-10 cursor-pointer rounded-[var(--radius-lg)]"
       />
       <div className="frame overflow-hidden rounded-[var(--radius-lg)] p-2">
+        <ViewTransition name={`case-${service.key}`} share="case-morph" default="none">
         <div className="relative h-[min(46vh,520px)] min-h-[260px] overflow-hidden rounded-[calc(var(--radius-lg)-6px)]">
           <Image
             data-card-img
@@ -89,6 +90,7 @@ function Card({ service, lang }: { service: Service; lang: Lang }) {
             className="object-cover will-change-transform"
           />
         </div>
+        </ViewTransition>
       </div>
 
       <div className="mt-7 grid grid-cols-12 gap-x-8 gap-y-4">
@@ -346,6 +348,7 @@ export function Services({ content, lang }: { content: Content; lang: Lang }) {
         <div className="mt-14 flex flex-col gap-14 pb-28">
           {items.map((service, position) => (
             <article key={service.key} data-scene="photo" className="group relative">
+              <ViewTransition name={`case-${service.key}`} share="case-morph" default="none">
               <RevealImage
                 variant={MOBILE_VARIANTS[position % MOBILE_VARIANTS.length]}
                 className="relative aspect-[4/3] overflow-hidden rounded-[var(--radius-lg)] border border-hairline"
@@ -359,6 +362,7 @@ export function Services({ content, lang }: { content: Content; lang: Lang }) {
                   className="object-cover"
                 />
               </RevealImage>
+              </ViewTransition>
               <h3 className="mt-6 font-display text-[22px] font-medium text-text">
                 <Link
                   href={serviceHref(lang, service.key)}
