@@ -41,10 +41,10 @@ export default async function HomePage({
       <Intro />
       <main id="main">
         <Hero content={content} lang={lang} />
-        {/* The work first: proof before the story about who made it. */}
+        {/* The portrait scene first, then the work: the face, then the proof. */}
+        <Manifesto content={content} />
         <Work content={content} lang={lang} />
         {content.testimonial ? <Testimonial testimonial={content.testimonial} /> : null}
-        <Manifesto content={content} />
         <Services content={content} lang={lang} />
         <TalkDemo content={content} />
         <Process content={content} />

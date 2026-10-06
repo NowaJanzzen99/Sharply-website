@@ -9,10 +9,10 @@ export const nl: Content = {
   },
   nav: {
     links: [
+      { href: "#studio", label: "Over mij" },
       { href: "#werk", label: "Werk" },
       { href: "#diensten", label: "Diensten" },
       { href: "#prijzen", label: "Prijzen" },
-      { href: "#studio", label: "Over mij" },
     ],
     cta: "Start een project",
     stickyButton: "Start een project",

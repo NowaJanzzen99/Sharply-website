@@ -9,10 +9,10 @@ export const en: Content = {
   },
   nav: {
     links: [
+      { href: "#studio", label: "About me" },
       { href: "#werk", label: "Work" },
       { href: "#diensten", label: "Services" },
       { href: "#prijzen", label: "Pricing" },
-      { href: "#studio", label: "About me" },
     ],
     cta: "Start a project",
     stickyButton: "Start a project",
