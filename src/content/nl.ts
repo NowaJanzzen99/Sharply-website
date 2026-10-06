@@ -227,9 +227,9 @@ export const nl: Content = {
         discipline: "Herontwerp van een productsite",
         blurb:
           "Software voor vertaalbureaus. Eén project dat je scrollend volgt van offerte tot factuur, een prijscalculator en een aanvraagformulier dat vraagt wat een vertaalbureau echt bezighoudt.",
-        image: "/images/showcase-flowdezk.webp",
-        thumb: "/images/card-flowdezk.webp",
-        alt: "De homepage van FlowDezk met de kop in het Japans: alle projecten, van offerte tot factuur",
+        image: "/images/showcase-flowdezk-en.webp",
+        thumb: "/images/card-flowdezk-en.webp",
+        alt: "De homepage van FlowDezk op laptop en telefoon: 'Every project. From quote to invoice.' naast een voorbeeldproject",
         real: true,
         label: "Herontwerp",
       },

@@ -362,7 +362,7 @@ export const detailsEn: Details = {
         "Five-step request form with a price indication",
         "English and Dutch",
       ],
-      page: { src: "/images/flow-page.webp", alt: "The FlowDezk homepage top to bottom: the headline, dashboard, quote, planning, delivery, vendor portal, reporting, price and form", width: 1200, height: 8250 },
+      page: { src: "/images/flow-page-en.webp", alt: "The FlowDezk homepage top to bottom: the headline, dashboard, quote, planning, delivery, vendor portal, reporting, price and form", width: 1200, height: 8250 },
       gallery: [
         { src: "/images/flow-dashboard.webp", alt: "The FlowDezk project dashboard with status bars per project", width: 1440, height: 900 },
         { src: "/images/flow-resourcing.webp", alt: "Translators booked per language on a weekly schedule", width: 1440, height: 900 },

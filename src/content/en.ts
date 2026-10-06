@@ -227,9 +227,9 @@ export const en: Content = {
         discipline: "Redesign of a product site",
         blurb:
           "Software for translation agencies. One project you follow by scrolling, from quote to invoice, a price calculator and a request form that asks what a translation agency actually deals with.",
-        image: "/images/showcase-flowdezk.webp",
-        thumb: "/images/card-flowdezk.webp",
-        alt: "The FlowDezk homepage with the headline in Japanese: every project, from quote to invoice",
+        image: "/images/showcase-flowdezk-en.webp",
+        thumb: "/images/card-flowdezk-en.webp",
+        alt: "The FlowDezk homepage on laptop and phone: 'Every project. From quote to invoice.' beside an example project",
         real: true,
         label: "Redesign",
       },

@@ -349,7 +349,7 @@ export const detailsNl: Details = {
         { label: "Talen", value: "Engels en Nederlands" },
       ],
       sections: [
-        { title: "Een kop in elke taal", body: "De kop vertaalt zich voor je ogen, van Engels naar Duits, Japans en verder. Wie op de site komt, weet in een seconde voor welke branche dit is." },
+        { title: "Een kop in elke taal", body: "De kop vertaalt zich voor je ogen, van Engels naar Duits, Arabisch, Japans en verder. Wie op de site komt, weet in een seconde voor welke branche dit is." },
         { title: "Eén project, zes stappen", body: "Een echt voorbeeldproject reist mee terwijl je scrolt: dashboard, offerte, vertalers inplannen, levering, vendorportaal en rapportage. De schermen zijn in code gebouwd, niet als plaatje." },
         { title: "Een prijs die je zelf uitrekent", body: "Schuif met gebruikers en opslag en de maandprijs rekent mee op de echte tarieven. Zo is de prijs uit te leggen aan de boekhouder." },
         { title: "Een aanvraag op maat", body: "Het formulier vraagt wat een vertaalbureau bezighoudt: volume, talenparen, het systeem dat ze nu gebruiken en waar het knelt. Aan het eind staat een samenvatting en een prijsindicatie." },
@@ -363,7 +363,7 @@ export const detailsNl: Details = {
         "Aanvraagformulier in vijf stappen met prijsindicatie",
         "Engels en Nederlands",
       ],
-      page: { src: "/images/flow-page.webp", alt: "De homepage van FlowDezk van boven naar beneden: de kop, het dashboard, de offerte, de planning, de levering, het vendorportaal, de rapportage, de prijs en het formulier", width: 1200, height: 8250 },
+      page: { src: "/images/flow-page-en.webp", alt: "De homepage van FlowDezk van boven naar beneden: de kop, het dashboard, de offerte, de planning, de levering, het vendorportaal, de rapportage, de prijs en het formulier", width: 1200, height: 8250 },
       gallery: [
         { src: "/images/flow-dashboard.webp", alt: "Het projectdashboard van FlowDezk met statusbalken per project", width: 1440, height: 900 },
         { src: "/images/flow-resourcing.webp", alt: "Vertalers per taal ingepland op een weekrooster", width: 1440, height: 900 },
