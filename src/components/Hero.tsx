@@ -119,7 +119,7 @@ export function Hero({ content, lang }: { content: Content; lang: Lang }) {
               className="group/proof flex items-center gap-2.5 rounded-[var(--radius-pill)] border border-hairline bg-canvas-deep/60 py-1 pl-1 pr-3.5 text-[13px] text-text-muted transition-[border-color,color,transform] duration-200 ease-[var(--ease-out)] active:scale-[0.97] hover-fine:hover:border-hairline-strong hover-fine:hover:text-text"
             >
               <span className="relative h-6 w-9 overflow-hidden rounded-full">
-                <Image src={item.image} alt="" fill sizes="36px" className="object-cover object-left-top" />
+                <Image src={item.thumb ?? item.image} alt="" fill sizes="36px" className="object-cover object-left-top" />
               </span>
               {item.title}
             </Link>

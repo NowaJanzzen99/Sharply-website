@@ -63,10 +63,9 @@ function ProjectCard({
               alt={item.alt}
               fill
               sizes={wide ? "(min-width: 768px) 66vw, 100vw" : "(min-width: 768px) 55vw, 100vw"}
-              data-scene-img
-              // Zoomed from the top left corner: these are screenshots, and the
-              // headline of each site sits there.
-              className="origin-top-left object-cover object-left-top"
+              // No inner zoom: these are composed showcases with their own
+              // margins, and zooming in cut the edges off.
+              className="object-cover"
             />
           </div>
         </ViewTransition>

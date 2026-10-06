@@ -306,6 +306,8 @@ export type Content = {
       real?: boolean;
       /** Overrides both labels, for work that is neither a concept nor a client job. */
       label?: string;
+      /** A plain screenshot, for small places where the showcase would be too busy. */
+      thumb?: string;
     }[];
   };
   process: {

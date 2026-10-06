@@ -75,8 +75,8 @@ export const en: Content = {
         title: "An assistant for your customers",
         body: "A smart assistant inside your own site that answers questions, books appointments and knows your information. Available day and night.",
         points: ["Knows your content", "Books appointments", "Works with your systems"],
-        image: "/images/service-ai-chat-2.webp",
-        alt: "Two phones showing Renofloww: on the left the overview of costs and quotes, on the right the assistant answering a question about the budget",
+        image: "/images/service-ai-chat-3.webp",
+        alt: "A ceramics studio's site with an assistant beside it booking a workshop, and a notice that the appointment is booked",
         placeholder: true,
       },
       {
@@ -192,7 +192,8 @@ export const en: Content = {
         discipline: "Brand, website and bookings",
         blurb:
           "The website of Sara van Heukelom, who paints weddings live. Brand, design, engineering and booking form all come from me.",
-        image: "/images/card-liveweddingpaintings.webp",
+        image: "/images/showcase-liveweddingpaintings.webp",
+        thumb: "/images/card-liveweddingpaintings.webp",
         alt: "The Live Wedding Paintings homepage: three paintings in gold frames beside the name in a decorative script",
         real: true,
       },
@@ -202,7 +203,8 @@ export const en: Content = {
         discipline: "Web app with accounts and database",
         blurb:
           "A complete web app with real accounts and its own database: users sign in and their budget, planning, quotes and photos are stored per project. With an assistant that reads that data.",
-        image: "/images/card-renofloww.webp",
+        image: "/images/showcase-renofloww.webp",
+        thumb: "/images/card-renofloww.webp",
         alt: "The Renofloww homepage: the headline 'Je verbouwing, eindelijk in één overzicht' above a week-by-week bathroom schedule",
         real: true,
         label: "Live product",
@@ -213,7 +215,8 @@ export const en: Content = {
         discipline: "Brand, website and assistant",
         blurb:
           "The site of an interior and architecture studio in Limburg. A house you watch change as you scroll, from shell to floor plan, and an assistant that gives a first direction for material and colour.",
-        image: "/images/card-daalwerk.webp",
+        image: "/images/showcase-daalwerk.webp",
+        thumb: "/images/card-daalwerk.webp",
         alt: "The Daalwerk homepage: a maquette of a courtyard farm beside the headline 'Verder bouwen op wat er staat'",
         real: true,
         label: "Own project",
@@ -224,7 +227,8 @@ export const en: Content = {
         discipline: "Redesign of a product site",
         blurb:
           "Software for translation agencies. One project you follow by scrolling, from quote to invoice, a price calculator and a request form that asks what a translation agency actually deals with.",
-        image: "/images/card-flowdezk.webp",
+        image: "/images/showcase-flowdezk.webp",
+        thumb: "/images/card-flowdezk.webp",
         alt: "The FlowDezk homepage with the headline in Japanese: every project, from quote to invoice",
         real: true,
         label: "Redesign",

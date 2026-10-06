@@ -14,8 +14,8 @@ const WHOLE: Focus = { x: 50, y: 50, zoom: 1 };
 export const FOCUS: Record<string, Focus[]> = {
   // Laptop and phone showing a site: the headline, the hero object, the phone.
   websites: [WHOLE, { x: 31, y: 38, zoom: 1.8 }, { x: 62, y: 42, zoom: 1.7 }, { x: 88, y: 56, zoom: 2.3 }],
-  // Two phones, one with the overview and one with the assistant answering.
-  aiChat: [WHOLE, { x: 36, y: 49, zoom: 1.8 }, { x: 62, y: 44, zoom: 2 }, { x: 64, y: 66, zoom: 2 }],
+  // A studio site, the assistant booking a workshop, the booking notice.
+  aiChat: [WHOLE, { x: 22, y: 36, zoom: 1.7 }, { x: 72, y: 42, zoom: 1.9 }, { x: 60, y: 79, zoom: 2.3 }],
   // A shop: the product photo, the buy button, the product grid on the phone.
   webshop: [WHOLE, { x: 39, y: 40, zoom: 1.9 }, { x: 59, y: 42, zoom: 2.2 }, { x: 85, y: 50, zoom: 2.4 }],
   // A dashboard: the calendar, the invoices, the chart.

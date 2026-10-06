@@ -75,8 +75,8 @@ export const nl: Content = {
         title: "Een assistent voor je klanten",
         body: "Een slimme assistent in je eigen site die vragen beantwoordt, afspraken inplant en jouw informatie kent. Dag en nacht beschikbaar.",
         points: ["Kent jouw content", "Plant afspraken in", "Werkt samen met je systemen"],
-        image: "/images/service-ai-chat-2.webp",
-        alt: "Twee telefoons met Renofloww: links het overzicht van kosten en offertes, rechts de assistent die een vraag over het budget beantwoordt",
+        image: "/images/service-ai-chat-3.webp",
+        alt: "De site van een keramiekatelier met een assistent ernaast die een workshop inplant, en een melding dat de afspraak geboekt is",
         placeholder: true,
       },
       {
@@ -192,7 +192,8 @@ export const nl: Content = {
         discipline: "Merk, website en boekingen",
         blurb:
           "De website van Sara van Heukelom, die live schildert op bruiloften. Merk, ontwerp, techniek en boekingsformulier komen van mij.",
-        image: "/images/card-liveweddingpaintings.webp",
+        image: "/images/showcase-liveweddingpaintings.webp",
+        thumb: "/images/card-liveweddingpaintings.webp",
         alt: "De homepage van Live Wedding Paintings: drie schilderijen in gouden lijsten naast de naam in een sierlijke letter",
         real: true,
       },
@@ -202,7 +203,8 @@ export const nl: Content = {
         discipline: "Webapp met accounts en database",
         blurb:
           "Een complete webapp met echte accounts en een eigen database: gebruikers loggen in en hun budget, planning, offertes en foto's worden per project opgeslagen. Met een assistent die die gegevens leest.",
-        image: "/images/card-renofloww.webp",
+        image: "/images/showcase-renofloww.webp",
+        thumb: "/images/card-renofloww.webp",
         alt: "De homepage van Renofloww: de kop 'Je verbouwing, eindelijk in één overzicht' boven een weekplanning van een badkamer",
         real: true,
         label: "Live product",
@@ -213,7 +215,8 @@ export const nl: Content = {
         discipline: "Merk, website en assistent",
         blurb:
           "De site van een interieur- en architectenstudio in Limburg. Een huis dat je scrollend ziet veranderen, van schil tot plattegrond, en een assistent die een eerste richting voor materiaal en kleur geeft.",
-        image: "/images/card-daalwerk.webp",
+        image: "/images/showcase-daalwerk.webp",
+        thumb: "/images/card-daalwerk.webp",
         alt: "De homepage van Daalwerk: een maquette van een carréboerderij naast de kop 'Verder bouwen op wat er staat'",
         real: true,
         label: "Eigen project",
@@ -224,7 +227,8 @@ export const nl: Content = {
         discipline: "Herontwerp van een productsite",
         blurb:
           "Software voor vertaalbureaus. Eén project dat je scrollend volgt van offerte tot factuur, een prijscalculator en een aanvraagformulier dat vraagt wat een vertaalbureau echt bezighoudt.",
-        image: "/images/card-flowdezk.webp",
+        image: "/images/showcase-flowdezk.webp",
+        thumb: "/images/card-flowdezk.webp",
         alt: "De homepage van FlowDezk met de kop in het Japans: alle projecten, van offerte tot factuur",
         real: true,
         label: "Herontwerp",

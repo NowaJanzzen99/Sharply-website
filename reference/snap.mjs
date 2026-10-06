@@ -65,7 +65,7 @@ const js = async (expression) =>
 
 try {
   await send("Page.enable");
-  await send("Emulation.setDeviceMetricsOverride", { width, height, deviceScaleFactor: 1, mobile: width < 700 });
+  await send("Emulation.setDeviceMetricsOverride", { width, height, deviceScaleFactor: Number(process.env.DSF ?? 1), mobile: width < 700 });
   // A returning visitor, so the loading screen stays out of the shots.
   await send("Page.addScriptToEvaluateOnNewDocument", {
     source: "try{sessionStorage.setItem('sharply:intro-seen','1')}catch(e){}",
