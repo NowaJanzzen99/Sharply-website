@@ -93,8 +93,8 @@ export const nl: Content = {
         title: "Systemen die samenwerken",
         body: "Agenda, mail, voorraad, facturen en CRM, verbonden tot één vloeiende werkstroom. Wat zich herhaalt, gaat vanzelf.",
         points: ["Alles in verbinding", "Werk dat vanzelf loopt", "Rapportage om op te sturen"],
-        image: "/images/service-integrations-2.webp",
-        alt: "Een dashboard met agenda, facturenlijst en grafiek, met blauwe lijnen ertussen, en een telefoon met een melding dat het gelukt is",
+        image: "/images/service-integrations-3.webp",
+        alt: "Een bestelling in het midden, verbonden met een agenda, mail, voorraad en boekhouding: één handeling, vier systemen bijgewerkt",
         placeholder: true,
       },
       {

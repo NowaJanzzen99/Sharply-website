@@ -93,8 +93,8 @@ export const en: Content = {
         title: "Systems that work together",
         body: "Calendar, mail, stock, invoices and CRM, joined into one smooth workflow. Whatever repeats simply runs itself.",
         points: ["Everything connected", "Work that runs itself", "Reporting to steer by"],
-        image: "/images/service-integrations-2.webp",
-        alt: "A dashboard with a calendar, an invoice list and a chart joined by blue lines, and a phone with a success notification",
+        image: "/images/service-integrations-3.webp",
+        alt: "An order in the middle, connected to a calendar, mail, stock and accounting: one action, four systems updated",
         placeholder: true,
       },
       {

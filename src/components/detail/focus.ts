@@ -18,8 +18,8 @@ export const FOCUS: Record<string, Focus[]> = {
   aiChat: [WHOLE, { x: 22, y: 36, zoom: 1.7 }, { x: 72, y: 42, zoom: 1.9 }, { x: 60, y: 79, zoom: 2.3 }],
   // A shop: the product photo, the buy button, the product grid on the phone.
   webshop: [WHOLE, { x: 39, y: 40, zoom: 1.9 }, { x: 59, y: 42, zoom: 2.2 }, { x: 85, y: 50, zoom: 2.4 }],
-  // A dashboard: the calendar, the invoices, the chart.
-  integrations: [WHOLE, { x: 28, y: 40, zoom: 2 }, { x: 50, y: 40, zoom: 2 }, { x: 71, y: 42, zoom: 2 }],
+  // An order in the middle of four systems: the order, the calendar and mail, the stock and invoices.
+  integrations: [WHOLE, { x: 50, y: 52, zoom: 1.9 }, { x: 24, y: 28, zoom: 2.1 }, { x: 76, y: 76, zoom: 2.1 }],
   // An identity set: the mark on the bag, the colours, the typeface.
   branding: [WHOLE, { x: 14, y: 47, zoom: 1.8 }, { x: 47, y: 77, zoom: 2.1 }, { x: 77, y: 81, zoom: 2.3 }],
   // A campaign: the grid of photos, the story format, the video timeline.
