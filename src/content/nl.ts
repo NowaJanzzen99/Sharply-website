@@ -4,7 +4,7 @@ export const nl: Content = {
   meta: {
     title: "Sharply | Websites en webapps op maat, door Noah Janssen",
     description:
-      "Websites, webshops en AI-systemen met de uitstraling van een topbureau, ontworpen en gebouwd door één maker. Na oplevering pas je alles aan door het te vragen.",
+      "Websites en webapps op maat voor ondernemers, ontworpen en gebouwd door Noah Janssen in Roermond. Met assistent, vanaf €1.800 excl. btw.",
     localeTag: "nl_NL",
   },
   nav: {

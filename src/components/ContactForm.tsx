@@ -305,7 +305,7 @@ export function ContactForm({ content, lang }: { content: Content; lang: Lang })
                               type="button"
                               disabled={!done}
                               onClick={() => goTo(index, -1)}
-                              aria-label={formStep.title}
+                              aria-label={`${index + 1}. ${formStep.title}`}
                               aria-current={active ? "step" : undefined}
                               className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[var(--radius-pill)] border font-mono text-[11px] transition-[background-color,border-color,color] duration-300 ease-[var(--ease-out)] disabled:cursor-default"
                               style={{

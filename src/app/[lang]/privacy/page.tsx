@@ -26,9 +26,13 @@ export async function generateMetadata({
   const content = getContent(lang);
   return {
     title: `${content.privacy.title} | Sharply`,
+    description:
+      lang === "nl"
+        ? "Welke gegevens Sharply verwerkt, waarvoor, hoe lang en wat je rechten zijn. Geen tracking en geen cookiebanner."
+        : "What data Sharply handles, what for, for how long and what your rights are. No tracking and no cookie banner.",
     alternates: {
       canonical: `/${lang}/privacy`,
-      languages: { nl: "/nl/privacy", en: "/en/privacy" },
+      languages: { nl: "/nl/privacy", en: "/en/privacy", "x-default": "/nl/privacy" },
     },
   };
 }

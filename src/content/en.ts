@@ -4,7 +4,7 @@ export const en: Content = {
   meta: {
     title: "Sharply | Custom websites and web apps, by Noah Janssen",
     description:
-      "Websites, shops and AI systems with the polish of a top studio, designed and built by one maker. After launch you change anything by simply asking.",
+      "Custom websites and web apps for businesses, designed and built by Noah Janssen in Roermond, the Netherlands. With an assistant, from €1,800 excl. VAT.",
     localeTag: "en_GB",
   },
   nav: {

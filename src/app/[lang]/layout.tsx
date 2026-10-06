@@ -8,6 +8,7 @@ import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { StickyCta } from "@/components/StickyCta";
 import { getAlternates, getContent, isLang, LANGS, type Lang } from "@/content";
+import { absolute, OWNER, SITE_NAME, SITE_URL } from "@/lib/site";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
@@ -33,21 +34,30 @@ export async function generateMetadata({
   return {
     // Without a base, the canonical and hreflang links below stay relative,
     // which search engines ignore: both were flagged invalid by Lighthouse.
-    metadataBase: new URL(
-      process.env.NEXT_PUBLIC_SITE_URL ?? "https://sharply-website.vercel.app",
-    ),
+    metadataBase: new URL(SITE_URL),
     title: content.meta.title,
     description: content.meta.description,
     alternates: {
       canonical: `/${lang}`,
-      languages: { nl: "/nl", en: "/en" },
+      languages: { nl: "/nl", en: "/en", "x-default": "/nl" },
     },
     openGraph: {
       title: content.meta.title,
       description: content.meta.description,
       locale: content.meta.localeTag,
+      alternateLocale: lang === "nl" ? ["en_GB"] : ["nl_NL"],
       type: "website",
+      siteName: SITE_NAME,
+      url: `/${lang}`,
     },
+    twitter: {
+      card: "summary_large_image",
+      title: content.meta.title,
+      description: content.meta.description,
+    },
+    authors: [{ name: OWNER, url: SITE_URL }],
+    creator: OWNER,
+    robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 } },
   };
 }
 
@@ -71,24 +81,54 @@ export default async function LangLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${sora.variable} antialiased`}
     >
       <body>
-        {/* Who we are, for search engines: the same facts as the footer. */}
+        {/* Who we are, for search engines: the same facts as the footer, as one
+            connected graph (the business, the person behind it, the website). */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "ProfessionalService",
-              name: "Sharply",
-              url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://sharply-website.vercel.app",
-              email: content.footer.email,
-              identifier: { "@type": "PropertyValue", propertyID: "KvK", value: "76336840" },
-              address: {
-                "@type": "PostalAddress",
-                streetAddress: "Scheidingsweg 2",
-                postalCode: "6045 CR",
-                addressLocality: "Roermond",
-                addressCountry: "NL",
-              },
+              "@graph": [
+                {
+                  "@type": "ProfessionalService",
+                  "@id": `${SITE_URL}/#business`,
+                  name: SITE_NAME,
+                  url: SITE_URL,
+                  email: content.footer.email,
+                  description: content.meta.description,
+                  image: absolute(`/${lang}/opengraph-image`),
+                  priceRange: "€€",
+                  areaServed: [{ "@type": "Country", name: "Nederland" }, { "@type": "Place", name: "Limburg" }],
+                  founder: { "@id": `${SITE_URL}/#noah` },
+                  identifier: { "@type": "PropertyValue", propertyID: "KvK", value: "76336840" },
+                  address: {
+                    "@type": "PostalAddress",
+                    streetAddress: "Scheidingsweg 2",
+                    postalCode: "6045 CR",
+                    addressLocality: "Roermond",
+                    addressCountry: "NL",
+                  },
+                  knowsLanguage: ["nl", "en"],
+                },
+                {
+                  "@type": "Person",
+                  "@id": `${SITE_URL}/#noah`,
+                  name: OWNER,
+                  jobTitle: lang === "nl" ? "Ontwerper en ontwikkelaar" : "Designer and developer",
+                  worksFor: { "@id": `${SITE_URL}/#business` },
+                  url: SITE_URL,
+                  image: absolute("/images/noah-cut.webp"),
+                  address: { "@type": "PostalAddress", addressLocality: "Roermond", addressCountry: "NL" },
+                },
+                {
+                  "@type": "WebSite",
+                  "@id": `${SITE_URL}/#website`,
+                  url: SITE_URL,
+                  name: SITE_NAME,
+                  inLanguage: ["nl", "en"],
+                  publisher: { "@id": `${SITE_URL}/#business` },
+                },
+              ],
             }),
           }}
         />

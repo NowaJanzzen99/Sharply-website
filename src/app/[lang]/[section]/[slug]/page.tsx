@@ -10,6 +10,7 @@ import { DetailGallery } from "@/components/detail/DetailGallery";
 import { FOCUS, PAGE_STOPS } from "@/components/detail/focus";
 import { DetailList } from "@/components/detail/DetailList";
 import { DetailRelated } from "@/components/detail/DetailRelated";
+import { absolute, clip } from "@/lib/site";
 import {
   getContent,
   getDetails,
@@ -162,20 +163,27 @@ export async function generateMetadata({
       ? serviceHref(other, resolved.key)
       : workHref(other, resolved.key);
 
+  // The page's own picture, so a shared link shows the project and not the home page.
+  const picture = resolved.image;
+  const description = clip(`${detail.tagline} ${detail.intro}`);
+
   return {
     title: `${title} | Sharply`,
-    description: detail.tagline,
+    description,
     alternates: {
       canonical: path,
-      languages: { [lang]: path, [other]: otherPath },
+      languages: { [lang]: path, [other]: otherPath, "x-default": lang === "nl" ? path : otherPath },
     },
     openGraph: {
       title: `${title} | Sharply`,
-      description: detail.tagline,
+      description,
       locale: content.meta.localeTag,
       type: "article",
       url: path,
+      siteName: "Sharply",
+      images: [{ url: picture, width: 1800, height: 1200, alt: title }],
     },
+    twitter: { card: "summary_large_image", title: `${title} | Sharply`, description, images: [picture] },
   };
 }
 
@@ -190,6 +198,8 @@ export default async function DetailPage({ params }: { params: Promise<Params> }
   const badge = resolved.kind === "work" ? resolved.badge : null;
 
   const backHref = isService ? `/${lang}#diensten` : `/${lang}#werk`;
+  const selfPath =
+    resolved.kind === "services" ? serviceHref(lang, resolved.key) : workHref(lang, resolved.key);
   const backLabel = isService ? copy.backToServices : copy.backToWork;
 
   // Something to move on to, so the page never dead ends. With a single
@@ -239,6 +249,51 @@ export default async function DetailPage({ params }: { params: Promise<Params> }
 
   return (
     <main id="main">
+      {/* Structured data: where this page sits, and what it is. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "BreadcrumbList",
+                itemListElement: [
+                  { "@type": "ListItem", position: 1, name: "Sharply", item: absolute(`/${lang}`) },
+                  {
+                    "@type": "ListItem",
+                    position: 2,
+                    name: resolved.kind === "services" ? copy.backToServices : copy.backToWork,
+                    item: absolute(`/${lang}`) + (isService ? "#diensten" : "#werk"),
+                  },
+                  { "@type": "ListItem", position: 3, name: title, item: absolute(selfPath) },
+                ],
+              },
+              resolved.kind === "work"
+                ? {
+                    "@type": "CreativeWork",
+                    name: title,
+                    description: detail.intro,
+                    image: absolute(image),
+                    url: absolute(selfPath),
+                    inLanguage: lang,
+                    creator: { "@id": absolute("/") + "#noah" },
+                    ...(resolved.detail.url ? { sameAs: resolved.detail.url } : {}),
+                  }
+                : {
+                    "@type": "Service",
+                    name: title,
+                    description: detail.intro,
+                    image: absolute(image),
+                    url: absolute(selfPath),
+                    inLanguage: lang,
+                    provider: { "@id": absolute("/") + "#business" },
+                    areaServed: "NL",
+                  },
+            ],
+          }),
+        }}
+      />
       <article>
         {/* Title block. No hero image behind the words: the picture gets its
             own moment below, at full width, where it can actually be seen. */}

@@ -1,9 +1,6 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowDownRight } from "@phosphor-icons/react";
+import { ArrowDownRight } from "@phosphor-icons/react/dist/ssr";
 import { RevealLines } from "./Reveal";
 import { MagneticButton } from "./MagneticButton";
 import { FloatingOrb } from "./hero/FloatingOrb";
@@ -17,23 +14,10 @@ import { workHref, type Content, type Lang } from "@/content";
 */
 
 export function Hero({ content, lang }: { content: Content; lang: Lang }) {
-  const [compact, setCompact] = useState(false);
-
-  useEffect(() => {
-    const query = window.matchMedia("(max-width: 767px)");
-    const sync = () => setCompact(query.matches);
-    const timer = setTimeout(sync, 0);
-    query.addEventListener("change", sync);
-    return () => {
-      clearTimeout(timer);
-      query.removeEventListener("change", sync);
-    };
-  }, []);
-
   return (
     <section className="relative isolate grain flex min-h-[100dvh] flex-col justify-end overflow-hidden bg-canvas-deep pb-16 pt-32 md:justify-center md:pb-24">
       <div aria-hidden="true" className="absolute inset-0 -z-20">
-        <FloatingOrb compact={compact} />
+        <FloatingOrb />
       </div>
 
       {/* Planet rim along the bottom edge. */}

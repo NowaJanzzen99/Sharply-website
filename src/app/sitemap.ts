@@ -1,21 +1,21 @@
 import type { MetadataRoute } from "next";
 import { getDetails, LANGS, sectionPath } from "@/content";
+import { SITE_URL } from "@/lib/site";
 
 /*
   Every page, in both languages, generated from the same dictionaries the pages
   themselves are built from. Add a service or a project and it appears here
   without anyone remembering to update a list.
 
-  SITE_URL is set in Vercel; the vercel.app address is the fallback so a local
-  build and a preview build still produce something valid.
+  The date is the day the content last changed, set by hand. Stamping every
+  page with the build time tells a crawler that everything changes daily, which
+  teaches it to stop trusting the field.
 */
-const base = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://sharply-website.vercel.app").replace(
-  /\/$/,
-  "",
-);
+const MODIFIED = new Date("2026-10-06");
+const base = SITE_URL;
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
+  const now = MODIFIED;
 
   return LANGS.flatMap((lang) => {
     const details = getDetails(lang);

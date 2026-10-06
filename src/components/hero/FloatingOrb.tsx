@@ -89,7 +89,13 @@ function Shards({ count }: { count: number }) {
 const POP_MS = 440;
 const REFORM_MS = 900;
 
-export function FloatingOrb({ compact }: { compact: boolean }) {
+/*
+  The layout is pure CSS, phone first with `md:` for the wide layout. It used
+  to be chosen by a state that a mount effect set after the first paint, so the
+  bubble was drawn in the desktop place and then jumped to the phone one: a
+  layout shift of 0.12 on phones, and a visible hop.
+*/
+export function FloatingOrb() {
   const host = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -443,11 +449,7 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
         data-spin="3"
         data-pop-at="70"
         data-base-opacity="1"
-        className={`absolute ${
-          compact
-            ? "left-1/2 top-[30%] w-[82vw] -translate-x-1/2 -translate-y-1/2"
-            : "left-[74%] top-1/2 w-[42vw] max-w-[580px] -translate-x-1/2 -translate-y-1/2"
-        } will-change-transform`}
+        className="absolute left-1/2 top-[30%] w-[82vw] -translate-x-1/2 -translate-y-1/2 will-change-transform md:left-[74%] md:top-1/2 md:w-[42vw] md:max-w-[580px]"
       >
         <Image
           data-orb-image
@@ -499,9 +501,7 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
         data-spin="6"
         data-pop-at="30"
         data-base-opacity="0.8"
-        className={`absolute ${
-          compact ? "left-[14%] top-[54%] w-[16vw]" : "left-[46%] top-[68%] w-[7vw] max-w-[96px]"
-        } will-change-transform`}
+        className="absolute left-[14%] top-[54%] w-[16vw] will-change-transform md:left-[46%] md:top-[68%] md:w-[7vw] md:max-w-[96px]"
       >
         <Image
           data-orb-image
@@ -525,9 +525,7 @@ export function FloatingOrb({ compact }: { compact: boolean }) {
         data-spin="8"
         data-pop-at="48"
         data-base-opacity="0.65"
-        className={`absolute ${
-          compact ? "right-[12%] top-[16%] w-[11vw]" : "left-[88%] top-[28%] w-[5vw] max-w-[68px]"
-        } will-change-transform`}
+        className="absolute right-[12%] top-[16%] w-[11vw] will-change-transform md:right-auto md:left-[88%] md:top-[28%] md:w-[5vw] md:max-w-[68px]"
       >
         <Image
           data-orb-image
